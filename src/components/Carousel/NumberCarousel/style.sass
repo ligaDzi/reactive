@@ -1,0 +1,50 @@
+@import '../../../style/_mixins'  
+@import '../../../../node_modules/rfs/sass'
+
+.carousel-num
+    flex-grow: 2
+    width: 0
+
+.carousel-num-item
+    width: 100%
+    height: calc(100%/3)
+
+.num-item__content
+    height: 25px
+    overflow: hidden    
+
+.num-item__block
+    color: #fff
+    +rfs(24px)
+    font-weight: 600
+    & span
+        margin: 0 5px
+
+.num-item__list
+    width: 30px
+    transform: translate3d(0px, -24px, 0px)
+    transition: all .9s ease-in-out  
+    +r(xl)
+        transform: translate3d(0px, -22px, 0px)
+    +r(lg)
+        transform: translate3d(0px, -21px, 0px)
+    +r(sm)
+        transform: translate3d(0px, -21px, 0px)
+    +r(xs)
+        transform: translate3d(0px, -19px, 0px)
+
+.num-item__list-appear
+    transform: translate3d(0px, 0px, 0px)
+
+.num-item__list-appear.num-item__list-appear-active
+    transform: translate3d(0px, -24px, 0px)
+    +r(xl)
+        transform: translate3d(0px, -22px, 0px)
+    +r(lg)
+        transform: translate3d(0px, -21px, 0px)
+    +r(sm)
+        transform: translate3d(0px, -21px, 0px)
+    +r(xs)
+        transform: translate3d(0px, -19px, 0px)
+
+    

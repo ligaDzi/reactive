@@ -1,5 +1,6 @@
 @import '../../../style/_mixins'
 @import '../../../style/_color'
+@import '../../../style/_animation'
 @import '../../../../node_modules/rfs/sass'
 
 $heightDesc: 2rem
@@ -65,6 +66,7 @@ $heightTitle: 2.4em
     &__size
 
 .block-title
+    position: relative
     +rfs(5em)
     line-height: $heightTitle - 1em
     color: $whiteCl
@@ -104,13 +106,39 @@ $heightTitle: 2.4em
         flex-grow: 1
         visibility: visible
   
+.block-title__read
+    display: block
+    position: absolute
+    height: 100%
+    width: 130px
+    transform: rotate(90deg)
+    right: -50px
+    top: 0
+    +r(xl)
+        right: -80px
+    & span
+        position: absolute
+        right: 0
+        overflow: hidden
+        cursor: pointer
+        +rfs(0.8rem)
+        color: $whiteCl
+        font-weight: 400
+        +r(xl)
+            +rfs(0.6rem)     
+    & span:before
+        content: ""
+        display: block
+        bottom: 45%
+        left: 0
+        height: 1px
+        width: calc(100% + 2px)
+        position: absolute
+        z-index: -1
+        background-color: $whiteCl
+        transform: translate3d(-100%,0,0)
+        transition: transform .4s
+    & span:hover::before
+        transform: translate3d(0,0,0)
 
-@keyframes slider
-    0%
-        transform: translateX(-100%)
-    90%
-        opacity: 1
-    100%
-        transform: translateX(0%)
-        opacity: 0
 

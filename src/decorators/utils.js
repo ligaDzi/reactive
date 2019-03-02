@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
 
+import '../style/_animation.sass'
+
 export default (OriginalComponent) => class Utils extends Component{
    
     getUniqId = () => {
@@ -37,7 +39,7 @@ export default (OriginalComponent) => class Utils extends Component{
                     transitionEnterTimeout = {100}
                     transitionLeaveTimeout = {100}
                 >                    
-                    <p className='title-parag'> {spn.trim()} </p>
+                    <p className='title-parag leave6000'> {spn.trim()} </p>
                 </CSSTransitionGroup>
             </div>
         )

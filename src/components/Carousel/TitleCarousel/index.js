@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { CSSTransitionGroup } from 'react-transition-group'
 
 import utilsDecor from '../../../decorators/utils'
 
@@ -53,7 +52,11 @@ class TitleCarousel extends Component {
                     </div>
                 </div>
                 <div className='carousel-title__block block-title block-title__size'>
+
                     {textToParagArr(activeSlide.title, 14)}
+                    <p className='block-title__read'>
+                        <span>Read the full story</span>
+                    </p>
                 </div>
             </div>
         )

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import ImgCarousel from './ImgCarousel'
 import NumberCarousel from './NumberCarousel'
 import TitleCarousel from './TitleCarousel'
+import Categories from './Categories'
 
 import utilsDecor from '../../decorators/utils'
 
@@ -54,6 +55,8 @@ class Carousel extends Component {
 
     getNumSlider = () => {
         const { articles, getUniqId } = this.props;
+        const categories = articles[this.state.activeSlide].categories;
+        
         return (                    
             <div className = 'carousel-num fa-start fj-start'>
                 <div className='carousel-num-item'></div>
@@ -65,7 +68,9 @@ class Carousel extends Component {
                         nextSlide = {this.state.nextSlide + 1} 
                     />
                 </div>
-                <div className='carousel-num-item'></div>
+                <div className='carousel-num-item'>
+                    <Categories categories = {categories}/>
+                </div>
             </div>            
         )
     }

@@ -1,8 +1,10 @@
 @import '../../style/_mixins'
+@import '../../../node_modules/rfs/sass'
 
 $widthImg: 30vw
 $heightImg: calc(100% + 60px)
-$heightCarousel: 100vh
+$heightCarousel: 93vh
+$widthBtnCarousel: 100px
 
 body
     font-family: 'Poppins', sans-serif
@@ -11,7 +13,17 @@ body
     padding: 60px 41px
     overflow: hidden
     background-color: #000
+    +r(sm)
+        padding: 140px 0 60px 41px
 
+.carousel-changing
+    display: flex
+    background-color: #000
+    width: 100%
+    +r(sm)
+        flex-direction: column 
+        position: relative
+        left: -41px
 
 .carousel-items 
     &__size   
@@ -35,3 +47,55 @@ body
     width: $widthImg
     height: $heightImg
     overflow: hidden
+    +r(sm) 
+        flex-shrink: 0
+        width: calc(100% + 30px)
+        
+.carousel-btn__content
+    width: $widthBtnCarousel
+    padding-top: 15%
+    +r(xl)
+        height: 60vh
+    +r(lg)
+        height: 50vh
+    +r(sm)
+        height: 40vh
+        width: $widthBtnCarousel/2
+    +r(xs)
+        height: 30vh
+    +r(xxs)
+        height: 20vh
+
+.carousel-btn   
+    cursor: pointer
+    transition: all 1s
+    &__size
+        width: $widthBtnCarousel
+        height: 16rem
+        overflow: hidden
+        transform: translatex(100px) 
+        +r(xl)
+            height: 10rem
+        +r(lg)
+            height: 9rem
+        +r(sm)
+            height: 13rem 
+            width: $widthBtnCarousel
+            transform: translatex(30px)
+        +r(xs)
+            height: 10rem 
+    &:hover
+        transform: translatex(51px)
+        +r(sm)
+            transform: translatex(10px)
+
+
+.carousel-num
+    flex-grow: 2
+    width: 0
+    +r(sm)
+        flex-grow: 0
+
+.carousel-num-item
+    width: 100%
+    height: calc(100%/3)

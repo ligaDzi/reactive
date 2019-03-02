@@ -52,6 +52,57 @@ class Carousel extends Component {
         clearInterval(this.interval);
     }
 
+    getNumSlider = () => {
+        const { articles, getUniqId } = this.props;
+        return (                    
+            <div className = 'carousel-num fa-start fj-start'>
+                <div className='carousel-num-item'></div>
+                <div className='carousel-num-item flex fa-center'>
+                    <NumberCarousel 
+                        key = {getUniqId()}
+                        numSlides = {articles.length}
+                        activeSlide = {this.state.activeSlide + 1} 
+                        nextSlide = {this.state.nextSlide + 1} 
+                    />
+                </div>
+                <div className='carousel-num-item'></div>
+            </div>            
+        )
+    }
+
+    getImgSlider = () => {
+        const { articles, getUniqId } = this.props;
+        const activeSlide = articles[ this.state.activeSlide ];
+        const nextSlide = articles[ this.state.nextSlide ];
+
+        return (
+            <div className='carousel-items carousel-items__size flex fa-end fj-start'>
+                <div className = 'carousel-size'>                    
+                    <ImgCarousel 
+                        key = {getUniqId()}
+                        activeSlide = {activeSlide}
+                        nextSlide = {nextSlide} 
+                    />
+                </div>
+            </div>            
+        )
+    }
+
+    getTitleSlider = () => {
+        const { articles, getUniqId } = this.props;
+        const nextSlide = articles[ this.state.nextSlide ];
+        
+        return (
+            <TitleCarousel 
+                key = {getUniqId()}
+                activeSlide = {nextSlide}  
+                lengthSlide = {articles.length}
+                numberActive = {this.state.activeSlide + 1} 
+                numberNext = {this.state.nextSlide + 1} 
+            />
+        )
+    }
+
     render() {
         const { articles, getUniqId } = this.props;
         const activeSlide = articles[ this.state.activeSlide ];
@@ -60,26 +111,21 @@ class Carousel extends Component {
 
         return (
             <div className = 'carousel flex'>
-                <NumberCarousel 
-                    key = {getUniqId()}
-                    numSlides = {articles.length}
-                    activeSlide = {this.state.activeSlide + 1} 
-                    nextSlide = {this.state.nextSlide + 1} 
-                />
-                <div className='carousel-items carousel-items__size flex fa-end fj-start'>
-                    <div className = 'carousel-size'>                    
+                <div className='carousel-changing'>
+                    {this.getNumSlider()}
+                    {this.getImgSlider()}
+                    {this.getTitleSlider()}
+                </div>
+
+                <div className='carousel-btn__content'>                    
+                    <div className='carousel-btn carousel-btn__size'>
                         <ImgCarousel 
                             key = {getUniqId()}
-                            activeSlide = {activeSlide}
-                            nextSlide = {nextSlide} 
+                            activeSlide = {nextSlide}
+                            nextSlide = {nextBtnSlide} 
                         />
                     </div>
                 </div>
-                <TitleCarousel 
-                    key = {getUniqId()}
-                    activeSlide = {nextSlide}                
-                    nextSlide = {nextBtnSlide} 
-                />
             </div>
         )
     }

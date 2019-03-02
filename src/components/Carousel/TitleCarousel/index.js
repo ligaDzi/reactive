@@ -4,7 +4,7 @@ import { CSSTransitionGroup } from 'react-transition-group'
 
 import utilsDecor from '../../../decorators/utils'
 
-import ImgCarousel from '../ImgCarousel'
+import NumberCarousel from '../NumberCarousel'
 
 import './style.sass' 
 import '../../../style/_position.sass'
@@ -13,8 +13,10 @@ class TitleCarousel extends Component {
 
     static propTypes = {
         //from component
-        nextSlide: PropTypes.object,
         activeSlide: PropTypes.object,
+        lengthSlide: PropTypes.number,
+        numberActive: PropTypes.number,
+        numberNext: PropTypes.number,
         //from decorator
         textToParagArr: PropTypes.func.isRequired,
         getUniqId: PropTypes.func.isRequired
@@ -25,26 +27,33 @@ class TitleCarousel extends Component {
     }
 
     render() {
-        const { nextSlide, activeSlide, textToParagArr, getUniqId } = this.props;
+        const { 
+            activeSlide, 
+            textToParagArr, 
+            getUniqId, 
+            lengthSlide,
+            numberActive,
+            numberNext } = this.props;
 
         return (
             <div className = 'carousel-title fa-start fj-start'>
                 <div className='carousel-title__block block-desc block-desc__size'>
                     {textToParagArr(activeSlide.description, 25)}
                 </div>
-                <div className='carousel-title__block flex fa-center'>
+                <div className='carousel-title__block flex fa-center fj-sb'>
                     <div className='carousel-slider carousel-slider__size'></div>
-                    <div className='carousel-null'></div>
-                    <div className='carousel-btn carousel-btn__size'>
-                        <ImgCarousel 
+                    <div className='carousel-slider__null'></div>
+                    <div className='carousel-title__num'>
+                        <NumberCarousel 
                             key = {getUniqId()}
-                            activeSlide = {activeSlide}
-                            nextSlide = {nextSlide} 
+                            numSlides = {lengthSlide}
+                            activeSlide = {numberActive} 
+                            nextSlide = {numberNext} 
                         />
                     </div>
                 </div>
                 <div className='carousel-title__block block-title block-title__size'>
-                    {textToParagArr(activeSlide.title, 15)}
+                    {textToParagArr(activeSlide.title, 14)}
                 </div>
             </div>
         )

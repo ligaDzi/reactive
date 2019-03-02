@@ -2,16 +2,20 @@
 @import '../../../style/_color'
 @import '../../../../node_modules/rfs/sass'
 
-$widthBtnCarousel: 100px
 $heightDesc: 2rem
 $heightTitle: 2.4em
 
 .carousel-title
     flex-grow: 6
     width: 0
+    +r(sm)
+        width: 100%
+        padding: 49px 0 49px 38px
 
 .carousel-title__block
     height: calc(100%/3)
+    +r(sm)
+        margin-bottom: 50px
 
 .carousel-slider
     background-color: $greyCl 
@@ -20,6 +24,9 @@ $heightTitle: 2.4em
         position: relative
         overflow: hidden
         height: 4px
+        +r(sm)
+            flex-grow: 3
+
     &:before
         content: ''
         position: absolute
@@ -32,30 +39,6 @@ $heightTitle: 2.4em
         animation-delay: 500ms
         animation-timing-function: ease
         animation-duration: 5900ms
-
-.carousel-null
-    flex-grow: 3
-
-.carousel-btn   
-    cursor: pointer
-    transition: all 1s
-    &__size
-        width: $widthBtnCarousel
-        height: 16rem
-        overflow: hidden
-        transform: translatex(100px) 
-        +r(xl)
-            height: 10rem
-        +r(lg)
-            height: 9rem
-        +r(sm)
-            height: 8rem
-        +r(xs)
-            height: 7rem
-        +r(xxs)
-            height: 10rem  
-    &:hover
-        transform: translatex(51px)
 
 .block-desc
     +rfs(1.6rem)
@@ -70,7 +53,8 @@ $heightTitle: 2.4em
         +rfs(1rem)
         line-height: $heightDesc - 0.5rem
     +r(sm)
-        +rfs(1rem) 
+        +rfs(1rem)
+        display: none 
     & div
         position: relative        
         width: 100%
@@ -109,7 +93,16 @@ $heightTitle: 2.4em
 .title-parag-appear.title-parag-appear-active
     transform: translate3d(0,0,0)
 
-    
+.carousel-slider__null
+    +r(sm)
+        flex-grow: 4
+
+.carousel-title__num
+    flex-grow: 2
+    visibility: hidden
+    +r(sm)
+        flex-grow: 1
+        visibility: visible
   
 
 @keyframes slider

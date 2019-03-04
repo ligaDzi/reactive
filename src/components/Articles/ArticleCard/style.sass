@@ -1,0 +1,95 @@
+@import '../../../style/_mixins'
+
+$sizeArtCard1: calc((100vw - 50px * 2) * 1 / 12)
+$sizeArtCard2:  calc((100vw - 50px * 2) * 2 / 12)
+
+$size575ArtCard1: calc((100vw - 1.625rem) * 1 / 8)
+$size575ArtCard2: calc((100vw - 1.625rem) * 2 / 8)
+$size575ArtCard3: calc((100vw - 1.625rem) * 3 / 8)
+$size575ArtCard4: calc((100vw - 1.625rem) * 4 / 8)
+$size575ArtCard5: calc((100vw - 1.625rem) * 5 / 8)
+$size575ArtCard6: calc((100vw - 1.625rem) * 6 / 8)
+    
+.article-card
+    position: relative
+    cursor: pointer
+    &:nth-child(1)
+        +sizeDesc(3, 1)
+        height: 40rem
+        margin-top: 5rem
+        margin-bottom: 5rem
+        +r(xxl)
+            height: 25rem
+        +r(lg)
+            +size991(4, 1)
+            height: 13rem
+            margin-top: 6rem
+            margin-bottom: 0
+        +r(xs)
+            height: 15rem
+            width: $size575ArtCard6
+            margin: 0 0 10rem $size575ArtCard2
+    &:nth-child(2)
+        +sizeDesc(3, 1)
+        height: 22rem
+        margin-top: 10rem
+        +r(xxl)
+            height: 14rem
+        +r(lg)
+            +size991(5, 0)
+            height: 27rem
+            margin-right: 0
+            margin-top: 0
+            margin-bottom: 5rem
+        +r(xs)
+            width: $size575ArtCard5
+            height: 15rem
+            margin-right: $size575ArtCard3
+            margin-bottom: 10rem
+    &:nth-child(3)
+        +sizeDesc(4, 0)
+        height: 40rem
+        +r(xxl)
+            height: 25rem
+        +r(lg)
+            +size991(5, 1)
+            height: 20rem
+        +r(xs)
+            width: $size575ArtCard6
+            height: 15rem
+            margin-right: 0
+            margin-left: $size575ArtCard2
+            margin-bottom: 10rem
+    &:nth-child(4)
+        +sizeDesc(4, 0)
+        height: 40rem
+        margin: 5rem $sizeArtCard2 5rem $sizeArtCard1
+        +r(xxl)
+            height: 25rem
+        +r(lg)
+            +size991(4, 0)
+            height: 20rem
+            margin: 6rem 0
+        +r(xs)
+            width: $size575ArtCard6
+            height: 15rem
+            margin-right: $size575ArtCard2
+            margin-bottom: 10rem
+            margin-top: 0
+    &:nth-child(5)
+        +sizeDesc(4, 0)
+        height: 32rem
+        +r(xxl)
+            height: 20rem
+        +r(lg)
+            +size991(5, 2)
+            height: 20rem
+            margin-bottom: 13rem
+        +r(xs)
+            width: $size575ArtCard5
+            height: 15rem
+            margin-right: 0
+            margin-left: $size575ArtCard3
+            margin-bottom: 20rem
+
+

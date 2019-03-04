@@ -1,0 +1,42 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+    
+.article-desc
+    width: 100%
+    color: $whiteCl
+    position: absolute
+    bottom: -20px
+    left: 0
+    transform: translateY(100%)
+    transition: opacity .6s ease
+    opacity: 0
+    +r(xs)
+        opacity: 1
+
+.article-card:hover
+    .article-desc
+        opacity: 1
+
+.article-desc-text
+    +rfs(1.4rem)
+    font-weight: 600
+    line-height: 1.5rem
+    margin-right: auto
+    +r(xxl)
+        +rfs(1.1rem)
+    +r(sm)
+        +rfs(0.9rem)
+        line-height: 1.2rem        
+
+.article-desc-date
+    +rfs(0.9rem)
+    font-weight: 500
+    line-height: 1rem
+    margin-left: 3rem
+    +r(xxl)
+        +rfs(0.6rem)
+    +r(xl)
+        margin-left: 1.5rem
+    +r(xs)
+        display: none

@@ -1,0 +1,23 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+    
+.article-categories
+    position: absolute
+    top: -21px
+    left: 0
+    transform: translateY(-100%)
+    color: $whiteCl
+    line-height: 1rem
+    font-weight: 500
+    +rfs(0.9rem)
+    transition: opacity .6s ease;
+    opacity: 0
+    +r(xxl)
+        +rfs(0.6rem)
+    +r(xs)
+        display: none
+
+.article-card:hover
+    .article-categories
+        opacity: 1

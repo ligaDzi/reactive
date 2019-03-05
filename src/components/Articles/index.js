@@ -6,10 +6,12 @@ import ArticlesList from './ArticlesList'
 import './style.sass'
 
 class Articles extends Component{
+
     static propTypes = {
         //from component
         articles: PropTypes.array
     }
+
 
     render() {
         const { articles } = this.props;

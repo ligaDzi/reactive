@@ -34,6 +34,7 @@
     "webpack-dev-server": "^2.0.0"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "autoprefixer-loader": "^3.2.0",
     "history": "^4.6.3",
     "immutable": "^3.8.1",

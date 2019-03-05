@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import AOS from 'aos'
 
 import ArticleCategories from '../ArticleCategories'
 import ArticleImg from '../ArticleImg'
@@ -14,11 +15,18 @@ class ArticleCard extends Component {
         article: PropTypes.object
     }
 
+    componentDidMount(){
+        AOS.init({
+            duration : 2000,
+            once: true
+        })
+    }
+
     render() {
         const { article } = this.props;
         
         return (
-            <div className='article-card'>
+            <div className='article-card' data-aos="fade-up">
                 <ArticleCategories categories = {article.categories} />
                 <ArticleImg name = {article.images[0]} />
                 <ArticleDesc text = {article.description} date = {article.date} />

@@ -1,0 +1,66 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+.contact-btn
+    position: relative
+    cursor: pointer
+    color: $whiteCl
+    font-weight: 600
+    line-height: 28px
+    +rfs(16px)
+    transition-property: color,opacity
+    transition-duration: .2s
+    &:after
+        content: ""
+        display: block
+        bottom: .3em
+        left: 0
+        height: 1px
+        width: calc(100% + 2px)
+        background-color: $whiteCl
+        position: absolute
+        transition-property: color,opacity
+        transition-duration: .2s
+    &:hover
+        color: $greyCl
+    +r(xxl)
+        letter-spacing: 0.025em
+        +rfs(0.6rem)
+        line-height: 1rem
+
+.contact-btn:hover::after
+    color: $greyCl
+
+.contact-content
+    height: auto
+    transition: all 0.5s ease
+    & p
+        line-height: 28px
+        +rfs(16px)
+        font-weight: 400
+        color: $whiteCl
+        +r(xxl)
+            +rfs(0.6rem)
+            line-height: 1rem
+
+.contact-content-appear
+    opacity: 0.01
+.contact-content-appear.contact-content-appear-active
+    opacity: 1
+    transition: all 0.5s ease
+
+.contact-content-enter
+    opacity: 0.01
+.contact-content-enter.contact-content-enter-active
+    opacity: 1
+    transition: all 0.3s ease
+
+.contact-content-leave
+    opacity: 1
+.contact-content-leave.contact-content-leave-active
+    opacity: 0.01
+    transition: all 0.5s ease
+
+
+    

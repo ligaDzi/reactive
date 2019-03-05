@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import utilsDecor from '../../../decorators/utils'
 
 import NumberCarousel from '../NumberCarousel'
+import Text90Deg from '../Text90Deg'
 
 import './style.sass' 
 import '../../../style/_position.sass'
@@ -54,9 +55,7 @@ class TitleCarousel extends Component {
                 <div className='carousel-title__block block-title block-title__size'>
 
                     {textToParagArr(activeSlide.title, 14)}
-                    <p className='block-title__read'>
-                        <span>Read the full story</span>
-                    </p>
+                    <Text90Deg text = 'Read the full story' />
                 </div>
             </div>
         )

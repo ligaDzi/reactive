@@ -141,3 +141,53 @@ export const articles = [
         "date": 'Mon, 10 Jun 2019 00:00:00 GMT'
     }
 ]
+
+export const menu = [
+    {
+        "id": "6754lgdf4rtys",
+        "name": "Articles",
+        "description": "Fuga ea dolore quasi nemo, provident quas tenetur facilis eaque assumenda quos consequatur ipsam architecto impedit cupiditate atque velit sed commodi.",
+        "alias": "articles"
+    },
+    {
+        "id": "sdgsg256358cbxwjj",
+        "name": "Studio",
+        "description": "Aut reprehenderit laborum ut iure modi autem ullam alias vitae incidunt similique distinctio aliquid voluptas cumque accusamus, rem itaque.",
+        "alias": "studio"
+    },
+    {
+        "id": "asf34534556358cbx4",
+        "name": "Factory",
+        "description": "Quos nisi illum optio numquam impedit dignissimos doloremque natus veritatis commodi voluptate praesentium animi molestias, cupiditate voluptates vel iste sapiente maiores porro quidem.",
+        "alias": "factory"
+    },
+    {
+        "id": "3494vbvb5w6358cbx4",
+        "name": "Team",
+        "description": "Molestias sunt ipsam dignissimos temporibus a illo libero praesentium, totam, numquam laborum harum quaerat.",
+        "alias": "team"
+    },
+    {
+        "id": "fgr4a4vbvb5w63bx4",
+        "name": "Archive",
+        "description": "Nobis voluptatibus distinctio quibusdam repudiandae, error aut id tempore, quidem in sit praesentium magnam dolor blanditiis odit.",
+        "alias": "archive"
+    }
+]
+
+export const contactUs = [
+    {
+        "id": "asdkjgfd325235ngb",
+        "title": "Vladivostok office",
+        "adress": "Vladivostok, Primorsky Krai, Russia, st. Tokarev lighthouse 2",
+        "email": "reactive-vladivastok@mail.ru",
+        "phone": "+ 7 950 298 93 31"
+    },
+    {
+        "id": "46dkjgfsdgh5235ngb",
+        "title": "Veliky Novgorod office",
+        "adress": "Veliky Novgorod, Novgorod region, Russia, nab. Alexander Nevsky 28",
+        "email": "reactive-novograd@mail.ru",
+        "phone": "+ 7 816 989 32 31"
+    }
+]

@@ -1,0 +1,59 @@
+@import '../../style/_color'
+@import '../../style/_mixins'
+@import '../../../node_modules/rfs/sass'
+
+.header
+    padding: 18rem 41px 60px 41px
+    display: block
+    top: 0
+    left: 0
+    width: 100%
+    overflow: auto
+    background-color: $bgPageCl
+    color: #fff
+    +r(xs)
+        padding: 0 41px 60px 41px
+
+.header-content
+    position: relative
+    height: 10rem
+    +r(lg)
+        flex-direction: column
+
+.header-copyright
+    height: 5rem
+    color: $whiteCl
+    font-weight: 500
+    line-height: 0.5rem
+    +rfs(0.6rem)   
+    +r(lg)
+        height: 10rem
+        justify-content: flex-start 
+
+.header-cloumn__null
+    flex-grow: 1
+    +r(xs)
+        flex-grow: 0
+
+.header-column__contact
+    flex-grow: 1
+    width: 0
+    +r(xs)
+        display: none
+
+.contact-text
+    p
+        height: 0
+    p span:before
+        bottom: 0
+
+.header-content__form
+    flex-grow: 4
+    +r(lg)
+        order: 1
+        height: 7rem
+
+.header-content__list
+    flex-grow: 7
+    +r(lg)
+        height: 60rem

@@ -1,0 +1,48 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+    
+.email-form
+    flex-grow: 3
+
+.email-enter
+    position: relative
+    flex: 5 1 auto
+    margin-right: 13px
+
+.email-txt
+    line-height: 28px
+    +rfs(16px)
+    +r(xxl)
+        +rfs(0.6rem)
+        line-height: 1rem
+
+.email-input   
+    width: 100% 
+    padding-bottom: 0.7603rem
+    padding-left: 0.4942rem
+    padding-right: 0.4942rem
+    border-radius: 0
+    letter-spacing: 0.25em
+    font-weight: 600
+    color: $whiteCl    
+
+.correct
+    border-bottom: 2px solid $whiteCl
+.incorrect
+    border-bottom: 2px solid $redCl
+
+.email-error
+    margin-top: 10px    
+    font-weight: 500
+    color: $redCl
+
+.email-submit
+    flex: 2 0 auto
+    font-weight: 500
+    color: $whiteCl
+    cursor: pointer
+    transition-property: color,opacity
+    transition-duration: .2s
+    &:hover
+        color: $greyCl

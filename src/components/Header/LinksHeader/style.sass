@@ -1,0 +1,24 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+.links-header
+    flex-grow: 1
+    width: 0
+
+.link-header
+    cursor: pointer
+    color: $whiteCl 
+    font-weight: 600   
+    transition-property: color,opacity
+    transition-duration: .2s
+    line-height: 28px
+    +rfs(16px)
+    +r(xxl)
+        +rfs(0.6rem)
+        line-height: 1rem
+        letter-spacing: 0.025em
+    +r(lg)
+        +rfs(0.5rem)
+    &:hover
+        color: $greyCl

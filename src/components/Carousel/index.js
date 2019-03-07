@@ -30,27 +30,42 @@ class Carousel extends Component {
         super(props);
 
         this.timeInterval = 6000;
+        this.interval = null;
     }
 
-    componentDidMount = () => {
-        const { articles } = this.props;
-        
+    componentDidMount = () => {        
         this.interval = setInterval(() => {
-            let active = (this.state.activeSlide + 1)%articles.length;            
-            let next = (this.state.nextSlide + 1)%articles.length; 
-            let nextBtn = (this.state.nextBtnSlide + 1)%articles.length; 
-
-            this.setState({
-                activeSlide: active,
-                nextSlide: next,
-                nextBtnSlide: nextBtn
-            });
-
+            this.nextSlide();
+            
         }, this.timeInterval);
     }  
     
     componentWillUnmount = () => {
         clearInterval(this.interval);
+    }
+
+    nextSlide = () => {
+        const { articles } =this.props;
+
+        let active = (this.state.activeSlide + 1)%articles.length;            
+        let next = (this.state.nextSlide + 1)%articles.length; 
+        let nextBtn = (this.state.nextBtnSlide + 1)%articles.length; 
+
+        this.setState({
+            activeSlide: active,
+            nextSlide: next,
+            nextBtnSlide: nextBtn
+        });
+    }
+
+    handleNext = ev => {                
+        clearInterval(this.interval);        
+        this.nextSlide();
+
+        this.interval = setInterval(() => {
+            this.nextSlide();
+            
+        }, this.timeInterval);
     }
 
     getNumSlider = () => {
@@ -106,11 +121,10 @@ class Carousel extends Component {
                 numberNext = {this.state.nextSlide + 1} 
             />
         )
-    }
+    }    
 
     render() {
         const { articles, getUniqId } = this.props;
-        const activeSlide = articles[ this.state.activeSlide ];
         const nextSlide = articles[ this.state.nextSlide ];
         const nextBtnSlide = articles[ this.state.nextBtnSlide ];
 
@@ -122,7 +136,7 @@ class Carousel extends Component {
                     {this.getTitleSlider()}
                 </div>
 
-                <div className='carousel-btn__content'>                    
+                <button className='carousel-btn__content' onClick = {this.handleNext}>                    
                     <div className='carousel-btn carousel-btn__size'>
                         <ImgCarousel 
                             key = {getUniqId()}
@@ -130,7 +144,7 @@ class Carousel extends Component {
                             nextSlide = {nextBtnSlide} 
                         />
                     </div>
-                </div>
+                </button>
             </div>
         )
     }

@@ -1,59 +1,66 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { loadMenu, loadAllCategories } from '../../AC'
 
-import FormHeader from './FormHeader'
-import LinksHeader from './LinksHeader'
-import ContactUsList from './ContactUsList'
-import Text90Deg from '../Carousel/Text90Deg'
+import CategoriesMenu from './CategoriesMenu'
+import ButtonHeader from './ButtonHeader'
 
 import './style.sass'
-import '../../style/_position.sass'
 
 class Header extends Component {
-
     static propTypes = {
-        //from component
+        //from store
         menu: PropTypes.array,
-        contactUs: PropTypes.array
+        categories: PropTypes.array,
+        loadMenu: PropTypes.func.isRequired,
+        loadAllCategories: PropTypes.func.isRequired
     }
 
-    handleEmailSubmit = email => {
-        console.log('===', 'email = ', email);        
+    state = {
+        isCategorActive: false
     }
 
-    showContactUs = () => {
-        return (
-            <div className = 'contact-text'>
-                <Text90Deg text = 'Contact Us' />
-            </div>
-        )
+    componentDidMount = () => {
+        this.props.loadMenu();
+        this.props.loadAllCategories();        
+    }
+
+    activatedCategorMenu = () => {
+        this.setState({
+            isCategorActive: !this.state.isCategorActive
+        })
     }
 
     render() {
-        const { menu, contactUs } = this.props;
+        const { isCategorActive } = this.state;        
 
         return (
             <div className='header'>
-                <div className='header-content flex'>
-                    <div className='header-content__form flex'>
-                        <div className='header-cloumn__null fa-start'></div>
-                        <FormHeader emailSubmit = {this.handleEmailSubmit} />
-                    </div>
-                    <div className='header-content__list flex'>
-                        <div className='header-cloumn__null fa-start'></div>
-                        <LinksHeader links = {menu} />
-                        <div className='header-cloumn__null fa-start'></div>
-                        <ContactUsList contactUs = {contactUs} />
-                        <div className='header-cloumn__null fa-start'></div>
-                        <div className='header-column__contact flex fa-start fj-end'>
-                            {this.showContactUs()}
-                        </div>
-                    </div>
-                </div>
-                <div className='header-copyright flex fj-end fa-end'>© 2019 Reacter Group Inc.</div>
+                <ButtonHeader 
+                    isCategorActive = {isCategorActive}
+                    activatedCategorMenu = {this.activatedCategorMenu} 
+                />
+                <CategoriesMenu 
+                    isCategorActive = {isCategorActive}
+                />
             </div>
         )
     }
 }
 
-export default Header;
+function MapStateToProps(state) {
+    return {
+        menu: state.menu,
+        categories: state.categories
+    }
+}
+
+const mapToDispatch = {
+    loadMenu,
+    loadAllCategories
+}
+
+const decorator = connect( MapStateToProps, mapToDispatch ); 
+
+export default decorator( Header );

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
+import Header from './Header'
 import Carousel from './Carousel'
 import Articles from './Articles'
-import Header from './Header'
+import Footer from './Footer'
 
-import { articles, menu, contactUs } from '../fixtures'
+import { articles, menu, contactUs, categories } from '../fixtures'
 
 class App extends Component{    
     render() {
@@ -13,9 +14,10 @@ class App extends Component{
                 
         return (
             <div>
-                <Carousel articles = {artSlider} />
-                <Articles articles = {artList} />
-                <Header menu = {menu} contactUs = {contactUs} />
+                <Header />
+                <Carousel />
+                <Articles />
+                <Footer />
             </div>
         )
     }

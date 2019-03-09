@@ -5,7 +5,7 @@ import utils from '../../../decorators/utils'
 
 import './style.sass'
 
-class LinksHeader extends Component {
+class LinksFooter extends Component {
 
     static propTypes = {
         //from component
@@ -19,7 +19,7 @@ class LinksHeader extends Component {
         
         return links.map( link => {
             return (
-                <li className='link-header' key = {getUniqId()}>
+                <li className='link-footer' key = {getUniqId()}>
                     {link.name}
                 </li>
             )
@@ -28,8 +28,8 @@ class LinksHeader extends Component {
 
     render() {
         return (
-            <div className='links-header flex fa-start fj-start'>
-                <ul className='links-header__items'>
+            <div className='links-footer flex fa-start fj-start'>
+                <ul className='links-footer__items'>
                     {this.showLinks()}
                 </ul>
             </div>
@@ -37,4 +37,4 @@ class LinksHeader extends Component {
     }
 }
 
-export default utils( LinksHeader );
+export default utils( LinksFooter );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './style.sass'
 
-class FormHeader extends Component {
+class FormFooter extends Component {
 
     static propTypes = {
         emailSubmit: PropTypes.func.isRequired
@@ -72,4 +72,4 @@ class FormHeader extends Component {
     }
 }
 
-export default FormHeader;
+export default FormFooter;

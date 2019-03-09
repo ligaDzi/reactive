@@ -191,3 +191,10 @@ export const contactUs = [
         "phone": "+ 7 816 989 32 31"
     }
 ]
+
+export const categories = [ 
+    { "id": "sdfh20jdl575j3", "name": "Innovation"},
+    { "id": "mc4h20jdl575jn", "name": "Brand"},
+    { "id": "h20jd436sbf5je", "name": "Space"},
+    { "id": "23529fh5jesdrf", "name": "Retail"},
+ ]

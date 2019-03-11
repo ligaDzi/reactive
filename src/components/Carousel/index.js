@@ -18,6 +18,7 @@ class Carousel extends Component {
     static propTypes = {
         //from store
         articlesCrsl: PropTypes.array,
+        categoriesAll: PropTypes.array,
         loadArticleCarousel: PropTypes.func.isRequired,
         //from decorator
         getUniqId: PropTypes.func
@@ -74,8 +75,8 @@ class Carousel extends Component {
     }
 
     getNumSlider = () => {
-        const { articlesCrsl, getUniqId } = this.props;
-        const categories = articlesCrsl[this.state.activeSlide].categories;
+        const { articlesCrsl, getUniqId, categoriesAll, mixingArrToId } = this.props;
+        const categories = articlesCrsl[this.state.activeSlide].categories;        
         
         return (                    
             <div className = 'carousel-num fa-start fj-start'>
@@ -157,7 +158,8 @@ class Carousel extends Component {
 
 function mapStateToProps(state) {
     return {
-        articlesCrsl: state.articleCarousel
+        articlesCrsl: state.articleCarousel,
+        categoriesAll: state.categories.all
     }
 }
 

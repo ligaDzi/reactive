@@ -45,12 +45,25 @@ export default (OriginalComponent) => class Utils extends Component{
         )
     }
 
+    mixingArrToId = ( idArr, objArr ) => {        
+        return idArr.map( id => {
+            let obj;
+            objArr.forEach( item => {
+                if(item.id === id) {                    
+                    obj = {...item};
+                }
+            });
+            return obj;            
+        })
+    }
+
     render() {
         return (
             <OriginalComponent 
                 {...this.props} {...this.state} 
                 getUniqId = {this.getUniqId} 
                 textToParagArr = {this.textToParagArr} 
+                mixingArrToId = {this.mixingArrToId} 
             />
         )
     }

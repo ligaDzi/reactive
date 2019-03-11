@@ -31,7 +31,7 @@ class Categories extends Component{
                                     transitionLeaveTimeout = {100}
                                     component = 'div'
                                 >
-                                    <div className='categorie-tag leave6000'>{categorie}</div>
+                                    <div className='categorie-tag leave6000'>{categorie.name}</div>
                                 </CSSTransitionGroup>
                             </li>
                         )

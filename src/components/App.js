@@ -5,13 +5,9 @@ import Carousel from './Carousel'
 import Articles from './Articles'
 import Footer from './Footer'
 
-import { articles, menu, contactUs, categories } from '../fixtures'
 
 class App extends Component{    
-    render() {
-        const artSlider = articles.slice(0, 5);
-        const artList = articles.slice(5, 10);        
-                
+    render() {   
         return (
             <div>
                 <Header />

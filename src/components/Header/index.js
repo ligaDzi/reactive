@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadMenu, loadAllCategories } from '../../AC'
+import { loadMenu } from '../../AC'
 
 import CategoriesMenu from './CategoriesMenu'
 import ButtonHeader from './ButtonHeader'
@@ -12,9 +12,7 @@ class Header extends Component {
     static propTypes = {
         //from store
         menu: PropTypes.array,
-        categories: PropTypes.array,
-        loadMenu: PropTypes.func.isRequired,
-        loadAllCategories: PropTypes.func.isRequired
+        loadMenu: PropTypes.func.isRequired
     }
 
     state = {
@@ -22,8 +20,7 @@ class Header extends Component {
     }
 
     componentDidMount = () => {
-        this.props.loadMenu();
-        this.props.loadAllCategories();        
+        this.props.loadMenu();       
     }
 
     activatedCategorMenu = () => {
@@ -51,14 +48,12 @@ class Header extends Component {
 
 function MapStateToProps(state) {
     return {
-        menu: state.menu,
-        categories: state.categories
+        menu: state.menu
     }
 }
 
 const mapToDispatch = {
-    loadMenu,
-    loadAllCategories
+    loadMenu
 }
 
 const decorator = connect( MapStateToProps, mapToDispatch ); 

@@ -12,6 +12,7 @@ import '../../../style/_position.sass'
 class ArticleCard extends Component {
 
     static propTypes = {
+        //from component
         article: PropTypes.object
     }
 
@@ -23,8 +24,7 @@ class ArticleCard extends Component {
     }
 
     render() {
-        const { article } = this.props;
-        
+        const { article, mixingArrToId } = this.props;
         return (
             <div className='article-card' data-aos="fade-up">
                 <ArticleCategories categories = {article.categories} />

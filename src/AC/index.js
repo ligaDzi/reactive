@@ -4,7 +4,8 @@ import {
     LOAD_ARTICLES_CAROUSEL,
     LOAD_MENU,
     LOAD_CONTACTUS,
-    LOAD_ALL_CATEGORIES } from '../constants'
+    LOAD_ALL_CATEGORIES,
+    CHANGE_SELECTED_CATEGORIES } from '../constants'
 
 export function loadAllArticles() {
     return {
@@ -40,5 +41,12 @@ export function loadContactUs() {
 export function loadAllCategories() {
     return {
         type: LOAD_ALL_CATEGORIES
+    }
+}
+
+export function changeSelectedCategor(id) {
+    return {
+        type: CHANGE_SELECTED_CATEGORIES,
+        payload: { id }
     }
 }

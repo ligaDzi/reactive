@@ -6,7 +6,8 @@ import './style.sass'
 export default function ArticleCategories(props){  
 
     const showCategories = categories => {
-        return categories.join(' / ');
+        const cateroriesValue = categories.map( cat => cat.name );
+        return cateroriesValue.join(' / ');
     }
     
     return(

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
 import { loadArticlesFromTo  } from '../../AC'
+import { filtreatedArticleSelector } from '../../selectors'
 
 import ArticlesList from './ArticlesList'
 
@@ -31,7 +33,7 @@ class Articles extends Component{
 
 function mapStateToDispatch(state) {
     return {
-        articles: state.articles
+        articles: filtreatedArticleSelector(state)
     }
 }
 

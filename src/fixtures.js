@@ -195,7 +195,7 @@ export const menu = [
         "id": "6754lgdf4rtys",
         "name": "Articles",
         "description": "Fuga ea dolore quasi nemo, provident quas tenetur facilis eaque assumenda quos consequatur ipsam architecto impedit cupiditate atque velit sed commodi.",
-        "alias": "articles"
+        "alias": ""
     },
     {
         "id": "sdgsg256358cbxwjj",
@@ -228,7 +228,7 @@ export const contactUs = [
         "id": "asdkjgfd325235ngb",
         "title": "Vladivostok office",
         "adress": "Vladivostok, Primorsky Krai, Russia, st. Tokarev lighthouse 2",
-        "email": "reactive-vladivastok@mail.ru",
+        "email": "reactive-vostok@mail.ru",
         "phone": "+ 7 950 298 93 31"
     },
     {

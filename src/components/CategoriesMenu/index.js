@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Title from '../TitleCategoriesMenu'
-import List from '../ListCategoriesMenu'
-import Cleare from '../CleareCategoriesMenu'
+import Title from './TitleCategoriesMenu'
+import List from './ListCategoriesMenu'
+import Cleare from './CleareCategoriesMenu'
 
-import utilsDecor from '../../../decorators/utils'
+import utilsDecor from '../../decorators/utils'
 
 import './style.sass'
-import '../../../style/_position.sass'
+import '../../style/_position.sass'
 
 
 class CategoriesMenu extends Component {

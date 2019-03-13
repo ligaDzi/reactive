@@ -15,7 +15,7 @@ const TitleCategoriesMenu = (props) => {
                 transitionLeaveTimeout = {200}
                 component = 'div'
             >
-               { props.isActive ? <h6 > Filter By Category </h6> : null }
+               { props.isActive ? <h6 className='categor-menu__text' > Filter By Category </h6> : null }
             </CSSTransitionGroup>            
         </div>
     )

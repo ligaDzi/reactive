@@ -13,23 +13,31 @@ class ButtonHeader extends Component {
     static propTypes = {
         //from component
         isCategorActive: PropTypes.bool,
-        activatedCategorMenu: PropTypes.func.isRequired
+        isMenuActive: PropTypes.bool,
+        activatedCategorMenu: PropTypes.func.isRequired,
+        activatedMainMenu: PropTypes.func.isRequired
     }
 
     render() {
-        const { isCategorActive, activatedCategorMenu } = this.props;
+        const { isCategorActive, activatedCategorMenu, isMenuActive, activatedMainMenu } = this.props;
         
         return (
             <div className='header-btn flex'>
                 <div className='header-btn__logo'>
-                    <Logo />
+                    <Logo 
+                        isMenuActive = {isMenuActive}                    
+                    />
                 </div>
                 <div className='header-btn__menu flex fa-center fj-end'>
                     <CategoriesBtn
                         isCategorActive = {isCategorActive}
+                        isMenuActive = {isMenuActive}
                         activatedCategorMenu = {activatedCategorMenu}
                     />
-                    <MenuBtn />
+                    <MenuBtn 
+                        isMenuActive = {isMenuActive}
+                        activatedMainMenu = {activatedMainMenu}
+                    />
                 </div>
             </div>
         )

@@ -24,6 +24,7 @@ class ArticleList extends Component {
 
     render() {
         const { articles } = this.props;
+        
         return (
             <div className='articles-list'>
                 {this.showArticleList(articles)}

@@ -12,8 +12,8 @@ export default (articles = articleList, action) => {
         case LOAD_ALL_ARTICLES:
             return articles;
 
-        case LOAD_FROM_TO_ARTICLES:
-            return articles.slice( payload.from, payload.to );
+        case LOAD_FROM_TO_ARTICLES:            
+            return articleList.slice( payload.from, payload.to );
     }
     
     return articles;

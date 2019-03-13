@@ -1,26 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { loadMenu } from '../../AC'
 
-import CategoriesMenu from './CategoriesMenu'
+import CategoriesMenu from '../CategoriesMenu'
 import ButtonHeader from './ButtonHeader'
+import MainMenu from '../MainMenu'
 
 import './style.sass'
 
 class Header extends Component {
     static propTypes = {
-        //from store
-        menu: PropTypes.array,
-        loadMenu: PropTypes.func.isRequired
+
     }
 
     state = {
-        isCategorActive: false
-    }
-
-    componentDidMount = () => {
-        this.props.loadMenu();       
+        isCategorActive: false,
+        isMenuActive: false
     }
 
     activatedCategorMenu = () => {
@@ -29,33 +23,34 @@ class Header extends Component {
         })
     }
 
+    activatedMainMenu = () => {
+        this.setState({
+            isMenuActive: !this.state.isMenuActive
+        });
+        document.body.classList.toggle('body-overflow-hidden');
+    }
+
     render() {
-        const { isCategorActive } = this.state;        
+        const { isCategorActive, isMenuActive } = this.state;        
 
         return (
             <div className='header'>
                 <ButtonHeader 
                     isCategorActive = {isCategorActive}
                     activatedCategorMenu = {this.activatedCategorMenu} 
+                    isMenuActive = {isMenuActive}
+                    activatedMainMenu = {this.activatedMainMenu}
                 />
                 <CategoriesMenu 
                     isCategorActive = {isCategorActive}
+                />
+                <MainMenu 
+                    isMenuActive = {isMenuActive}
+                    activatedMainMenu = {this.activatedMainMenu}
                 />
             </div>
         )
     }
 }
 
-function MapStateToProps(state) {
-    return {
-        menu: state.menu
-    }
-}
-
-const mapToDispatch = {
-    loadMenu
-}
-
-const decorator = connect( MapStateToProps, mapToDispatch ); 
-
-export default decorator( Header );
+export default Header;

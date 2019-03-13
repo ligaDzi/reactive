@@ -8,6 +8,7 @@ class CategoriesBtn extends Component {
     static propTypes = {
         //from component
         isCategorActive: PropTypes.bool,
+        isMenuActive: PropTypes.bool,
         activatedCategorMenu: PropTypes.func.isRequired
     }
 
@@ -16,11 +17,12 @@ class CategoriesBtn extends Component {
     }
     
     render() { 
-        const { isCategorActive } = this.props;
+        const { isCategorActive, isMenuActive } = this.props;
         const active = isCategorActive ? 'active' : '';
+        const hidden = isMenuActive ? 'hidden' : '';
 
         return (           
-            <button className={`categor-menu-btn ${active}`} onClick = {this.handleClickCategorMenu}>
+            <button className={`categor-menu-btn ${active} ${hidden}`} onClick = {this.handleClickCategorMenu}>
                 <div className='categor-menu-btn__content'>
                     <span className='circle'></span>
                     <span className='circle'></span>

@@ -1,0 +1,66 @@
+@import '../../style/_color'
+@import '../../style/_mixins'
+
+.body-overflow-hidden
+    overflow: hidden
+
+.main-menu 
+    height: 100vh
+    overflow-y: scroll
+    position: fixed
+    left: 0
+    top: 0
+    width: 100vw
+    z-index: -2
+    background-color: $bgMenu   
+    transition: all .3s ease .3s
+    transform: translate3d(0, -100%, 0)
+    &.active
+        transform: translate3d(0, 0, 0)  
+      
+
+.extender
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: calc(100vh + 772px)
+    z-index: -2
+    +r(xxs)
+        height: calc(100vh + 1472px)
+
+
+.main-menu__root
+    position: sticky
+    left: 0
+    top: 0;
+    width: 100%
+    max-height: 100vh
+    z-index: -1
+
+.main-menu__content
+    display: block
+    top: 0
+    left: 0
+    width: 100%
+    overflow: auto
+    padding: 60px 41px
+    z-index: 1
+
+.wide
+    height: calc(25vh - 30px)
+    +r(xxs)
+        height: calc(25vh - 15px)
+
+.narrow
+    height: calc(12.5vh - 15px)
+
+.m-m__empty
+    flex-grow: 1
+    +r(xxs)
+        flex-grow: 0
+    &__two
+        flex-grow: 2
+        +r(xxs)
+            flex-grow: 1
+    

@@ -29,7 +29,7 @@ class CleareCategoriesMenu extends Component {
                 className='cleare-categor flex fa-end fj-start'
                 onClick = {this.handleClickCleare(null)}
             >
-                <span className='cleare-categor__txt'> Clear All Filters </span>
+                <span className='categor-menu__text'> Clear All Filters </span>
             </button>
         )
     }

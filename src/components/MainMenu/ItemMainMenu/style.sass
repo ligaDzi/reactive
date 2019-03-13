@@ -1,0 +1,37 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+
+.menu-item a
+    cursor: pointer
+    +rfs(120px)
+    line-height: 120px
+    font-weight: 1000
+    color: $whiteCl
+    +r(xxl)
+        line-height: 4rem
+        +rfs(5.3rem)
+    +r(xxs)
+        font-size: 5rem
+        line-height: 5rem
+    &:hover
+        color: $bgPageCl
+    &.active
+        color: $bgPageCl
+
+.linkMenu-enter
+    opacity: 0.01
+    transform: translate3d(0,-10px,0)
+.linkMenu-enter.linkMenu-enter-active
+    opacity: 1
+    transform: translate3d(0,0,0)
+    transition: all 1000ms ease-in
+
+.linkMenu-leave
+    opacity: 1
+    transform: translate3d(0,0,0)
+.linkMenu-leave.linkMenu-leave-active
+    opacity: 0.01
+    transform: translate3d(0,-10px,0)
+    transition: all 350ms ease-in

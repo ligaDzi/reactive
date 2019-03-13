@@ -1,10 +1,13 @@
 @import '../../../style/_color'
+@import '../../../style/_mixins'
 
 .categor-menu-btn
     height: 100%
     cursor: pointer
     transition-property: color,opacity
-    transition-duration: .2s    
+    transition-duration: .2s   
+    &.hidden
+        visibility: hidden 
 
 .categor-menu-btn__content
     display: flex
@@ -20,6 +23,12 @@
     transition: transform .3s cubic-bezier(.215,.61,.355,1),background-color .2s cubic-bezier(.215,.61,.355,1),-webkit-transform .3s cubic-bezier(.215,.61,.355,1)
     &:nth-child(2)
         margin: 0 10px
+    +r(sm)
+        width: 8px
+        height: 8px
+        &:nth-child(2)
+            margin: 0 8px
+    
 
 .categor-menu-btn.active ~ .burger
     visibility: hidden

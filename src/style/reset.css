@@ -58,4 +58,12 @@ input:active, textarea:active {outline:none;}
 textarea {resize:none;}
 textarea {resize:vertical;}
 textarea {resize:horizontal;}
+a {
+    outline: none;
+    text-decoration: none;
+}
+a:visited {
+    
+}
+
 

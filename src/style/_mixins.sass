@@ -3,6 +3,8 @@
 // @content - это стили, которые должны добавиться к элементу
 //            при вызаве миксина.
 @mixin r($class)
+    @if $class == hsm
+        @media(max-height: 575px) {@content;}
     @if $class == xxs
         @media(max-width: 481px) {@content;}
     @else if $class == xs

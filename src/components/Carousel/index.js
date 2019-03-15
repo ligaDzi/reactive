@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadArticleCarousel } from '../../AC'
+
+import { loadAllArticles } from '../../AC'
+import { mapToArr } from '../../helpers'
 
 import ImgCarousel from './ImgCarousel'
 import NumberCarousel from './NumberCarousel'
@@ -18,8 +20,7 @@ class Carousel extends Component {
     static propTypes = {
         //from store
         articlesCrsl: PropTypes.array,
-        categoriesAll: PropTypes.array,
-        loadArticleCarousel: PropTypes.func.isRequired,
+        loadAllArticles: PropTypes.func.isRequired,
         //from decorator
         getUniqId: PropTypes.func
     }
@@ -36,9 +37,12 @@ class Carousel extends Component {
         this.timeInterval = 6000;
         this.interval = null;
     }
+    componentWillMount = () => {
+
+        this.props.loadAllArticles();
+    }
 
     componentDidMount = () => {   
-        this.props.loadArticleCarousel();
 
         this.interval = setInterval(() => {
             this.nextSlide();
@@ -74,9 +78,14 @@ class Carousel extends Component {
         }, this.timeInterval);
     }
 
-    getNumSlider = () => {
-        const { articlesCrsl, getUniqId, categoriesAll, mixingArrToId } = this.props;
-        const categories = articlesCrsl[this.state.activeSlide].categories;        
+    getNumSlider = () => {        
+        const { articlesCrsl, getUniqId } = this.props;
+        const artAct = articlesCrsl[this.state.activeSlide];
+
+        if(!artAct) return null;
+
+        const categories = artAct.categories;      
+        
         
         return (                    
             <div className = 'carousel-num fa-start fj-start'>
@@ -99,7 +108,9 @@ class Carousel extends Component {
     getImgSlider = () => {
         const { articlesCrsl, getUniqId } = this.props;
         const activeSlide = articlesCrsl[ this.state.activeSlide ];
-        const nextSlide = articlesCrsl[ this.state.nextSlide ];
+        const nextSlide = articlesCrsl[ this.state.nextSlide ];      
+
+        if(!activeSlide || !nextSlide) return null;
 
         return (
             <div className='carousel-items carousel-items__size flex fa-end fj-start'>
@@ -117,6 +128,8 @@ class Carousel extends Component {
     getTitleSlider = () => {
         const { articlesCrsl, getUniqId } = this.props;
         const nextSlide = articlesCrsl[ this.state.nextSlide ];
+
+        if(!nextSlide) return null;
         
         return (
             <TitleCarousel 
@@ -133,6 +146,8 @@ class Carousel extends Component {
         const { articlesCrsl, getUniqId } = this.props;
         const nextSlide = articlesCrsl[ this.state.nextSlide ];
         const nextBtnSlide = articlesCrsl[ this.state.nextBtnSlide ];
+
+        if(!nextSlide || !nextBtnSlide) return null;
 
         return (
             <div className = 'carousel flex'>
@@ -158,13 +173,12 @@ class Carousel extends Component {
 
 function mapStateToProps(state) {
     return {
-        articlesCrsl: state.articleCarousel,
-        categoriesAll: state.categories.all
+        articlesCrsl: mapToArr(state.articles.carousel)
     }
 }
 
 const mapToDispatch = {
-    loadArticleCarousel
+    loadAllArticles
 }
 
 const decorator = connect( mapStateToProps, mapToDispatch );

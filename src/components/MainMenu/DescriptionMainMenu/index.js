@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { connect } from 'react-redux'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -8,9 +9,9 @@ import '../../../style/_position.sass'
 class DescriptionMainMenu extends Component {
 
     static propTypes = {
-        //from component
+        //from store
+        isMenuActive: PropTypes.bool,
         description: PropTypes.string,
-        isMenuActive: PropTypes.bool
     }
 
     renderDesc = decription => {
@@ -41,4 +42,13 @@ class DescriptionMainMenu extends Component {
     }
 }
 
-export default DescriptionMainMenu;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive,
+        description: state.menu.description
+    }
+}
+
+const decoraator = connect( mapStateToProps );
+
+export default decoraator( DescriptionMainMenu );

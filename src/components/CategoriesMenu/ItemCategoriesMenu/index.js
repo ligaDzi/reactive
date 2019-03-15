@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { connect } from 'react-redux'
+
+import { changeSelectedCategor } from '../../../AC'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -10,29 +13,20 @@ class ItemCategoriesMenu extends Component {
     static propTypes = {
         //from component
         categorie: PropTypes.object,
+        //from store
         isMenuActive: PropTypes.bool,
-        changeSelectedCategor: PropTypes.func.isRequired
-    }
-
-    state = {
-        isActive: false
-    }
-
-    selectedCategor = () => {
-        this.setState({
-            isActive: !this.state.isActive
-        })
+        changeSelectedCategor: PropTypes.func.isRequired,
+        selectedCategor: PropTypes.array,
     }
 
     handleClickCategor = ev => {
         const { categorie, changeSelectedCategor } = this.props;
-        this.selectedCategor();
         changeSelectedCategor(categorie.id);       
     }
 
     showCategor = categorie => {
-        const { isActive } = this.state;
-        const active = isActive ? 'active' : '';
+        const { selectedCategor } = this.props;
+        const active = selectedCategor.includes(categorie.id) ? 'active' : '';
         return (            
             <button className='categor-menu__item flex fa-start' onClick = {this.handleClickCategor}>
                 <span className='categor-menu__text'> {categorie.name} </span>
@@ -56,4 +50,17 @@ class ItemCategoriesMenu extends Component {
     }
 }
 
-export default ItemCategoriesMenu;
+function mapStateToProps(state) {
+    return {
+        selectedCategor: state.categories.selected,
+        isMenuActive: state.categories.isActive
+    }
+}
+
+const mapToDispatch = {
+    changeSelectedCategor
+}
+
+const decorator = connect( mapStateToProps, mapToDispatch );
+
+export default decorator( ItemCategoriesMenu );

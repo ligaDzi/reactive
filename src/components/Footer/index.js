@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadMenu, loadContactUs } from '../../AC'
+import { mapToArr } from '../../helpers'
 
 import FormFooter from './FormFooter'
 import LinksFooter from './LinksFooter'
@@ -38,7 +39,7 @@ class Footer extends Component {
     }
 
     render() {
-        const { menu, contactUs } = this.props;
+        const { menu, contactUs } = this.props;           
 
         return (
             <div className='footer'>
@@ -66,8 +67,8 @@ class Footer extends Component {
 
 function mapStateToProps(state) {
     return {
-        menu: state.menu,
-        contactUs: state.contactUs
+        menu: mapToArr(state.menu.entities),
+        contactUs: mapToArr(state.contactUs)
     }
 }
 

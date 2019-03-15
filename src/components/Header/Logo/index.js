@@ -1,20 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { toggleMenu } from '../../../AC'
 
 import './style.sass'
 
-export default function Logo(props){
+const Logo = props => {
 
     const menuActive = props.isMenuActive ? 'black' : '';
 
     return(
-        <div className={`logo ${menuActive}`}>
+        <button className={`logo ${menuActive}`}>
             reactive.
-        </div>
+        </button>
     )
 }
 
 Logo.propTypes = {
-    //from component
-    isMenuActive: PropTypes.bool
+    //from store
+    isMenuActive: PropTypes.bool,
+    toggleMenu: PropTypes.func.isRequired,
 }
+
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive
+    }
+}
+
+const mapToDispatch = {
+    toggleMenu
+}
+
+const decorator = connect ( mapStateToProps, mapToDispatch );
+
+export default decorator( Logo );

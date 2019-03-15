@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { connect } from 'react-redux'
+
+import { mapToArr } from '../../../helpers'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -31,7 +34,7 @@ const ContactUsMainMenu = props => {
 } 
 
 ContactUsMainMenu.propTypes = {
-    //from component
+    //from store
     contact: PropTypes.array,
     isMenuActive: PropTypes.bool
 }
@@ -59,4 +62,13 @@ ItemContactMM.propTypes = {
     contact: PropTypes.object
 }
 
-export default ContactUsMainMenu;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive,
+        contact: mapToArr(state.contactUs)
+    }
+}
+
+const decorator = connect( mapStateToProps );
+
+export default decorator( ContactUsMainMenu );

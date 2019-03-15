@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Title from './TitleCategoriesMenu'
 import List from './ListCategoriesMenu'
 import Cleare from './CleareCategoriesMenu'
-
-import utilsDecor from '../../decorators/utils'
 
 import './style.sass'
 import '../../style/_position.sass'
@@ -15,30 +14,15 @@ class CategoriesMenu extends Component {
     static propTypes = {
         //from component
         isCategorActive: PropTypes.bool,
-        //from decorator
-        getUniqId: PropTypes.func.isRequired
-    }
-
-    state = {
-        cleare: false
-    }
-
-    updateMenu = () => {
-        this.setState({
-            cleare: !this.state.cleare
-        })
     }
 
     render() {
-        const { isCategorActive, getUniqId } = this.props;
-        const { cleare } = this.state;
+        const { isCategorActive } = this.props;
         const active = isCategorActive ? 'active' : '';
-        const { keyMenu } = getUniqId();
         
         return (
             <div 
                 className={`categor-menu ${active}`} 
-                key = { cleare ? getUniqId() : keyMenu }
             >
                 <div className='categor-menu__content'>
                     <div className='flex'></div>
@@ -46,14 +30,11 @@ class CategoriesMenu extends Component {
                         <Title isActive = {isCategorActive} />
                     </div>
                     <div className='flex'>
-                        <List isActive = {isCategorActive} />
+                        <List />
                     </div>
                     <div className='flex'></div>
                     <div className='flex fa-end fj-start'>
-                        <Cleare 
-                            isActive = {isCategorActive} 
-                            updateMenu = {this.updateMenu}
-                        />
+                        <Cleare />
                     </div>
                 </div>
             </div>
@@ -61,6 +42,14 @@ class CategoriesMenu extends Component {
     }
 }
 
-export default utilsDecor( CategoriesMenu );
+function mapStateToProps(state) {
+    return {
+        isCategorActive: state.categories.isActive
+    }
+}
+
+const decorator = connect( mapStateToProps );
+
+export default decorator( CategoriesMenu );
 
 

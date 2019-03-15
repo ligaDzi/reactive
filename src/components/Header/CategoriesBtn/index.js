@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { toggleMenuCategor } from '../../../AC'
 
 import './style.sass'
 
 class CategoriesBtn extends Component {
 
     static propTypes = {
-        //from component
+        //from store
         isCategorActive: PropTypes.bool,
+        toggleMenuCategor: PropTypes.func.isRequired,
         isMenuActive: PropTypes.bool,
-        activatedCategorMenu: PropTypes.func.isRequired
     }
 
     handleClickCategorMenu = ev => {
-        this.props.activatedCategorMenu();     
+        this.props.toggleMenuCategor();     
     }
     
     render() { 
@@ -33,4 +36,17 @@ class CategoriesBtn extends Component {
     }
 }
 
-export default CategoriesBtn;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive,
+        isCategorActive: state.categories.isActive
+    }
+}
+
+const mapToDispatch = {
+    toggleMenuCategor
+}
+
+const decorator = connect( mapStateToProps, mapToDispatch );
+
+export default decorator( CategoriesBtn );

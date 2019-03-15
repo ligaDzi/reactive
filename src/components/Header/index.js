@@ -12,42 +12,12 @@ class Header extends Component {
 
     }
 
-    state = {
-        isCategorActive: false,
-        isMenuActive: false
-    }
-
-    activatedCategorMenu = () => {
-        this.setState({
-            isCategorActive: !this.state.isCategorActive
-        })
-    }
-
-    activatedMainMenu = () => {
-        this.setState({
-            isMenuActive: !this.state.isMenuActive
-        });
-        document.body.classList.toggle('body-overflow-hidden');
-    }
-
-    render() {
-        const { isCategorActive, isMenuActive } = this.state;        
-
+    render() {  
         return (
             <div className='header'>
-                <ButtonHeader 
-                    isCategorActive = {isCategorActive}
-                    activatedCategorMenu = {this.activatedCategorMenu} 
-                    isMenuActive = {isMenuActive}
-                    activatedMainMenu = {this.activatedMainMenu}
-                />
-                <CategoriesMenu 
-                    isCategorActive = {isCategorActive}
-                />
-                <MainMenu 
-                    isMenuActive = {isMenuActive}
-                    activatedMainMenu = {this.activatedMainMenu}
-                />
+                <ButtonHeader />
+                <CategoriesMenu />
+                <MainMenu />
             </div>
         )
     }

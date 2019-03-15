@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { toggleMenu } from '../../../AC'
 
 import './style.sass'
 
 class MenuBtn extends Component {
 
     static proptypes = {
-        //from component
+        //from store
         isMenuActive: PropTypes.bool,
-        activatedMainMenu: PropTypes.func.isRequired
+        toggleMenu: PropTypes.func.isRequired
     }
 
     handleClickBurger = ev => {   
-        this.props.activatedMainMenu();    
+        this.props.toggleMenu();    
     }
 
     render() {
@@ -29,5 +32,17 @@ class MenuBtn extends Component {
     }
 }
 
-export default MenuBtn;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive
+    }
+}
+
+const mapToDispatch = {
+    toggleMenu
+}
+
+const decorator = connect( mapStateToProps, mapToDispatch );
+
+export default decorator( MenuBtn );
 

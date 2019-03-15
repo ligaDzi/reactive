@@ -1,14 +1,16 @@
 import { createSelector } from 'reselect'
+import { mapToArr } from '../helpers'
 
-const articleGetter = state => state.articles;
+const articleGetter = state => state.articles.all;
 const categorieGetter = state => state.categories;
 
 export const filtreatedArticleSelector = createSelector( articleGetter, categorieGetter, (articles, categories) => {
 
-    const { selected } = categories;    
+    const { selected } = categories;        
     
-    const artFilt = articles.filter( article => {
-        if(!selected.length) return true;
+    const artFilt = mapToArr( articles ).filter( article => {
+        
+        if(!selected.length) return true;        
 
         let isCheck = false;
         article.categories.forEach(cat => {

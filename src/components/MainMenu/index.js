@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
  import { loadMenu } from '../../AC'
+ import { mapToArr } from '../../helpers'
 
 import ListMainMenu from './ListMainMenu'
 import CopyrightMenu from './CopyrightMenu'
@@ -15,17 +16,9 @@ import '../../style/_position.sass'
 class MainMenu extends Component {
 
     static propTypes = {
-        //from component
-        isMenuActive: PropTypes.bool,
-        activatedMainMenu: PropTypes.func.isRequired,
         //from store
-        menu: PropTypes.array,
+        isMenuActive: PropTypes.bool,
         loadMenu: PropTypes.func.isRequired,
-        contact: PropTypes.array
-    }
-
-    state = {
-        description: this.props.menu[0].description
     }
     
     componentDidMount = () => {
@@ -34,20 +27,9 @@ class MainMenu extends Component {
         loadMenu(); 
     }
 
-    changeDesc = id => {
-        const { menu } = this.props;
-        const linkHover = menu.filter( item => item.id === id)[0];
-        const desc = linkHover.description;
-
-        this.setState({
-            description: desc
-        })
-    }
-
     render() {
-        const { isMenuActive, activatedMainMenu, menu, contact } = this.props;
-        const { description } = this.state;
-        const active = isMenuActive ? 'active' : '';
+        const { isMenuActive } = this.props;
+        const active = isMenuActive ? 'active' : '';       
 
         return (
             <div className={`main-menu ${active}`} ref='mainMenu'>
@@ -57,31 +39,19 @@ class MainMenu extends Component {
                         <div className='flex wide'></div>
                         <div className='flex wide'>
                             <ListMainMenu 
-                                menus = {menu}
-                                isMenuActive = {isMenuActive}
-                                activatedMainMenu = {activatedMainMenu}
-                                mainMenuRef = {this.refs.mainMenu}
-                                changeDesc = {this.changeDesc}                                
+                                mainMenuRef = {this.refs.mainMenu}                               
                             />
                         </div>
                         <div className='flex narrow'></div>
                         <div className='flex narrow'>
                             <div className='m-m__empty flex fa-start fj-start'></div>
-                            <DescriptionMainMenu 
-                                description = {description}                            
-                                isMenuActive = {isMenuActive}    
-                            />
+                            <DescriptionMainMenu />
                             <div className='m-m__empty m-m__empty__two flex fa-start fj-start'></div>
-                            <ContactUsMainMenu 
-                                contact = {contact} 
-                                isMenuActive = {isMenuActive}
-                            />
+                            <ContactUsMainMenu />
                             <div className='m-m__empty flex fa-start fj-start'></div>
                         </div>
                         <div className='flex wide'>
-                            <CopyrightMenu 
-                                isMenuActive = {isMenuActive}                                
-                            />
+                            <CopyrightMenu />
                         </div>
                     </div>
                 </div>
@@ -90,17 +60,16 @@ class MainMenu extends Component {
     }
 }
 
-function MapStateToProps(state) {
+function mapStateToProps(state) {
     return {
-        menu: state.menu,
-        contact: state.contactUs
+        isMenuActive: state.menu.isActive
     }
 }
 
-const mapToDispatch = {
+const maToDispatch = {
     loadMenu
 }
 
-const decorator = connect( MapStateToProps, mapToDispatch );
+const decorator = connect( mapStateToProps, maToDispatch );
 
 export default decorator( MainMenu );

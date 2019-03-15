@@ -2,6 +2,8 @@ import React from 'react'
 import PropType from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 
+import { connect } from 'react-redux'
+
 import './style.sass'
 import '../../../style/_position.sass'
 
@@ -31,8 +33,16 @@ const CopyrightMenu = (props) => {
 }
 
 CopyrightMenu.propTypes = {
-    //from component
+    //from store
     isMenuActive: PropType.bool
 }
 
-export default CopyrightMenu;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive
+    }
+}
+
+const decorator = connect( mapStateToProps );
+
+export default decorator( CopyrightMenu );

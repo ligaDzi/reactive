@@ -1,11 +1,13 @@
 import { 
     LOAD_ALL_ARTICLES, 
     LOAD_FROM_TO_ARTICLES,
-    LOAD_ARTICLES_CAROUSEL,
     LOAD_MENU,
+    TOGGLE_MENU,
+    CHANGE_DESCRIPTION_MENU,
     LOAD_CONTACTUS,
     LOAD_ALL_CATEGORIES,
-    CHANGE_SELECTED_CATEGORIES } from '../constants'
+    CHANGE_SELECTED_CATEGORIES,
+    TOGGLE_MENU_CATEGORIES } from '../constants'
 
 export function loadAllArticles() {
     return {
@@ -20,15 +22,22 @@ export function loadArticlesFromTo(from, to) {
     }
 }
 
-export function loadArticleCarousel() {
-    return {
-        type: LOAD_ARTICLES_CAROUSEL
-    }
-}
-
 export function loadMenu() {
     return {
         type: LOAD_MENU
+    }
+}
+
+export function toggleMenu() {    
+    return {
+        type: TOGGLE_MENU
+    }
+}
+
+export function changeDescMenu(id) {    
+    return {
+        type: CHANGE_DESCRIPTION_MENU,
+        payload: { id }
     }
 }
 
@@ -48,5 +57,11 @@ export function changeSelectedCategor(id) {
     return {
         type: CHANGE_SELECTED_CATEGORIES,
         payload: { id }
+    }
+}
+
+export function toggleMenuCategor() {
+    return {
+        type: TOGGLE_MENU_CATEGORIES
     }
 }

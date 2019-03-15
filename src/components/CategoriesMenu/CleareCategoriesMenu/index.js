@@ -10,17 +10,14 @@ import '../../../style/_position.sass'
 class CleareCategoriesMenu extends Component {
 
     static propTypes = {
-        //from component
-        isActive: PropTypes.bool,
-        updateMenu: PropTypes.func.isRequired,
         //from store
+        isActive: PropTypes.bool,
         changeSelectedCategor: PropTypes.func.isRequired
     }
 
     handleClickCleare = id => ev => {
-        const { updateMenu, changeSelectedCategor } = this.props;
-        changeSelectedCategor(id);
-        updateMenu();
+        const { changeSelectedCategor } = this.props;
+        changeSelectedCategor(id);        
     }
 
     showClearBtn = () => {
@@ -49,10 +46,16 @@ class CleareCategoriesMenu extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        isActive: state.categories.isActive
+    }
+}
+
 const mapToDispatch = {
     changeSelectedCategor
 }
 
-const decorator = connect( null, mapToDispatch );
+const decorator = connect( mapStateToProps, mapToDispatch );
 
 export default decorator( CleareCategoriesMenu );

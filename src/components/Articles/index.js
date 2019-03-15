@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadArticlesFromTo  } from '../../AC'
+import { loadArticlesFromTo } from '../../AC'
 import { filtreatedArticleSelector } from '../../selectors'
 
 import ArticlesList from './ArticlesList'
@@ -17,12 +17,13 @@ class Articles extends Component{
         loadArticlesFromTo: PropTypes.func.isRequired
     }
 
-    componentDidMount = () => {
+    componentDidMount = () => {        
         this.props.loadArticlesFromTo( 5, 10 );
     }
 
     render() {
         const { articles } = this.props;
+
         return (
             <div className='articles-section'>
                 <ArticlesList articles = {articles} />
@@ -38,7 +39,7 @@ function mapStateToDispatch(state) {
 }
 
 const mapToDispatch = {
-    loadArticlesFromTo
+    loadArticlesFromTo    
 }
 
 const decorator = connect( mapStateToDispatch, mapToDispatch );

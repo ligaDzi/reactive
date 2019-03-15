@@ -1,36 +1,55 @@
+import { Record, OrderedMap } from 'immutable'
+import { arrToMap } from '../helpers'
 import { categories as List } from '../fixtures'
-
 import { 
     LOAD_ALL_CATEGORIES,
-    CHANGE_SELECTED_CATEGORIES } from '../constants'
+    CHANGE_SELECTED_CATEGORIES,
+    TOGGLE_MENU_CATEGORIES } from '../constants'
 
-const categorieList = {
-    all: List,
-    selected: []
-}
+    
+const CategoriesRecord = Record({
+    id: undefined,
+    name: undefined
+})
 
-export default ( categories = categorieList, action ) => {
+const ReducerState = Record({
+    all: new OrderedMap({}),
+    selected: [],
+    isActive: false
+});
+
+const defaultCategories = new ReducerState();
+
+
+export default ( categories = defaultCategories, action ) => {
 
     const { type, payload } = action;
 
     switch(type) {
         case LOAD_ALL_CATEGORIES:
-            return categories;
+            return categories.set( 'all', arrToMap(List, CategoriesRecord) );
+
+        case TOGGLE_MENU_CATEGORIES:
+            return categories.set( 'isActive', !categories.isActive );
 
         case CHANGE_SELECTED_CATEGORIES: 
             if(!payload.id){                
-                return {...categories, selected: [] };
+                return categories.set( 'selected', [] );
             }
 
-            const tmpState = {...categories}
-            const id = tmpState.selected.indexOf(payload.id);
+            const indexId = categories.selected.indexOf(payload.id);            
 
-            if( id !== -1 ){                
-                tmpState.selected.splice(id, 1);                
+            if( indexId !== -1 ){                                
+                return categories.update(
+                    'selected',
+                    selected => selected.filter( id => id !== payload.id )
+                )               
             } else {
-                tmpState.selected.push(payload.id);
+                return categories.update(
+                    'selected', 
+                    selected => selected.concat(payload.id)
+                )
             }
-            return tmpState;
     }
     return categories;
 }

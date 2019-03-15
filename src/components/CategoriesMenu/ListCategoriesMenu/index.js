@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadAllCategories, changeSelectedCategor } from '../../../AC'
+import { loadAllCategories } from '../../../AC'
+import { mapToArr } from '../../../helpers'
 
 import Categorie from '../ItemCategoriesMenu'
 
@@ -12,13 +13,10 @@ import '../../../style/_position.sass'
 class ListCategoriesMenu extends Component {
     
     static propTypes = {
-        //fro component
-        isActive: PropTypes.bool,
         //from store
         categories: PropTypes.array,
         selectedCategor: PropTypes.array,
-        loadAllCategories: PropTypes.func.isRequired,
-        changeSelectedCategor: PropTypes.func.isRequired,
+        loadAllCategories: PropTypes.func.isRequired
     }
     
     componentDidMount = () => {
@@ -26,16 +24,12 @@ class ListCategoriesMenu extends Component {
     }
 
     renderList = () => {
-        const { categories, isActive, changeSelectedCategor, selectedCategor } = this.props;
+        const { categories } = this.props;
 
         return categories.map( categor => {
             return (
                 <li key = {categor.id}>
-                    <Categorie                         
-                        categorie = {categor} 
-                        isMenuActive = {isActive} 
-                        changeSelectedCategor = {changeSelectedCategor}
-                    />
+                    <Categorie categorie = {categor} />
                 </li>
             )
         })
@@ -55,14 +49,13 @@ class ListCategoriesMenu extends Component {
 
 function mapStateToProps(state) {
     return {
-        categories: state.categories.all,
+        categories: mapToArr(state.categories.all),
         selectedCategor: state.categories.selected
     }
 }
 
 const mapToDispatch = {
-    loadAllCategories,
-    changeSelectedCategor
+    loadAllCategories
 }
 
 const decorator = connect( mapStateToProps, mapToDispatch );

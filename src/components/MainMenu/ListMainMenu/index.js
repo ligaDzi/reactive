@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { mapToArr } from '../../../helpers'
+import { toggleMenu, changeDescMenu } from '../../../AC'
 
 import ItemMainMenu from '../ItemMainMenu'
 
@@ -10,11 +14,12 @@ class ListMainMenu extends Component {
 
     static propTypes = {
         //from component
+        mainMenuRef: PropTypes.object,
+        //from store
         menus: PropTypes.array,
         isMenuActive: PropTypes.bool,
-        mainMenuRef: PropTypes.object,
-        activatedMainMenu: PropTypes.func.isRequired,
-        changeDesc: PropTypes.func.isRequired
+        toggleMenu: PropTypes.func.isRequired,
+        changeDescMenu: PropTypes.func.isRequired,
     }
     
     componentDidUpdate = () => {
@@ -29,7 +34,7 @@ class ListMainMenu extends Component {
     }
 
     renderListMenu = () => {
-        const { menus, activatedMainMenu, isMenuActive, changeDesc } = this.props; 
+        const { menus, isMenuActive, toggleMenu, changeDescMenu } = this.props; 
 
         return menus.map( item => {
             return (
@@ -37,8 +42,8 @@ class ListMainMenu extends Component {
                     <ItemMainMenu  
                         menu = {item}
                         isMenuActive = {isMenuActive}
-                        activatedMainMenu = {activatedMainMenu}
-                        changeDesc = {changeDesc}
+                        activatedMainMenu = {toggleMenu}
+                        changeDesc = {changeDescMenu}
                     />
                     <div className='menu-item__empty'></div>
                 </div>
@@ -62,4 +67,18 @@ class ListMainMenu extends Component {
     }
 }
 
-export default ListMainMenu;
+function mapStateToProps(state) {
+    return {
+        isMenuActive: state.menu.isActive,
+        menus: mapToArr(state.menu.entities)
+    }
+}
+
+const mapToDispatch = {
+    toggleMenu,
+    changeDescMenu
+}
+
+const decorator = connect( mapStateToProps, mapToDispatch )
+
+export default decorator( ListMainMenu );

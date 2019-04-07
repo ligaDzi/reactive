@@ -7,6 +7,7 @@ import App from './App'
 import Header from './Header'
 import Footer from './Footer'
 import NotFound from './NotFound'
+import LandscapeLock from './LandscapeLock'
 
 import '../style/reset.css'
 
@@ -25,6 +26,7 @@ class Root extends Component {
 
                             </Switch>
                             <Footer />
+                            <LandscapeLock />
                         </div>
                     </Route>
                 </Router>

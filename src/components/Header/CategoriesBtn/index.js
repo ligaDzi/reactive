@@ -13,6 +13,7 @@ class CategoriesBtn extends Component {
         isCategorActive: PropTypes.bool,
         toggleMenuCategor: PropTypes.func.isRequired,
         isMenuActive: PropTypes.bool,
+        artFocus: PropTypes.object
     }
 
     handleClickCategorMenu = ev => {
@@ -20,9 +21,9 @@ class CategoriesBtn extends Component {
     }
     
     render() { 
-        const { isCategorActive, isMenuActive } = this.props;
+        const { isCategorActive, isMenuActive, artFocus } = this.props;
         const active = isCategorActive ? 'active' : '';
-        const hidden = isMenuActive ? 'hidden' : '';
+        const hidden = (isMenuActive || artFocus.id) ? 'hidden' : '';
 
         return (           
             <button className={`categor-menu-btn ${active} ${hidden}`} onClick = {this.handleClickCategorMenu}>
@@ -39,7 +40,8 @@ class CategoriesBtn extends Component {
 function mapStateToProps(state) {
     return {
         isMenuActive: state.menu.isActive,
-        isCategorActive: state.categories.isActive
+        isCategorActive: state.categories.isActive,
+        artFocus: state.articles.artFocus
     }
 }
 

@@ -1,0 +1,53 @@
+@import '../../../style/_animation'
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+.article-current
+    position: relative
+    width: 100%
+    min-height: 100vh
+
+.article-current__content
+    position: relative
+    z-index: 0
+    margin-top: calc((-1 * 100vh) + (((100vh - 60px * 2) * 2 / 8) + 60px) - 1px)
+    left: calc((((100% - 50px * 2) * 1 / 12) + 50px) - 1px)
+    top: 0
+    width: calc((((100% - 50px * 2) * 11 / 12) + 50px) + 1px)    
+    pointer-events: none
+    +r(sm)    
+        left: calc(((100% - 50px * 2) * 0 / 12) + 50px)
+        width: calc(((100% - 50px * 2) * 12 / 12) + 50px)
+    +r(xs)
+        left: 0
+        width: 100%
+        margin-top: calc((-1 * 100vh) + (((100vh - 60px * 2) * 2 / 8) + 60px) - 90px)
+        background-color: $whiteCl
+
+.article-slider__default
+    width: 100%
+    pointer-events: all
+    height: 100vh
+    transform: translateZ(0)
+    overflow: hidden
+    backface-visibility: hidden
+    will-change: transform
+    -webkit-perspective: 1000
+    perspective: 1000
+    clip-path: polygon(100% 0,100% calc(100vh - 3.8017rem),calc(100vw - 7.7935rem) calc(100vh - 3.8017rem),calc(100vw - 7.7935rem) 100%,0 100%,0 0)
+    transition: clip-path .6s cubic-bezier(.77,0,.175,1),-webkit-clip-path .6s cubic-bezier(.77,0,.175,1)
+    +r(lg)
+        clip-path: polygon(100% 0,100% calc(100vh - 3.8017rem),calc(100vw - 6.7935rem) calc(100vh - 3.8017rem),calc(100vw - 6.7935rem) 100%,0 100%,0 0)
+    +r(sm)
+        clip-path: polygon(100% 0,100% calc(100vh - 6.0282rem),calc(100vw - 9.3577rem) calc(100vh - 6.0282rem),calc(100vw - 9.3577rem) 100%,0 100%,0 0)
+    +r(xxs)
+        clip-path: polygon(100% 0,100% calc(100vh - 3.608333rem),calc(100vw - 8.27083rem) calc(100vh - 3.608333rem),calc(100vw - 8.27083rem) 100%,0 100%,0 0)
+    &.open
+        clip-path: polygon(100% 0,100% calc(((100vh - 60px * 2) * 2 / 8) + 60px),calc(((100% - 50px * 2) * 1 / 12) + 50px) calc(((100vh - 60px * 2) * 2 / 8) + 60px),calc(((100% - 50px * 2) * 1 / 12) + 50px) 100%,0 100%,0 0)
+        +r(sm)
+            clip-path: polygon(100% 0,100% calc(((100vh - 60px * 2) * 2 / 8) + 60px),calc(((100% - 50px * 2) * 0 / 12) + 50px) calc(((100vh - 60px * 2) * 2 / 8) + 60px),calc(((100% - 50px * 2) * 0 / 12) + 50px) 100%,0 100%,0 0)
+        +r(xs)
+            clip-path: polygon(100% 0,100% calc(((100vh - 60px * 2) * 1 / 8) + 60px),0 calc(((100vh - 60px * 2) * 1 / 8) + 60px),0 100%,0 100%,0 0)
+        
+

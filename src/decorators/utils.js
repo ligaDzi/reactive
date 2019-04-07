@@ -56,6 +56,18 @@ export default (OriginalComponent) => class Utils extends Component{
             return obj;            
         })
     }
+    
+    getNumSlide = num => {
+        return num < 10 ? `0${num}` : num;
+    }
+
+    showDate = dateStr => {
+        const date = new Date(dateStr);
+        const year = this.getNumSlide(date.getFullYear());
+        const month = this.getNumSlide(date.getMonth());
+        const day = this.getNumSlide(date.getDate());
+        return `${year}.${month}.${day}`;
+    }
 
     render() {
         return (
@@ -63,7 +75,9 @@ export default (OriginalComponent) => class Utils extends Component{
                 {...this.props} {...this.state} 
                 getUniqId = {this.getUniqId} 
                 textToParagArr = {this.textToParagArr} 
-                mixingArrToId = {this.mixingArrToId} 
+                mixingArrToId = {this.mixingArrToId}
+                showDate = {this.showDate} 
+                getNumSlide = {this.getNumSlide}
             />
         )
     }

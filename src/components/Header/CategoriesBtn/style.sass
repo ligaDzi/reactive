@@ -4,10 +4,13 @@
 .categor-menu-btn
     height: 100%
     cursor: pointer
-    transition-property: color,opacity
-    transition-duration: .2s   
+    transition-property: color,opacity, z-index
+    transition-duration: .3s   
+    opacity: 1
+    z-index: inherit
     &.hidden
-        visibility: hidden 
+        opacity: 0
+        z-index: -1
 
 .categor-menu-btn__content
     display: flex

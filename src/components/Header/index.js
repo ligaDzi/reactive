@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import CategoriesMenu from '../CategoriesMenu'
 import ButtonHeader from './ButtonHeader'
@@ -9,10 +10,10 @@ import './style.sass'
 
 class Header extends Component {
     static propTypes = {
-
     }
 
-    render() {  
+    render() {        
+
         return (
             <div className='header'>
                 <ButtonHeader />
@@ -22,5 +23,6 @@ class Header extends Component {
         )
     }
 }
+
 
 export default Header;

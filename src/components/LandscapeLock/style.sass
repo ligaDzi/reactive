@@ -1,0 +1,61 @@
+@import '../../style/_color'
+@import '../../style/_mixins'
+@import '../../../node_modules/rfs/sass'
+
+.landscape
+    display: block
+    position: fixed
+    z-index: 300
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background-color: $bgPageCl
+    +r(xxs)
+        display: none
+    +rmin(smm)
+        display: none
+
+.landscape__wrapp
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%,-50%)
+    width: 15.77524rem
+    &:before
+        content: ""
+        position: absolute
+        display: block
+        width: 6.1588rem
+        height: 6.1588rem
+        top: 0.9124rem
+        right: calc(100% + 1.9009rem)
+        background-image: url(/src/img/landscape.png)
+        background-size: contain
+        background-repeat: no-repeat
+        +r(sm)
+            top: 0.7837rem
+            right: calc(100% + 1.2056rem)
+            width: 4.8828rem
+            height: 4.8828rem
+    +r(sm)
+        width: 15.20028rem
+
+.landscape__logo
+    color: $whiteCl
+    font-weight: 1000
+    +rfs(5.1rem)
+
+.landscape-row
+    +rfs(35px)
+    line-height: 40px
+    font-weight: 500
+    color: $whiteCl
+    & span:first-child
+        opacity: .5
+    +r(xxl)
+        +rfs(1.3306rem)
+        line-height: 1.5207rem
+    +r(sm)
+        +rfs(0.9851rem)
+        line-height: 1.2659rem

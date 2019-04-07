@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadArticlesFromTo } from '../../AC'
+import { loadArticlesFromTo, selectArticle, closeArticle, loadAllArticles } from '../../AC'
 import { filtreatedArticleSelector } from '../../selectors'
 
 import ArticlesList from './ArticlesList'
@@ -14,7 +14,11 @@ class Articles extends Component{
     static propTypes = {
         //from store
         articles: PropTypes.array,
-        loadArticlesFromTo: PropTypes.func.isRequired
+        artFocus: PropTypes.object,
+        artNext: PropTypes.object,
+        loadArticlesFromTo: PropTypes.func.isRequired,
+        selectArticle: PropTypes.func.isRequired,
+        closeArticle: PropTypes.func.isRequired
     }
 
     componentDidMount = () => {        
@@ -22,11 +26,17 @@ class Articles extends Component{
     }
 
     render() {
-        const { articles } = this.props;
-
+        const { articles, artFocus, artNext, selectArticle, closeArticle } = this.props;
+         
         return (
             <div className='articles-section'>
-                <ArticlesList articles = {articles} />
+                <ArticlesList 
+                    articles = {articles} 
+                    artFocus = {artFocus}
+                    artNext = {artNext}
+                    selectArticle = {selectArticle}
+                    closeArticle = {closeArticle}
+                />
             </div>
         )
     }
@@ -34,12 +44,17 @@ class Articles extends Component{
 
 function mapStateToDispatch(state) {
     return {
-        articles: filtreatedArticleSelector(state)
+        articles: filtreatedArticleSelector(state),
+        artFocus: state.articles.artFocus,
+        artNext: state.articles.artNext
     }
 }
 
 const mapToDispatch = {
-    loadArticlesFromTo    
+    loadArticlesFromTo,
+    selectArticle,
+    closeArticle,
+    loadAllArticles
 }
 
 const decorator = connect( mapStateToDispatch, mapToDispatch );

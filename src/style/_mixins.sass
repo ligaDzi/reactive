@@ -9,6 +9,8 @@
         @media(max-width: 481px) {@content;}
     @else if $class == xs
         @media(max-width: 575px) {@content;}
+    @else if $class == smm
+        @media(max-width: 720px) {@content;}
     @else if $class == sm
         @media(max-width: 768px) {@content;}
     @else if $class == lg
@@ -18,6 +20,9 @@
     @else if $class == xxl
         @media(max-width: 1600px) {@content;}
 
+@mixin rmin($class)
+    @if $class == smm
+        @media(min-width: 720px) {@content;}
 
 
 @mixin sizeDesc($width, $margin)    

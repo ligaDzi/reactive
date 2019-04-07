@@ -1,24 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import utils from '../../../decorators/utils'
+
 import './style.sass'
 import '../../../style/_position.sass'
 
-export default function ArticleDesc(props){
+function ArticleDesc(props){
     
-    const { text, date } = props;
-
-    const getNumSlide = num => {
-        return num < 10 ? `0${num}` : num;
-    }
-
-    const showDate = dateStr => {
-        const date = new Date(dateStr);
-        const year = getNumSlide(date.getFullYear());
-        const month = getNumSlide(date.getMonth());
-        const day = getNumSlide(date.getDate());
-        return `${year}.${month}.${day}`;
-    }
+    const { text, date, showDate } = props;
 
     return (
         <div className='article-desc flex fa-start'>
@@ -35,5 +25,9 @@ export default function ArticleDesc(props){
 ArticleDesc.propTypes = {
     //from component
     text: PropTypes.string,
-    date: PropTypes.string
+    date: PropTypes.string,
+    //from decorator
+    showDate: PropTypes.func.isRequired
 }
+
+export default utils( ArticleDesc );

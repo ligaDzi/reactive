@@ -1,0 +1,135 @@
+@import '../../../style/_animation'
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+.artslider-mainrow
+    display: flex
+    height: calc((1vh * 62.5) - 75px)
+
+.mainrow-title
+    flex-grow: 7.3
+
+.mainrow-sliderbtn
+    flex-grow: 4.7
+
+.mainrow-title__content
+    width: 100%
+    height: 100%
+    display: block
+
+.mainrow-title__date
+    height: calc((1vh * 12.5) - 15px)
+
+.mainrow-title__txt
+    height: calc((1vh * 45) - 30px)
+
+.m-date__txt
+    flex-grow: 1
+    & span
+        animation-delay: 850ms
+        animation-timing-function: ease
+        animation-duration: 700ms
+        animation-fill-mode: both
+        animation-name: fadeIn__btnclose
+        pointer-events: all        
+        transition-property: color,opacity
+        transition-duration: .2s
+        font-weight: 500
+        color: $whiteCl
+        line-height: 30px
+        +rfs(30px)
+        &.deactive
+            animation-delay: 400ms
+            animation-timing-function: ease
+            animation-duration: 300ms
+            animation-fill-mode: both
+            animation-name: fadeOut
+            animation-play-state: running
+        +r(xxl)
+            +rfs(1.14rem)
+            line-height: 1.14rem
+        +r(xxs)
+            +rfs(0.9rem)
+            line-height: .52083rem
+
+.m-date__null
+    flex-grow: 10
+
+$title-top-xxl: calc(10.875 * 1px)
+$title-left-xxl: calc(100vw/6.19543)
+
+.mr-t-txt__wrapper
+    position: relative
+    width: calc((100vw - 100px) * 7.5 / 12)
+    padding: 0
+    transition: transform .6s cubic-bezier(.77,0,.175,1),-webkit-transform .6s cubic-bezier(.77,0,.175,1)
+    transform-origin: left top
+    pointer-events: all
+    opacity: 1
+    animation-fill-mode: both
+    +r(sm)
+        width: calc((100vw - 100px) * 7.5 / 10)
+    +r(xs)
+        width: calc((100vw - 100px) * 6 / 10)
+    +r(xxs)
+        width: calc((100vw - .8125rem * 2) * 6 / 8)
+    &.hidden
+        transition: transform .6s cubic-bezier(.77,0,.175,1),opacity 0s ease .6s,-webkit-transform .6s cubic-bezier(.77,0,.175,1)
+        transform: translate3d(calc(100vw/6.19543), calc(100vh/99.3103), 0) scale(.67)
+        +r(xxl)
+            transform: translate3d(calc(100vw/6.2359), calc(-100vh/21.8873), 0) scale(.67)
+        +r(xl)
+            transform: translate3d(calc(100vw/6.3189), calc(-100vh/17.2455), 0) scale(.67)
+        +r(lg)
+            transform: translate3d(calc(100vw/6.3903), calc(-100vh/15.5536), 0) scale(.67)
+        +r(sm)
+            transform: translate3d(calc(100vw/6.5042), calc(-100vh/14.3076), 0) scale(.67)
+        +r(xs)
+            transform: translate3d(calc(100vw/15.9307), calc(-100vh/15.0035), 0) scale(.67)
+        +r(xxs)
+            transform: translate3d(0, calc(-100vh/8.4406), 0) scale(.67)
+
+
+.mr-t-txt-w__overflow
+    overflow: hidden
+    // height: 100%
+    height: calc( 1vh * 25 - 30px )
+    width: 100%
+    position: relative
+    +r(hsm)
+        height: 100%
+
+.mr-t-txt-w-o__txt
+    animation-delay: 850ms
+    animation-timing-function: ease
+    animation-duration: 500ms
+    pointer-events: all
+    visibility: hidden
+    backface-visibility: hidden
+    will-change: transform
+    -webkit-perspective: 1000
+    perspective: 1000
+    animation-fill-mode: both
+    animation-name: slideInUpVisible
+    transition-property: color,opacity
+    transition-duration: .2s
+    padding-bottom: .2em
+    font-weight: 600
+    color: $whiteCl
+    +rfs(115px)
+    line-height: .95
+    &.deactive
+        animation-name: slideOutHidden 
+        animation-fill-mode: both   
+        animation-delay: 300ms
+        animation-timing-function: ease
+        animation-duration: 450ms
+    +r(xxl)
+        +rfs(4rem)
+    +r(sm)
+        font-size: 3.7977rem
+        line-height: 3.7977rem
+    +r(xxs)
+        font-size: 1.875rem
+        line-height: 1.875rem

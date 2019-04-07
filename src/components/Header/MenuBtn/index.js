@@ -11,7 +11,8 @@ class MenuBtn extends Component {
     static proptypes = {
         //from store
         isMenuActive: PropTypes.bool,
-        toggleMenu: PropTypes.func.isRequired
+        toggleMenu: PropTypes.func.isRequired,
+        artFocus: PropTypes.object
     }
 
     handleClickBurger = ev => {   
@@ -19,10 +20,12 @@ class MenuBtn extends Component {
     }
 
     render() {
-        const { isMenuActive } = this.props;
+        const { isMenuActive, artFocus } = this.props;
         const active = isMenuActive ? 'active' : '';
+        const hidden = artFocus.id ? 'hidden' : '';
+
         return (
-            <button className={`burger ${active}`} onClick = {this.handleClickBurger}>
+            <button className={`burger ${active} ${hidden}`} onClick = {this.handleClickBurger}>
                 <div className='burger-content'>
                     <span className='burger-line'></span>
                     <span className='burger-line'></span>
@@ -34,7 +37,8 @@ class MenuBtn extends Component {
 
 function mapStateToProps(state) {
     return {
-        isMenuActive: state.menu.isActive
+        isMenuActive: state.menu.isActive,
+        artFocus: state.articles.artFocus
     }
 }
 

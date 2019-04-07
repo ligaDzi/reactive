@@ -11,7 +11,7 @@ export default function ArticleCategories(props){
     }
     
     return(
-        <div className='article-categories'>
+        <div className= {props.classCategor}>
             {showCategories(props.categories)}
         </div>
     )
@@ -19,5 +19,6 @@ export default function ArticleCategories(props){
 
 ArticleCategories.propTypes = {
     //from component
-    categories: PropTypes.array
+    categories: PropTypes.array,
+    classCategor: PropTypes.string.isRequired
 }

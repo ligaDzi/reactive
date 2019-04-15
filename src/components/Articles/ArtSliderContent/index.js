@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import MainrowArtSlider from '../MainrowArtSlider'
+import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -38,14 +39,16 @@ const ArtSliderContent = (props) => {
                     onClickUp = {props.onClickUp}
                     onClickDown = {props.onClickDown} 
                 />
-                <div className = {`artslider-close ${deactive}`}>
-                    <button onClick = { handleClickClose }>
-                        <div className = 'artslider-close__content flex fd-column fj-sb'>
-                            <span className = 'artslider-close__line'></span>
-                            <span className = 'artslider-close__line'></span>
-                        </div>
-                    </button>
-                </div>
+                <CursorProvider text = 'close'>
+                    <div className = {`artslider-close ${deactive}`}>
+                        <button onClick = { handleClickClose }>
+                            <div className = 'artslider-close__content flex fd-column fj-sb'>
+                                <span className = 'artslider-close__line'></span>
+                                <span className = 'artslider-close__line'></span>
+                            </div>
+                        </button>
+                    </div>
+                </CursorProvider>
             </div>
         </div>
     )

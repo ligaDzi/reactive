@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import './style.sass'
 
 class ContactUs extends Component {
@@ -42,7 +44,9 @@ class ContactUs extends Component {
         const { contact, onOpen } = this.props;
         return (
             <div>
-                <button className='contact-btn' onClick = {onOpen}> {contact.title} </button>
+                <CursorProvider text = 'click'>
+                    <button className='contact-btn' onClick = {onOpen}> {contact.title} </button>
+                </CursorProvider>
                 {this.showContact()}
             </div>
         )

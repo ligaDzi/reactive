@@ -16,7 +16,7 @@ class ButtonNumCarousel extends Component {
         const { onClickUp, onClickDown } = this.props;
 
         return (
-            <div className = 'num-artcar__btn flex fa-end fj-sb fd-column'>
+            <div className = 'num-artcar__btn flex fa-end fj-sb fd-column'>                
                 <button className = 'num-artcar__btn-up' onClick = { () => onClickUp() }>
                     <svg viewBox = '0 0 37.57 37.93' className = 'btn-up__img'>
                         <g>

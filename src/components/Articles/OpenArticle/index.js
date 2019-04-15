@@ -4,6 +4,7 @@ import { Flipped } from 'react-flip-toolkit'
 
 import CurrentOpenArt from '../CurrentOpenArticle'
 import NextOpenArt from '../NextOpenArticle'
+import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 
@@ -17,6 +18,7 @@ class OpenArticle extends Component {
             PropTypes.bool
         ]),
         closeArticle: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
     }
 
     state = {
@@ -43,25 +45,34 @@ class OpenArticle extends Component {
         
     }
 
+    handleNextArt = id => ev => {
+        const { openArticle, leaveCursor } = this.props;
+
+        leaveCursor();
+        openArticle(id);
+    }
+
     renderNextArt = () => {
-        const { artNext, openArticle } = this.props;
+        const { artNext } = this.props;
 
         return (
             artNext ? (
-                <div className = 'article-open__next' onClick = { () => { openArticle(artNext.id) }}>  </div>
+                <CursorProvider text = 'next'>
+                    <div className = 'article-open__next' onClick = { this.handleNextArt(artNext.id) }>  </div>
+                </CursorProvider>
             ) : null
         )
     }
 
     render() {
-        const { article, artNext, closeArticle, openArticle } = this.props;
+        const { article, artNext, closeArticle, leaveCursor } = this.props;
         const { isOpen } = this.state;
         
         return (
             <Flipped 
                 flipId = {`article-card-${article.id}`} 
                 
-            >
+            >                
                 <div 
                     className = 'article-open'
                     ref='artOpenRef' 
@@ -72,6 +83,7 @@ class OpenArticle extends Component {
                         artNext = {artNext}
                         isOpen = {isOpen}
                         closeArticle = {closeArticle}
+                        leaveCursor = {leaveCursor}
                     />
                     {this.renderNextArt()}
                 </div>

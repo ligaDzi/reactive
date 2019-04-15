@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import { toggleMenuCategor } from '../../../AC'
 
 import './style.sass'
@@ -24,15 +26,18 @@ class CategoriesBtn extends Component {
         const { isCategorActive, isMenuActive, artFocus } = this.props;
         const active = isCategorActive ? 'active' : '';
         const hidden = (isMenuActive || artFocus.id) ? 'hidden' : '';
+        const textCursor = isCategorActive ? 'close' : 'tag';
 
-        return (           
-            <button className={`categor-menu-btn ${active} ${hidden}`} onClick = {this.handleClickCategorMenu}>
-                <div className='categor-menu-btn__content'>
-                    <span className='circle'></span>
-                    <span className='circle'></span>
-                    <span className='circle'></span>
-                </div>
-            </button>            
+        return ( 
+            <CursorProvider text = {textCursor}>
+                <button className={`categor-menu-btn ${active} ${hidden}`} onClick = {this.handleClickCategorMenu}>
+                    <div className='categor-menu-btn__content'>
+                        <span className='circle'></span>
+                        <span className='circle'></span>
+                        <span className='circle'></span>
+                    </div>
+                </button>            
+            </CursorProvider>          
         )
     }
 }

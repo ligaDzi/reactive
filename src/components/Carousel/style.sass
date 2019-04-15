@@ -26,7 +26,16 @@ body
         position: relative
         left: -41px
 
-.carousel-items 
+.carousel-items
+    & > span:nth-child(1)
+        position: relative
+        width: $widthImg
+        height: $heightImg
+        overflow: hidden
+        cursor: none
+        +r(sm) 
+            flex-shrink: 0
+            width: calc(100% + 30px)
     &__size   
         flex-grow: 2
         height: $heightCarousel
@@ -48,7 +57,7 @@ body
     width: $widthImg
     height: $heightImg
     overflow: hidden
-    cursor: pointer
+    cursor: none
     +r(sm) 
         flex-shrink: 0
         width: calc(100% + 30px)
@@ -56,6 +65,7 @@ body
 .carousel-btn__content
     width: $widthBtnCarousel
     padding-top: 15%
+    cursor: none
     +r(xl)
         height: 60vh
     +r(lg)
@@ -69,8 +79,9 @@ body
         height: 20vh
 
 .carousel-btn   
-    cursor: pointer
+    cursor: none
     transition: all 1s
+    display: block
     &__size
         width: $widthBtnCarousel
         height: 16rem

@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 
 import Carousel from './Carousel'
 import Articles from './Articles'
 
 
-class App extends Component{    
+class App extends PureComponent{    
     render() {   
         return (
             <div>

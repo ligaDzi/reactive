@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { connect } from 'react-redux'
+
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import { changeSelectedCategor } from '../../../AC'
 
 import './style.sass'
@@ -21,13 +24,15 @@ class CleareCategoriesMenu extends Component {
     }
 
     showClearBtn = () => {
-        return (            
-            <button 
-                className='cleare-categor flex fa-end fj-start'
-                onClick = {this.handleClickCleare(null)}
-            >
-                <span className='categor-menu__text'> Clear All Filters </span>
-            </button>
+        return ( 
+            <CursorProvider text = 'clear'>
+                <button 
+                    className='cleare-categor flex fa-end fj-start'
+                    onClick = {this.handleClickCleare(null)}
+                >
+                    <span className='categor-menu__text'> Clear All Filters </span>
+                </button>
+            </CursorProvider>           
         )
     }
 

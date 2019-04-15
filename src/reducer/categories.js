@@ -4,7 +4,8 @@ import { categories as List } from '../fixtures'
 import { 
     LOAD_ALL_CATEGORIES,
     CHANGE_SELECTED_CATEGORIES,
-    TOGGLE_MENU_CATEGORIES } from '../constants'
+    TOGGLE_MENU_CATEGORIES,
+    CLOSE_MENU_CATEGORIES } from '../constants'
 
     
 const CategoriesRecord = Record({
@@ -31,6 +32,9 @@ export default ( categories = defaultCategories, action ) => {
 
         case TOGGLE_MENU_CATEGORIES:
             return categories.set( 'isActive', !categories.isActive );
+
+        case CLOSE_MENU_CATEGORIES:
+            return categories.set( 'isActive', false );
 
         case CHANGE_SELECTED_CATEGORIES: 
             if(!payload.id){                

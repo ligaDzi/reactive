@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Flipper, Flipped } from 'react-flip-toolkit'
 
-import { loadAllArticles, selectArticle, closeArticle } from '../../AC'
+import { loadAllArticles, selectArticle, closeArticle, leaveCursor } from '../../AC'
 import { mapToArr } from '../../helpers'
 
 import ImgCarousel from './ImgCarousel'
@@ -11,6 +11,7 @@ import NumberCarousel from './NumberCarousel'
 import TitleCarousel from './TitleCarousel'
 import Categories from './Categories'
 import OpenArticle from '../Articles/OpenArticle'
+import CursorProvider from '../Cursor/CursorProvider'
 
 import utilsDecor from '../../decorators/utils'
 
@@ -27,6 +28,7 @@ class Carousel extends Component {
         loadAllArticles: PropTypes.func.isRequired,
         selectArticle: PropTypes.func.isRequired,
         closeArticle: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
         //from decorator
         getUniqId: PropTypes.func
     }
@@ -42,27 +44,44 @@ class Carousel extends Component {
 
         this.timeInterval = 6000;
         this.interval = null;
+        this.flag = true;
     }
     componentWillMount = () => {
 
         this.props.loadAllArticles();
     }
 
-    componentDidMount = () => {   
-
+    componentDidMount = () => {      
+        
         this.interval = setInterval(() => {
             this.nextSlide();
             
         }, this.timeInterval);
     }  
     
+    shouldComponentUpdate = (nextProps, nextState) => {
+        const { activeSlide, nextSlide, nextBtnSlide} = this.state;        
+
+        if(this.flag) {
+            this.flag = false;
+            return true;
+        }
+
+        if( activeSlide !== nextState.activeSlide ) return true;
+        if( nextSlide !== nextState.nextSlide ) return true;
+        if( nextBtnSlide !== nextState.nextBtnSlide ) return true;
+        if( this.props.artFocus.id !== nextProps.artFocus.id ) return true;
+
+        return false;
+    }
+        
     componentWillUnmount = () => {
         clearInterval(this.interval);
     }
 
     nextSlide = () => {        
         const { articlesCrsl } = this.props;
-
+ 
         let active = (this.state.activeSlide + 1)%articlesCrsl.length;            
         let next = (this.state.nextSlide + 1)%articlesCrsl.length; 
         let nextBtn = (this.state.nextBtnSlide + 1)%articlesCrsl.length; 
@@ -74,7 +93,7 @@ class Carousel extends Component {
         });
     }
 
-    handleNext = ev => {      
+    handleNext = ev => {     
         clearInterval(this.interval);        
         this.nextSlide();
 
@@ -120,7 +139,7 @@ class Carousel extends Component {
 
         return (
             <Flipper flipKey = {artFocus.id} className = 'carousel-items carousel-items__size flex fa-end fj-start'>
-                <div className='carousel-items carousel-items__size flex fa-end fj-start'>                     
+                <div className='carousel-items carousel-items__size flex fa-end fj-start'>
                     <div className = 'carousel-size'>  
                         {this.renderSlide()} 
                     </div>
@@ -144,10 +163,10 @@ class Carousel extends Component {
     }
 
     renderSlide = () => {
-        const { articlesCrsl, getUniqId, artFocus, artNext, closeArticle, selectArticle } = this.props;
+        const { articlesCrsl, getUniqId, artFocus, selectArticle, leaveCursor } = this.props;
         const activeSlide = articlesCrsl[ this.state.activeSlide ];
         const nextSlide = articlesCrsl[ this.state.nextSlide ]; 
-
+        
         return (
             artFocus.id === nextSlide.id ? (               
                 <OpenArticle 
@@ -156,14 +175,18 @@ class Carousel extends Component {
                     closeArticle = {this.handleCloseArt}
                     artNext = {false}
                     openArticle = {selectArticle}
+                    leaveCursor = {leaveCursor}
                 />
-            ) : (                    
-                <ImgCarousel 
-                    key = {getUniqId()}
-                    activeSlide = {activeSlide}
-                    nextSlide = {nextSlide} 
-                    openArticle = {this.handleOpenArt}
-                />
+            ) : (  
+                <CursorProvider text = 'open'>
+                    <ImgCarousel 
+                        key = {getUniqId()}
+                        activeSlide = {activeSlide}
+                        nextSlide = {nextSlide} 
+                        openArticle = {this.handleOpenArt}
+                        leaveCursor = {leaveCursor}
+                    />
+                </CursorProvider>                  
             )
         )
     }
@@ -201,13 +224,15 @@ class Carousel extends Component {
                 </div>
 
                 <button className='carousel-btn__content' onClick = {this.handleNext}>                    
-                    <div className='carousel-btn carousel-btn__size'>
-                        <ImgCarousel 
-                            key = {getUniqId()}
-                            activeSlide = {nextSlide}
-                            nextSlide = {nextBtnSlide} 
-                        />
-                    </div>
+                    <CursorProvider text = 'next'>
+                        <div className='carousel-btn carousel-btn__size'>
+                            <ImgCarousel 
+                                key = {getUniqId()}
+                                activeSlide = {nextSlide}
+                                nextSlide = {nextBtnSlide} 
+                            />
+                        </div>
+                    </CursorProvider>
                 </button>
             </div>
         )
@@ -226,6 +251,7 @@ const mapToDispatch = {
     loadAllArticles,
     selectArticle,
     closeArticle,
+    leaveCursor
 }
 
 const decorator = connect( mapStateToProps, mapToDispatch );

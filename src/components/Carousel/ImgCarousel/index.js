@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { Flipped } from 'react-flip-toolkit'
 
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import './style.sass'
 import '../../../style/_position.sass'
 
@@ -12,13 +14,15 @@ class CarouselImg extends Component{
         //from component
         activeSlide: PropTypes.object,
         nextSlide: PropTypes.object,
-        openArticle: PropTypes.func
+        openArticle: PropTypes.func,
+        leaveCursor: PropTypes.func,
     }
 
     handleClick = ev => {
-        const { nextSlide, openArticle } = this.props;
+        const { nextSlide, openArticle, leaveCursor } = this.props;
 
         if(openArticle) {
+            leaveCursor();
             openArticle(nextSlide.id);
         }
     }

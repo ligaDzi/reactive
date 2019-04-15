@@ -6,7 +6,7 @@ export const articles = [
         "text": "<p>Laborum minim non ut aliquip commodo est consectetur. Mollit eu aliqua tempor est nulla ullamco irure. Sit non amet et eiusmod cillum ex cillum anim incididunt ad laboris mollit. Sunt quis incididunt elit ea qui non ullamco aliquip consequat voluptate eiusmod est. Irure laboris amet culpa sit aliquip.</p><p>Aliquip id nostrud adipisicing irure. Labore reprehenderit ea ex officia ullamco incididunt consequat elit amet quis commodo. Fugiat amet veniam cillum ut aliquip velit est esse minim fugiat eiusmod sint. Commodo ea in culpa deserunt.</p><p>Nisi sit nisi cillum dolor fugiat sint do nostrud ex cillum cupidatat. Culpa do duis non et excepteur labore dolor culpa qui tempor veniam. Ex labore deserunt qui sit aute ad incididunt do cupidatat eiusmod reprehenderit ad. Qui laborum qui voluptate velit et consectetur ipsum enim dolore minim. Est sint velit tempor reprehenderit. Qui consectetur ad minim consequat.</p>",
         "autor": "Sandra Adamsen",
         "images": [
-            'ACE-packaging.jpeg',
+            'ACE-packaging.jpg',
             'Sandra_1.jpg',
             'Sandra_2.jpg'
         ],
@@ -99,7 +99,6 @@ export const articles = [
         "text": "<p>Aut reprehenderit laborum ut iure modi autem ullam alias vitae incidunt similique distinctio aliquid voluptas cumque accusamus, rem itaque. Quos nisi illum optio numquam impedit dignissimos doloremque natus veritatis commodi voluptate praesentium animi molestias, cupiditate voluptates vel iste sapiente maiores porro quidem. Molestias sunt ipsam dignissimos temporibus a illo libero praesentium, totam, numquam laborum harum quaerat!</p><p>Nobis voluptatibus distinctio quibusdam repudiandae, error aut id tempore, quidem in sit praesentium magnam dolor blanditiis odit?</p><p>Fuga ea dolore quasi nemo, provident quas tenetur facilis eaque assumenda quos consequatur ipsam architecto impedit cupiditate atque velit sed commodi. Non voluptatem illo dolorum ratione! Suscipit, provident odio odit sapiente a vitae vel quia qui porro possimus laborum saepe nostrum repellat quibusdam minus minima cum iste reiciendis maiores consectetur ipsum, voluptas molestias. Doloribus, laborum.</p>",
         "autor": "Taisiya Sobol",
         "images": [
-            'baltimore.jpg',
             'Taisiya_1.jpg',
             'Taisiya_2.jpg',
             'Taisiya_3.jpg'

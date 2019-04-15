@@ -9,7 +9,10 @@ import {
     LOAD_CONTACTUS,
     LOAD_ALL_CATEGORIES,
     CHANGE_SELECTED_CATEGORIES,
-    TOGGLE_MENU_CATEGORIES } from '../constants'
+    TOGGLE_MENU_CATEGORIES,
+    CLOSE_MENU_CATEGORIES,
+    CURSOR_ENTER,
+    CURSOR_LEAVE } from '../constants'
 
 export function loadAllArticles() {
     return {
@@ -29,9 +32,17 @@ export function selectArticle(id) {
     // здесь будет использоваться middlewares.
     // С загрузкой с сервера 2х статей: выбранной и следующей после неё.
     // Т.е. в reducer будет приходить не id а response с 2мя статьями.
-    return {
-        type: SELECT_ARTICLE,
-        payload: { id }
+
+    return (dispatch) => {
+        dispatch({            
+            type: CLOSE_MENU_CATEGORIES            
+        });
+
+        dispatch({            
+            type: SELECT_ARTICLE,
+            payload: { id }            
+        });
+
     }
 }
 
@@ -82,5 +93,24 @@ export function changeSelectedCategor(id) {
 export function toggleMenuCategor() {
     return {
         type: TOGGLE_MENU_CATEGORIES
+    }
+}
+
+export function closeMenuCategor() {
+    return {
+        type: CLOSE_MENU_CATEGORIES
+    }
+}
+
+export function enterCursor(text) {
+    return {
+        type: CURSOR_ENTER,
+        payload: { text }
+    }
+}
+
+export function leaveCursor() {
+    return {
+        type: CURSOR_LEAVE
     }
 }

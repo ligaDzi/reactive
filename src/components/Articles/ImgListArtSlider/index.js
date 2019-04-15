@@ -14,8 +14,20 @@ const ImgListArtSlider = ({ imgList, activeImg, getUniqId }) => {
         ))
     }
 
+    const getIndex = activeImg => {
+        if( activeImg > 0 ) {
+            if( activeImg <= 2) {
+                return 0.5;
+            } else {
+                return (1 + (activeImg * 0.1));
+            }
+        } else {
+            return 0;
+        }
+    }
+
     return (
-        <div className = 'imglist__wrapp' style = {{transform: `translateY(${-100 * activeImg}vh)`}}>
+        <div className = 'imglist__wrapp' style = {{transform: `translateY(${(-100 * activeImg) - getIndex(activeImg)}vh)`}}>
             {renderList(imgList)}
         </div>
     )

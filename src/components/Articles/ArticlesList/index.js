@@ -7,6 +7,7 @@ import utils from '../../../decorators/utils'
 import ArticleCard from '../ArticleCard'
 import OpenArticle from '../OpenArticle'
 import NextOpenArticle from '../NextOpenArticle'
+import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 
@@ -18,23 +19,25 @@ class ArticleList extends Component {
         artFocus: PropTypes.object,
         artNext: PropTypes.object,
         selectArticle: PropTypes.func.isRequired,
-        closeArticle: PropTypes.func.isRequired
+        closeArticle: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
     }
 
     showArticleList = articles => {
-        const { getUniqId, artFocus, artNext, selectArticle, closeArticle } = this.props;   
+        const { getUniqId, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;   
            
       
         return articles.map( article => {
 
             return ( 
-                artFocus.id === article.id ? (
+                artFocus.id === article.id ? (                    
                     <OpenArticle 
                         key = {getUniqId()} 
                         article = {article} 
                         closeArticle = {closeArticle}
                         artNext = {artNext}
                         openArticle = {selectArticle}
+                        leaveCursor = {leaveCursor}
                     />
                 ) : artNext.id === article.id ? (
                     <NextOpenArticle 
@@ -46,6 +49,7 @@ class ArticleList extends Component {
                         key = {getUniqId()} 
                         article = {article} 
                         openArticle = {selectArticle}
+                        leaveCursor = {leaveCursor}
                     />
                 )
             )

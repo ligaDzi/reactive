@@ -18,7 +18,8 @@ class CurrentOpenArticle extends PureComponent {
             PropTypes.bool
         ]),
         isOpen: PropTypes.bool,
-        closeArticle: PropTypes.func.isRequired
+        closeArticle: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
     }
       
     state = {
@@ -27,6 +28,7 @@ class CurrentOpenArticle extends PureComponent {
     }
 
     deactiveArt = () => {
+        this.props.leaveCursor();
         this.setState({
             isActiveArt: false
         })

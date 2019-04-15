@@ -39,9 +39,11 @@ class DotsSlider extends Component {
 
             list.push( 
                 <li key = {getUniqId()} className = {`line-dots__item ${active}`}> 
+                    
                     <button className = 'line-dots__btn max-block' onClick = { () => onClickLine(i) }>
                         <div className = 'line-btn'></div>
                     </button>
+                    
                 </li> 
             );
         }

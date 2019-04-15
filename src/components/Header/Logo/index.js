@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import CursorPropvider from '../../Cursor/CursorProvider'
+
 import { toggleMenu } from '../../../AC'
 
 import './style.sass'
@@ -11,9 +13,11 @@ const Logo = props => {
     const menuActive = props.isMenuActive ? 'black' : '';
 
     return(
-        <button className={`logo ${menuActive}`}>
-            reactive.
-        </button>
+        <CursorPropvider text = 'home' >
+            <button className={`logo ${menuActive}`} >
+                reactive.
+            </button>
+        </CursorPropvider>
     )
 }
 

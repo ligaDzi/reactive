@@ -8,10 +8,12 @@ import Header from './Header'
 import Footer from './Footer'
 import NotFound from './NotFound'
 import LandscapeLock from './LandscapeLock'
+import Cursor from './Cursor'
 
 import '../style/reset.css'
 
 class Root extends Component {
+
     render() {
         return (
             <Provider store = {store}>
@@ -27,6 +29,7 @@ class Root extends Component {
                             </Switch>
                             <Footer />
                             <LandscapeLock />
+                            <Cursor />
                         </div>
                     </Route>
                 </Router>

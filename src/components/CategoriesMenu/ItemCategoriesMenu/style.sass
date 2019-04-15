@@ -3,16 +3,17 @@
 @import '../../../../node_modules/rfs/sass'
 
 .categor-menu__item
-    cursor: pointer
-    width: 100%
+    cursor: none
+    width: 100%    
     +r(xxs)
-        padding-top: .8rem
+        padding-top: .8rem        
 
 
 .categor-menu__close
     visibility: hidden
     margin-left: auto
     margin-top: 0.1rem
+    float: right
     +rfs(0.8rem)
     &.active
         visibility: visible
@@ -32,6 +33,8 @@
     opacity: 0.01
     transform: translate3d(0,100%,0)
     transition: all 350ms ease-in
+
+
 
 
 

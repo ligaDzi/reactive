@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import './style.sass'
 
 class FormFooter extends Component {
@@ -58,15 +60,19 @@ class FormFooter extends Component {
         return (
             <form className='email-form flex fa-start fj-start' onSubmit = {this.handleSubmit}>
                 <div className='email-enter'>
-                    <input 
-                        className = {`email-input email-txt ${this.addBorder()}`}
-                        placeholder = 'Enter email to stay up-to-date'
-                        value = {this.state.email}
-                        onChange = {this.handleChange}
-                    />
+                    <CursorProvider text = 'edit'>
+                        <input 
+                            className = {`email-input email-txt ${this.addBorder()}`}
+                            placeholder = 'Enter email to stay up-to-date'
+                            value = {this.state.email}
+                            onChange = {this.handleChange}
+                        />
+                    </CursorProvider>
                     {this.showErr()}
                 </div>
-                <input className='email-submit email-txt' type='submit' value='Submit' />
+                <CursorProvider text = 'submit'>
+                    <input className='email-submit email-txt' type='submit' value='Submit' />
+                </CursorProvider>
             </form>
         )
     }

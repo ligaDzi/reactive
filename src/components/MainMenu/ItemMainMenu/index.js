@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
 
+import CursorPropvider from '../../Cursor/CursorProvider'
+
 import './style.sass'
 
 class ItemMainMenu extends Component {
@@ -30,19 +32,21 @@ class ItemMainMenu extends Component {
     showLink = (menu, changeDesc) => {   
         const isHome = menu.alias === '';       
 
-        return (            
+        return ( 
             <div                
                 className = 'menu-item' 
                 onClick = {this.handleClickLink} 
                 onMouseOver = {this.handleHover(menu.id)}
             > 
-                <NavLink 
-                    exact = {isHome} 
-                    to = {`/${menu.alias}`}
-                    activeClassName = 'active'
-                >
-                    {menu.name}
-                </NavLink>
+                <CursorPropvider text = 'click'>
+                    <NavLink 
+                        exact = {isHome} 
+                        to = {`/${menu.alias}`}
+                        activeClassName = 'active'
+                    >
+                        {menu.name}
+                    </NavLink>
+                </CursorPropvider>
             </div>
         )
     }

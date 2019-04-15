@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadArticlesFromTo, selectArticle, closeArticle, loadAllArticles } from '../../AC'
+import { loadArticlesFromTo, selectArticle, closeArticle, loadAllArticles, leaveCursor } from '../../AC'
 import { filtreatedArticleSelector } from '../../selectors'
 
 import ArticlesList from './ArticlesList'
@@ -18,7 +18,8 @@ class Articles extends Component{
         artNext: PropTypes.object,
         loadArticlesFromTo: PropTypes.func.isRequired,
         selectArticle: PropTypes.func.isRequired,
-        closeArticle: PropTypes.func.isRequired
+        closeArticle: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
     }
 
     componentDidMount = () => {        
@@ -26,7 +27,7 @@ class Articles extends Component{
     }
 
     render() {
-        const { articles, artFocus, artNext, selectArticle, closeArticle } = this.props;
+        const { articles, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;
          
         return (
             <div className='articles-section'>
@@ -36,6 +37,7 @@ class Articles extends Component{
                     artNext = {artNext}
                     selectArticle = {selectArticle}
                     closeArticle = {closeArticle}
+                    leaveCursor = {leaveCursor}
                 />
             </div>
         )
@@ -54,7 +56,8 @@ const mapToDispatch = {
     loadArticlesFromTo,
     selectArticle,
     closeArticle,
-    loadAllArticles
+    loadAllArticles,
+    leaveCursor
 }
 
 const decorator = connect( mapStateToDispatch, mapToDispatch );

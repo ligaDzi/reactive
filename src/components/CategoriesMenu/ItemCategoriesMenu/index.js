@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { connect } from 'react-redux'
 
+import CursorProvider from '../../Cursor/CursorProvider'
+
 import { changeSelectedCategor } from '../../../AC'
 
 import './style.sass'
@@ -27,10 +29,13 @@ class ItemCategoriesMenu extends Component {
     showCategor = categorie => {
         const { selectedCategor } = this.props;
         const active = selectedCategor.includes(categorie.id) ? 'active' : '';
-        return (            
+        const textCursor = active ? 'delete' : 'select';
+        return ( 
             <button className='categor-menu__item flex fa-start' onClick = {this.handleClickCategor}>
-                <span className='categor-menu__text'> {categorie.name} </span>
-                <span className={`categor-menu__close ${active}`}>x</span>
+                <CursorProvider text = {textCursor}>
+                    <span className='categor-menu__text'> {categorie.name} </span>
+                    <span className={`categor-menu__close ${active}`}>x</span>
+                </CursorProvider>           
             </button>
         )
     }

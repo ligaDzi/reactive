@@ -12,6 +12,7 @@ class NextOpenArticle extends Component {
 
     render() {
         const { article } = this.props;
+        
         return (    
             <Flipped 
                 flipId = {`article-card-${article.id}`}                

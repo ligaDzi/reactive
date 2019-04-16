@@ -11,6 +11,7 @@ class Text90Deg extends Component {
 
     render() {
         const { text } = this.props;
+
         return (
             <p className='block-title__read'>
                 <span> {text} </span>

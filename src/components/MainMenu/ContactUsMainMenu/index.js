@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { connect } from 'react-redux'
@@ -8,36 +8,53 @@ import { mapToArr } from '../../../helpers'
 import './style.sass'
 import '../../../style/_position.sass'
 
+class ContactUsMainMenu extends Component {
 
-const ContactUsMainMenu = props => {
-    const { contact, isMenuActive } = props;
+    static propTypes = {
+        //from store
+        contact: PropTypes.array,
+        isMenuActive: PropTypes.bool
+    }
+    
+    shouldComponentUpdate = (nextProps, nextState) => {
+        const { isMenuActive, contact } = this.props;
 
-    const renderListCMM = list => {
+        if( isMenuActive !== nextProps.isMenuActive ) return true;
+
+        for (let i = 0; i < contact.length; i++) {            
+            
+            if( contact[i].id !== nextProps.contact[i].id ) return true;
+        }
+        return false;
+    }
+
+    renderListCMM = list => {
         return list.map( item => {
             return <ItemContactMM key = {item.id} contact = {item} />
         });
     }
 
-    return (        
-        <div className='cntUs-menu flex fa-start fj-sb'> 
-                        
-            <CSSTransitionGroup
-                transitionName = 'cntUsMenu'
-                transitionEnterTimeout = {1100}
-                transitionLeaveTimeout = {200}
-                component = 'div'            
-            >
-                { isMenuActive ? renderListCMM(contact) : null }
-            </CSSTransitionGroup>
-        </div>
-    )
-} 
+    render() {
+        const { isMenuActive, contact } = this.props;
+        
 
-ContactUsMainMenu.propTypes = {
-    //from store
-    contact: PropTypes.array,
-    isMenuActive: PropTypes.bool
+        return (        
+            <div className='cntUs-menu flex fa-start fj-sb'> 
+                            
+                <CSSTransitionGroup
+                    transitionName = 'cntUsMenu'
+                    transitionEnterTimeout = {1100}
+                    transitionLeaveTimeout = {200}
+                    component = 'div'            
+                >
+                    { isMenuActive ? this.renderListCMM(contact) : null }
+                </CSSTransitionGroup>
+            </div>
+        )
+
+    }
 }
+
 
 
 

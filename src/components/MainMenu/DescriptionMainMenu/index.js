@@ -24,7 +24,7 @@ class DescriptionMainMenu extends Component {
     }
     render() {
         const { description, isMenuActive } = this.props;
-
+        
         return (
             <div className='desc-mainMenu flex fa-start fj-start'>
                 

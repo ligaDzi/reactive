@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import ArticleCategories from '../ArticleCategories'
 
 import './style.sass'
 
-class TxtCOA extends Component {
+class TxtCOA extends PureComponent {
 
     static propTypes = {
         //from component
@@ -16,12 +16,9 @@ class TxtCOA extends Component {
         ]),
     }
 
-    renderTxt = text => {
-
-    }
-
     render() {
         const { article, artNext } = this.props;
+        
         return (
             <div className = 'txtcoa__wrapp'>
                 <div className = 'txtcoa__categories'>

@@ -37,7 +37,7 @@ class NumberCarousel extends Component {
 
     render() {
         const { numSlides, activeSlide, nextSlide, getUniqId } = this.props;
-
+        
         return (
             <div className='num-item__content flex '>
                 <div className='num-item__block'>

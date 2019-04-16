@@ -13,9 +13,9 @@ class LinksFooter extends Component {
         //from decorator
         getUniqId: PropTypes.func.isRequired
     }
-
+    
     showLinks = () => {
-        const { links, getUniqId } = this.props;
+        const { links, getUniqId } = this.props;            
         
         return links.map( link => {
             return (
@@ -27,6 +27,7 @@ class LinksFooter extends Component {
     }
 
     render() {
+        
         return (
             <div className='links-footer flex fa-start fj-start'>
                 <ul className='links-footer__items'>

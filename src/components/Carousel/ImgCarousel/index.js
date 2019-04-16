@@ -1,14 +1,13 @@
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { Flipped } from 'react-flip-toolkit'
 
-import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 import '../../../style/_position.sass'
 
-class CarouselImg extends Component{
+class CarouselImg extends PureComponent{
 
     static propTypes = {
         //from component
@@ -28,8 +27,8 @@ class CarouselImg extends Component{
     }
     
     render() {        
-        const { activeSlide, nextSlide, openArticle } = this.props;        
-
+        const { activeSlide, nextSlide } = this.props;
+        
         return (
 
             <CSSTransitionGroup

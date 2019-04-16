@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Flipped } from 'react-flip-toolkit'
 
@@ -8,7 +8,7 @@ import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 
-class OpenArticle extends Component {
+class OpenArticle extends PureComponent {
 
     static propTypes = {
         //from component

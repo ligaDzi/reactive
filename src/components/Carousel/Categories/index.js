@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -7,7 +7,7 @@ import utils from '../../../decorators/utils'
 import '../../../style/_animation.sass'
 import './style.sass'
 
-class Categories extends Component{
+class Categories extends PureComponent{
     static propTypes = {
         //from component
         categories: PropTypes.array,
@@ -17,6 +17,7 @@ class Categories extends Component{
 
     render() {
         const { categories, getUniqId } = this.props;
+        
         return (
             <ul className='categories'>
                 {

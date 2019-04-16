@@ -75,6 +75,7 @@ class CurrentOpenArticle extends PureComponent {
         const { activeImg, isActiveArt } = this.state;
         const open = isOpen && isActiveArt ? 'open' : '';
         
+        
         return (
             <div className = 'article-current'>
                 <div className = 'article-slider'>

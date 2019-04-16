@@ -37,7 +37,7 @@ class ArticleCard extends Component {
 
     render() {
         const { article } = this.props;
-
+        
         return (
             <Flipped flipId = {`article-card-${article.id}`}>
                 <div className={`article-card`} onClick = { this.handleClickACard(article.id) } >

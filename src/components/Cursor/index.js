@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import './style.sass'
 
-class Cursor extends Component {
+class Cursor extends PureComponent {
 
     static propTypes = {
         myContent: PropTypes.object,
@@ -37,7 +37,8 @@ class Cursor extends Component {
         const { isHover, text } = this.props;
         const { cursorX, cursorY, opacity } = this.state;
         const cursorStyle = { transform: `translate3d(${cursorX}px, ${cursorY}px, 0px)`, opacity }
-        const hover = isHover ? 'hover' : '';        
+        const hover = isHover ? 'hover' : ''; 
+               
 
         return (
             <div className = 'cursor' style = {cursorStyle} >

@@ -23,6 +23,19 @@ class ListCategoriesMenu extends Component {
         this.props.loadAllCategories();
     }
 
+    shouldComponentUpdate = (nextProps, nextState) => {
+        
+        const { categories} = this.props;        
+
+        if(categories.length === 0) return true;
+
+        categories.forEach( (categor, i) => {
+            if(categor.id !== nextProps.categories[i].id) return true;
+        })
+                 
+        return false;
+    }
+
     renderList = () => {
         const { categories } = this.props;
 
@@ -35,7 +48,7 @@ class ListCategoriesMenu extends Component {
         })
     }
 
-    render() {       
+    render() {               
 
         return (
             <div className='categor-menu__list flex fa-start fj-start'>

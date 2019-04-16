@@ -28,7 +28,7 @@ class Articles extends Component{
 
     render() {
         const { articles, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;
-         
+
         return (
             <div className='articles-section'>
                 <ArticlesList 

@@ -29,7 +29,8 @@ class MainMenu extends Component {
 
     render() {
         const { isMenuActive } = this.props;
-        const active = isMenuActive ? 'active' : '';       
+        const active = isMenuActive ? 'active' : '';
+        
 
         return (
             <div className={`main-menu ${active}`} ref='mainMenu'>

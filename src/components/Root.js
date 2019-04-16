@@ -13,7 +13,7 @@ import Cursor from './Cursor'
 import '../style/reset.css'
 
 class Root extends Component {
-
+    
     render() {
         return (
             <Provider store = {store}>

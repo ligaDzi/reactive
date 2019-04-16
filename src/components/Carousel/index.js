@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Flipper, Flipped } from 'react-flip-toolkit'
 
-import { loadAllArticles, selectArticle, closeArticle, leaveCursor } from '../../AC'
+import { loadCarouselArticles, selectArticle, closeArticle, leaveCursor } from '../../AC'
 import { mapToArr } from '../../helpers'
 
 import ImgCarousel from './ImgCarousel'
@@ -25,7 +25,7 @@ class Carousel extends Component {
         articlesCrsl: PropTypes.array,
         artFocus: PropTypes.object,
         artNext: PropTypes.object,
-        loadAllArticles: PropTypes.func.isRequired,
+        loadCarouselArticles: PropTypes.func.isRequired,
         selectArticle: PropTypes.func.isRequired,
         closeArticle: PropTypes.func.isRequired,
         leaveCursor: PropTypes.func.isRequired,
@@ -48,7 +48,7 @@ class Carousel extends Component {
     }
     componentWillMount = () => {
 
-        this.props.loadAllArticles();
+        this.props.loadCarouselArticles();
     }
 
     componentDidMount = () => {      
@@ -60,7 +60,8 @@ class Carousel extends Component {
     }  
     
     shouldComponentUpdate = (nextProps, nextState) => {
-        const { activeSlide, nextSlide, nextBtnSlide} = this.state;        
+        const { articlesCrsl, artFocus } = this.props;        
+        const { activeSlide, nextSlide, nextBtnSlide} = this.state;                
 
         if(this.flag) {
             this.flag = false;
@@ -70,7 +71,16 @@ class Carousel extends Component {
         if( activeSlide !== nextState.activeSlide ) return true;
         if( nextSlide !== nextState.nextSlide ) return true;
         if( nextBtnSlide !== nextState.nextBtnSlide ) return true;
-        if( this.props.artFocus.id !== nextProps.artFocus.id ) return true;
+        if( artFocus.id !== nextProps.artFocus.id ) {
+
+            let flag = false;
+            articlesCrsl.forEach( item => {                
+                if( item.id === nextProps.artFocus.id ) { 
+                    flag = true;
+                }
+            })
+            return flag;
+        } 
 
         return false;
     }
@@ -248,7 +258,7 @@ function mapStateToProps(state) {
 }
 
 const mapToDispatch = {
-    loadAllArticles,
+    loadCarouselArticles,
     selectArticle,
     closeArticle,
     leaveCursor

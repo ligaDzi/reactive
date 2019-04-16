@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
 
 import Logo from '../Logo'
 import CategoriesBtn from '../CategoriesBtn'
@@ -8,13 +7,10 @@ import MenuBtn from '../MenuBtn'
 import './style.sass'
 import '../../../style/_position.sass'
 
-class ButtonHeader extends Component {
+class ButtonHeader extends PureComponent {
 
-    static propTypes = {
-        //from component
-    }
-
-    render() {        
+    render() {    
+            
         return (
             <div className='header-btn flex'>
                 <div className='header-btn__logo'>

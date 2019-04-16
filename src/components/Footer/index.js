@@ -26,10 +26,29 @@ class Footer extends Component {
         this.props.loadContactUs();
     }
 
+    shouldComponentUpdate = (nextProps, nextState) => {
+
+        const { menu, contactUs} = this.props;        
+                
+        if( menu.length === 0 || contactUs.length === 0 ) return true;
+
+        for (let i = 0; i < contactUs.length; i++) {
+            
+            if( contactUs[i].id !== nextProps.contactUs[i].id) return true;            
+        }
+
+        for (let i = 0; i < menu.length; i++) {
+            
+            if( menu[i].id !== nextProps.menu[i].id) return true;            
+        }
+
+        return false;        
+    }
+    
     handleEmailSubmit = email => {
         console.log('===', 'email = ', email);        
     }
-
+    
     showContactUs = () => {
         return (
             <div className = 'contact-text'>
@@ -37,10 +56,10 @@ class Footer extends Component {
             </div>
         )
     }
-
+    
     render() {
-        const { menu, contactUs } = this.props;           
-
+        const { menu, contactUs } = this.props;   
+        
         return (
             <div className='footer'>
                 <div className='footer-content flex'>

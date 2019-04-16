@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { mapToArr } from '../../../helpers'
-import { toggleMenu, changeDescMenu } from '../../../AC'
+import { toggleMenu, changeDescMenu, leaveCursor } from '../../../AC'
 
 import ItemMainMenu from '../ItemMainMenu'
 
@@ -21,6 +21,18 @@ class ListMainMenu extends Component {
         toggleMenu: PropTypes.func.isRequired,
         changeDescMenu: PropTypes.func.isRequired,
     }
+
+    shouldComponentUpdate = (nextProps, nextState) => {
+        const { isMenuActive, menus } = this.props;
+
+        if( isMenuActive !== nextProps.isMenuActive ) return true;
+
+        for (let i = 0; i < menus.length; i++) {            
+            
+            if( menus[i].id !== nextProps.menus[i].id ) return true;
+        }
+        return false;
+    }
     
     componentDidUpdate = () => {
         const { isMenuActive, mainMenuRef } = this.props;
@@ -34,7 +46,7 @@ class ListMainMenu extends Component {
     }
 
     renderListMenu = () => {
-        const { menus, isMenuActive, toggleMenu, changeDescMenu } = this.props; 
+        const { menus, isMenuActive, toggleMenu, changeDescMenu, leaveCursor } = this.props; 
 
         return menus.map( item => {
             return (
@@ -44,6 +56,7 @@ class ListMainMenu extends Component {
                         isMenuActive = {isMenuActive}
                         activatedMainMenu = {toggleMenu}
                         changeDesc = {changeDescMenu}
+                        leaveCursor = {leaveCursor}
                     />
                     <div className='menu-item__empty'></div>
                 </div>
@@ -51,7 +64,8 @@ class ListMainMenu extends Component {
         });
     }
 
-    render() {       
+    render() {  
+             
         return (
             <div className='list-menu flex fa-center fj-start'>
                 <div className='list-menu__root'>
@@ -76,7 +90,8 @@ function mapStateToProps(state) {
 
 const mapToDispatch = {
     toggleMenu,
-    changeDescMenu
+    changeDescMenu,
+    leaveCursor
 }
 
 const decorator = connect( mapStateToProps, mapToDispatch )

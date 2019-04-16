@@ -14,12 +14,14 @@ class ItemMainMenu extends Component {
         menu: PropTypes.object,
         isMenuActive: PropTypes.bool,
         activatedMainMenu: PropTypes.func.isRequired,
-        changeDesc: PropTypes.func.isRequired
+        changeDesc: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
     }
 
     handleClickLink = ev => {
-        const { activatedMainMenu } = this.props;
+        const { activatedMainMenu, leaveCursor } = this.props;
 
+        leaveCursor();
         activatedMainMenu();
     }
 
@@ -53,7 +55,7 @@ class ItemMainMenu extends Component {
 
     render() {
         const { menu, changeDesc, isMenuActive } = this.props;
-
+        
         return (
             <CSSTransitionGroup
                 transitionName = 'linkMenu'

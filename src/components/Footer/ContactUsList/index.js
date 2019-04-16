@@ -29,7 +29,8 @@ class ContactUsList extends Component {
         })
     }
 
-    render() {
+    render() {       
+        
         return (
             <div className='contact-list '>
                 {this.showContactList()}

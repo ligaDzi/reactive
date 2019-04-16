@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import ButtonNum from './ButtonNumArtCarosel'
@@ -7,7 +7,7 @@ import DotsSlider from './DotsSlider'
 import './style.sass'
 import '../../../style/_position.sass'
 
-class NumArtCarousel extends Component {
+class NumArtCarousel extends PureComponent {
 
     static propTypes = {
         //from component
@@ -22,7 +22,7 @@ class NumArtCarousel extends Component {
     render() {
         const { imgLength, activeImg, isActiveArt, onClickLine, onClickUp, onClickDown } = this.props;
         const deactive = !isActiveArt ? 'deactive' : '';
-
+        
         return (
             <div className = 'max-block'>
                 <div className = {`num-artcar flex ${deactive}`}>

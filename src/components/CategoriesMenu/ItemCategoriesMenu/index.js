@@ -28,6 +28,7 @@ class ItemCategoriesMenu extends Component {
 
     showCategor = categorie => {
         const { selectedCategor } = this.props;
+        
         const active = selectedCategor.includes(categorie.id) ? 'active' : '';
         const textCursor = active ? 'delete' : 'select';
         return ( 
@@ -40,8 +41,9 @@ class ItemCategoriesMenu extends Component {
         )
     }
 
-    render() {
+    render() {         
         const { categorie, isMenuActive } = this.props;
+        
         return (
             <CSSTransitionGroup
                 transitionName = 'catmenu-item'

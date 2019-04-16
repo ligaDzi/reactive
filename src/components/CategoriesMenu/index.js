@@ -20,6 +20,7 @@ class CategoriesMenu extends Component {
         const { isCategorActive } = this.props;
         const active = isCategorActive ? 'active' : '';
         
+        
         return (
             <div 
                 className={`categor-menu ${active}`} 

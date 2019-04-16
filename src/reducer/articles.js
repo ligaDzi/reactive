@@ -3,7 +3,8 @@ import {
     LOAD_ALL_ARTICLES,
     LOAD_FROM_TO_ARTICLES,
     SELECT_ARTICLE,
-    CLOSE_ARTICLE } from '../constants'
+    CLOSE_ARTICLE,
+    LOAD_CAROUSEL_ARTICLES } from '../constants'
 
 import { arrToMap } from '../helpers'
 import { Record, OrderedMap } from 'immutable'
@@ -31,19 +32,23 @@ const defaultArticles = new ReducerState();
 export default (articles = defaultArticles, action) => {
 
     const { type, payload } = action;    
+    const allArticles = arrToMap( articleList, ArticleRecord );
 
     switch(type) {
         case LOAD_ALL_ARTICLES:
-            const allArticles = arrToMap( articleList, ArticleRecord );
             
             return articles
-                    .set('all', allArticles)
+                    .set('all', allArticles);
+                    
+        case LOAD_CAROUSEL_ARTICLES:
+                    
+            return articles
                     .set('carousel', allArticles.slice(0, 5));
 
         case LOAD_FROM_TO_ARTICLES:            
             return articles.set(
                     'all', 
-                    articles.all.slice( payload.from, payload.to )
+                    allArticles.slice( payload.from, payload.to )
                 );
 
         case SELECT_ARTICLE: 

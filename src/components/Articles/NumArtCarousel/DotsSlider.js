@@ -52,7 +52,7 @@ class DotsSlider extends Component {
     
     render() {
         const { length, getNumSlide, activeImg } = this.props;
-
+        
         return (
             <div className = 'num-artcar__dots flex fa-end fd-column'>
                 <div className = 'num-dots'>

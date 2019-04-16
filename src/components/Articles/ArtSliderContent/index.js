@@ -18,7 +18,7 @@ const ArtSliderContent = (props) => {
     }
 
     const deactive = !props.isActiveArt ? 'deactive' : '';
-
+    
     return (        
         <div className = 'artslider-content'>
             <div className = 'artslider-content__grid'>

@@ -23,6 +23,21 @@ class ArticleList extends Component {
         leaveCursor: PropTypes.func.isRequired,
     }
 
+    shouldComponentUpdate = (nextProps, nextState) => {
+
+        const { articles, artFocus } = this.props;
+
+        if( articles.length === 0 ) return true;
+        if( artFocus.id !== nextProps.artFocus.id ) return true;
+        if( articles.length !== nextProps.articles.length ) return true;
+
+        articles.forEach( (item, i) => {
+            if( item.id !== nextProps.articles[i].id ) return true;
+        })        
+        
+        return false;
+    }
+
     showArticleList = articles => {
         const { getUniqId, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;   
            
@@ -58,6 +73,7 @@ class ArticleList extends Component {
 
     render() {
         const { articles, artFocus } = this.props;
+        
         
         return (
             <Flipper 

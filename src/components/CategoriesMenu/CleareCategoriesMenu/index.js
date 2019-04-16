@@ -38,6 +38,7 @@ class CleareCategoriesMenu extends Component {
 
     render() {
         const { isActive} = this.props;
+        
         return (
             <CSSTransitionGroup
                 transitionName = 'cleare'

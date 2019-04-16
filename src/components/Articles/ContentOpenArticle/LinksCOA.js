@@ -14,7 +14,7 @@ class LinksCOA extends PureComponent {
     render() {
         const { autor, isOpen } = this.props;
         const open = isOpen ? 'open' : '';
-
+        
         return (
             <div className = 'lincs-coa'>
                 <div className = 'lincs-coa__content'>

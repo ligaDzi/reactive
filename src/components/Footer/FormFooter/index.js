@@ -56,7 +56,7 @@ class FormFooter extends Component {
     }
 
     render() {
-
+        
         return (
             <form className='email-form flex fa-start fj-start' onSubmit = {this.handleSubmit}>
                 <div className='email-enter'>

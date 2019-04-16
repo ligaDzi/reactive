@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -8,7 +8,7 @@ import { toggleMenuCategor } from '../../../AC'
 
 import './style.sass'
 
-class CategoriesBtn extends Component {
+class CategoriesBtn extends PureComponent {
 
     static propTypes = {
         //from store
@@ -18,6 +18,8 @@ class CategoriesBtn extends Component {
         artFocus: PropTypes.object
     }
 
+
+
     handleClickCategorMenu = ev => {
         this.props.toggleMenuCategor();     
     }
@@ -26,10 +28,10 @@ class CategoriesBtn extends Component {
         const { isCategorActive, isMenuActive, artFocus } = this.props;
         const active = isCategorActive ? 'active' : '';
         const hidden = (isMenuActive || artFocus.id) ? 'hidden' : '';
-        const textCursor = isCategorActive ? 'close' : 'tag';
-
+        const textCursor = isCategorActive ? 'close' : 'tag';      
+        
         return ( 
-            <CursorProvider text = {textCursor}>
+            <CursorProvider text = {textCursor} isHidden = {isMenuActive}>
                 <button className={`categor-menu-btn ${active} ${hidden}`} onClick = {this.handleClickCategorMenu}>
                     <div className='categor-menu-btn__content'>
                         <span className='circle'></span>

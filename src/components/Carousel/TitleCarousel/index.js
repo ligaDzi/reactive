@@ -22,10 +22,6 @@ class TitleCarousel extends Component {
         getUniqId: PropTypes.func.isRequired
     }
 
-    componentWillUpdate = () => {
-        console.log('===', 'componentWillUpdate');        
-    }
-
     render() {
         const { 
             activeSlide, 
@@ -34,6 +30,7 @@ class TitleCarousel extends Component {
             lengthSlide,
             numberActive,
             numberNext } = this.props;
+        
 
         return (
             <div className = 'carousel-title fa-start fj-start'>

@@ -14,7 +14,7 @@ class ButtonNumCarousel extends Component {
 
     render() {
         const { onClickUp, onClickDown } = this.props;
-
+        
         return (
             <div className = 'num-artcar__btn flex fa-end fj-sb fd-column'>                
                 <button className = 'num-artcar__btn-up' onClick = { () => onClickUp() }>

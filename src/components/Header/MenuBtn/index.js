@@ -26,7 +26,7 @@ class MenuBtn extends Component {
         const { isMenuActive, artFocus, isCategorActive } = this.props;
         const active = isMenuActive ? 'active' : '';
         const hidden = artFocus.id ? 'hidden' : '';
-        const textCursor = isMenuActive ? 'close' : 'menu';
+        const textCursor = isMenuActive ? 'close' : 'menu';        
 
         return (
             <CursorPropvider text = {textCursor} isHidden = {isCategorActive}>

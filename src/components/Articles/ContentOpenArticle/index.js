@@ -18,8 +18,9 @@ class ContentOpenArticle extends PureComponent {
         isOpen: PropTypes.bool
     }
 
-    render() {
+    render() {        
         const { article, artNext, isOpen } = this.props;
+        
         return (
             <div className = 'cont-art__wrapp'>
                 <TxtCOA 

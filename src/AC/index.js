@@ -1,5 +1,6 @@
 import { 
-    LOAD_ALL_ARTICLES, 
+    LOAD_ALL_ARTICLES,
+    LOAD_CAROUSEL_ARTICLES, 
     LOAD_FROM_TO_ARTICLES,
     SELECT_ARTICLE,
     CLOSE_ARTICLE,
@@ -17,6 +18,12 @@ import {
 export function loadAllArticles() {
     return {
         type: LOAD_ALL_ARTICLES
+    }
+}
+
+export function loadCarouselArticles() {
+    return {
+        type: LOAD_CAROUSEL_ARTICLES
     }
 }
 

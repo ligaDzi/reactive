@@ -6,7 +6,8 @@ import './style.sass'
 import '../../../style/_position.sass'
 
 
-const TitleCategoriesMenu = (props) => {      
+const TitleCategoriesMenu = (props) => {
+         
     return (        
         <div className='categor-menu__title flex fa-start fj-start'>
             <CSSTransitionGroup

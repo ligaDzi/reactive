@@ -17,6 +17,7 @@ const CopyrightMenu = (props) => {
         )
     }
 
+    
     return (
         <div className='cprmenu-content flex'>
             <CSSTransitionGroup

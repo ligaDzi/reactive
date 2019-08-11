@@ -12,7 +12,7 @@ import '../../style/_position.sass'
 
 class CategoriesMenu extends Component {
     static propTypes = {
-        //from component
+        //from store
         isCategorActive: PropTypes.bool,
     }
 

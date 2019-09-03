@@ -17,3 +17,7 @@ export const CLOSE_MENU_CATEGORIES = 'CLOSE_MENU_CATEGORIES';
 
 export const CURSOR_ENTER = 'CURSOR_ENTER';
 export const CURSOR_LEAVE  = 'CURSOR_LEAVE';
+
+export const START = '_START';
+export const SUCCESS = '_SUCCESS';
+export const FAIL = '_FAIL';

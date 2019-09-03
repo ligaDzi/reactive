@@ -18,13 +18,15 @@ class MainMenu extends Component {
     static propTypes = {
         //from store
         isMenuActive: PropTypes.bool,
+        isMenuLoading: PropTypes.bool,
+        isMenuLoaded: PropTypes.bool,
         loadMenu: PropTypes.func.isRequired,
     }
     
     componentDidMount = () => {
-        const { loadMenu } = this.props;
+        const { isMenuLoading, isMenuLoaded, loadMenu } = this.props;
 
-        loadMenu(); 
+        if(!isMenuLoading && !isMenuLoaded) loadMenu(); 
     }
 
     render() {
@@ -63,7 +65,9 @@ class MainMenu extends Component {
 
 function mapStateToProps(state) {
     return {
-        isMenuActive: state.menu.isActive
+        isMenuActive: state.menu.isActive,
+        isMenuLoading: state.menu.isLoading,
+        isMenuLoaded: state.menu.isLoaded
     }
 }
 

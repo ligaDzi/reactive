@@ -13,16 +13,17 @@ class ContactUsMainMenu extends Component {
     static propTypes = {
         //from store
         contact: PropTypes.array,
-        isMenuActive: PropTypes.bool
+        isMenuActive: PropTypes.bool,
+        isContactsLoaded: PropTypes.bool
     }
     
     shouldComponentUpdate = (nextProps, nextState) => {
-        const { isMenuActive, contact } = this.props;
+        const { isMenuActive, contact, isContactsLoaded } = this.props;
 
         if( isMenuActive !== nextProps.isMenuActive ) return true;
+        if( isContactsLoaded !== nextProps.isContactsLoaded ) return true;
 
-        for (let i = 0; i < contact.length; i++) {            
-            
+        for (let i = 0; i < contact.length; i++) {   
             if( contact[i].id !== nextProps.contact[i].id ) return true;
         }
         return false;
@@ -82,7 +83,8 @@ ItemContactMM.propTypes = {
 function mapStateToProps(state) {
     return {
         isMenuActive: state.menu.isActive,
-        contact: mapToArr(state.contactUs)
+        contact: mapToArr(state.contactUs.entities),
+        isContactsLoaded: state.contactUs.isLoaded
     }
 }
 

@@ -6,6 +6,7 @@ import { mapToArr } from '../../../helpers'
 import { toggleMenu, changeDescMenu, leaveCursor } from '../../../AC'
 
 import ItemMainMenu from '../ItemMainMenu'
+import Loader from '../../Loader'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -16,20 +17,28 @@ class ListMainMenu extends Component {
         //from component
         mainMenuRef: PropTypes.object,
         //from store
-        menus: PropTypes.array,
+        menu: PropTypes.shape({
+            isLoading: PropTypes.bool,
+            isLoaded: PropTypes.bool,
+            isError: PropTypes.bool,
+            entities: PropTypes.array
+        }),
         isMenuActive: PropTypes.bool,
         toggleMenu: PropTypes.func.isRequired,
         changeDescMenu: PropTypes.func.isRequired,
     }
 
     shouldComponentUpdate = (nextProps, nextState) => {
-        const { isMenuActive, menus } = this.props;
+        const { isMenuActive, menu } = this.props;
 
         if( isMenuActive !== nextProps.isMenuActive ) return true;
+        if( menu.isLoading !== nextProps.menu.isLoading ) return true;
+        if( menu.isLoaded !== nextProps.menu.isLoaded ) return true;
+        if( menu.isError !== nextProps.menu.isError ) return true;
 
-        for (let i = 0; i < menus.length; i++) {            
+        for (let i = 0; i < menu.entities.length; i++) {            
             
-            if( menus[i].id !== nextProps.menus[i].id ) return true;
+            if( menu.entities[i].id !== nextProps.menu.entities[i].id ) return true;
         }
         return false;
     }
@@ -46,9 +55,15 @@ class ListMainMenu extends Component {
     }
 
     renderListMenu = () => {
-        const { menus, isMenuActive, toggleMenu, changeDescMenu, leaveCursor } = this.props; 
+        const { menu, isMenuActive, toggleMenu, changeDescMenu, leaveCursor } = this.props; 
 
-        return menus.map( item => {
+        if(menu.isLoading) return <Loader color='black' />
+        if(menu.isError){
+            console.error('Menu error');
+            return null;
+        }
+
+        return menu.entities.map( item => {
             return (
                 <div key = {item.id} className='flex menu-items' >
                     <ItemMainMenu  
@@ -83,8 +98,13 @@ class ListMainMenu extends Component {
 
 function mapStateToProps(state) {
     return {
-        isMenuActive: state.menu.isActive,
-        menus: mapToArr(state.menu.entities)
+        isMenuActive: state.menu.isActive,        
+        menu: {
+            isLoading: state.menu.isLoading,
+            isLoaded: state.menu.isLoaded,
+            isError: state.menu.isError,
+            entities: mapToArr(state.menu.entities)
+        }
     }
 }
 

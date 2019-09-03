@@ -61,7 +61,8 @@ export function closeArticle() {
 
 export function loadMenu() {
     return {
-        type: LOAD_MENU
+        type: LOAD_MENU,
+        callApi: '/api/menu/all'
     }
 }
 
@@ -80,7 +81,8 @@ export function changeDescMenu(id) {
 
 export function loadContactUs() {
     return {
-        type: LOAD_CONTACTUS
+        type: LOAD_CONTACTUS,
+        callApi: '/api/contact/all'
     }
 }
 

@@ -1,7 +1,7 @@
 import { Record, OrderedMap } from 'immutable'
 import { arrToMap } from '../helpers'
 import { menu as menuList } from '../fixtures'
-import { LOAD_MENU, TOGGLE_MENU, CHANGE_DESCRIPTION_MENU } from '../constants'
+import { LOAD_MENU, TOGGLE_MENU, CHANGE_DESCRIPTION_MENU, START, SUCCESS, FAIL } from '../constants'
 
 const MenuRecord = Record({    
     id: undefined,
@@ -13,6 +13,9 @@ const MenuRecord = Record({
 const ReducerState = Record({
     isActive: false,
     description: undefined,
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
     entities: new OrderedMap({})
 });
 
@@ -20,12 +23,25 @@ const defaultMenu = new ReducerState();
 
 export default ( menu = defaultMenu, action ) => {
 
-    const { type, payload } = action;
+    const { type, payload, response } = action;
 
     switch(type) {
 
-        case LOAD_MENU:
-            return menu.set( 'entities', arrToMap(menuList, MenuRecord) );            
+        case LOAD_MENU + START:
+            return menu.set('isLoading', true);
+
+        case LOAD_MENU + SUCCESS:
+            return menu
+                .update('entities', entities => arrToMap(response, MenuRecord).merge(entities))
+                .set('isLoading', false)
+                .set('isLoaded', true)
+                .set('isError', false); 
+            
+        case LOAD_MENU + FAIL:
+            return menu            
+                .set('isLoading', false)
+                .set('isLoaded', false)
+                .set('isError', true);
 
         case TOGGLE_MENU:      
             document.body.classList.toggle('body-overflow-hidden');      

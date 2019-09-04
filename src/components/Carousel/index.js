@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Flipper, Flipped } from 'react-flip-toolkit'
 
-import { loadCarouselArticles, selectArticle, closeArticle, leaveCursor } from '../../AC'
+import { loadSliderArticles, selectArticle, closeArticle, leaveCursor } from '../../AC'
 import { mapToArr } from '../../helpers'
 
 import ImgCarousel from './ImgCarousel'
@@ -12,6 +12,7 @@ import TitleCarousel from './TitleCarousel'
 import Categories from './Categories'
 import OpenArticle from '../Articles/OpenArticle'
 import CursorProvider from '../Cursor/CursorProvider'
+import Loader from '../Loader'
 
 import utilsDecor from '../../decorators/utils'
 
@@ -22,10 +23,15 @@ class Carousel extends Component {
 
     static propTypes = {
         //from store
-        articlesCrsl: PropTypes.array,
+        articlesCrsl: PropTypes.shape({
+            isLoading: PropTypes.bool,
+            isLoaded: PropTypes.bool,
+            isError: PropTypes.bool,
+            entities: PropTypes.array
+        }),
         artFocus: PropTypes.object,
         artNext: PropTypes.object,
-        loadCarouselArticles: PropTypes.func.isRequired,
+        loadSliderArticles: PropTypes.func.isRequired,
         selectArticle: PropTypes.func.isRequired,
         closeArticle: PropTypes.func.isRequired,
         leaveCursor: PropTypes.func.isRequired,
@@ -47,8 +53,10 @@ class Carousel extends Component {
         this.flag = true;
     }
     componentWillMount = () => {
+        const { loadSliderArticles } = this.props;
+        const { isLoading, isLoaded } = this.props.articlesCrsl;
 
-        this.props.loadCarouselArticles();
+        if(!isLoading && !isLoaded) loadSliderArticles();
     }
 
     componentDidMount = () => {      
@@ -90,11 +98,11 @@ class Carousel extends Component {
     }
 
     nextSlide = () => {        
-        const { articlesCrsl } = this.props;
+        const { entities } = this.props.articlesCrsl;
  
-        let active = (this.state.activeSlide + 1)%articlesCrsl.length;            
-        let next = (this.state.nextSlide + 1)%articlesCrsl.length; 
-        let nextBtn = (this.state.nextBtnSlide + 1)%articlesCrsl.length; 
+        let active = (this.state.activeSlide + 1)%entities.length;            
+        let next = (this.state.nextSlide + 1)%entities.length; 
+        let nextBtn = (this.state.nextBtnSlide + 1)%entities.length; 
 
         this.setState({
             activeSlide: active,
@@ -115,12 +123,11 @@ class Carousel extends Component {
 
     getNumSlider = () => {        
         const { articlesCrsl, getUniqId } = this.props;
-        const artAct = articlesCrsl[this.state.activeSlide];
+        const artAct = articlesCrsl.entities[this.state.activeSlide];
 
         if(!artAct) return null;
 
-        const categories = artAct.categories;      
-        
+        const categories = artAct.categories;   
         
         return (                    
             <div className = 'carousel-num fa-start fj-start'>
@@ -128,7 +135,7 @@ class Carousel extends Component {
                 <div className='carousel-num-item flex fa-center'>
                     <NumberCarousel 
                         key = {getUniqId()}
-                        numSlides = {articlesCrsl.length}
+                        numSlides = {articlesCrsl.entities.length}
                         activeSlide = {this.state.activeSlide + 1} 
                         nextSlide = {this.state.nextSlide + 1} 
                     />
@@ -142,8 +149,8 @@ class Carousel extends Component {
 
     getImgSlider = () => {
         const { articlesCrsl, getUniqId, artFocus, selectArticle } = this.props;
-        const activeSlide = articlesCrsl[ this.state.activeSlide ];
-        const nextSlide = articlesCrsl[ this.state.nextSlide ];      
+        const activeSlide = articlesCrsl.entities[ this.state.activeSlide ];
+        const nextSlide = articlesCrsl.entities[ this.state.nextSlide ];      
 
         if(!activeSlide || !nextSlide) return null;
 
@@ -174,8 +181,8 @@ class Carousel extends Component {
 
     renderSlide = () => {
         const { articlesCrsl, getUniqId, artFocus, selectArticle, leaveCursor } = this.props;
-        const activeSlide = articlesCrsl[ this.state.activeSlide ];
-        const nextSlide = articlesCrsl[ this.state.nextSlide ]; 
+        const activeSlide = articlesCrsl.entities[ this.state.activeSlide ];
+        const nextSlide = articlesCrsl.entities[ this.state.nextSlide ]; 
         
         return (
             artFocus.id === nextSlide.id ? (               
@@ -203,7 +210,7 @@ class Carousel extends Component {
 
     getTitleSlider = () => {
         const { articlesCrsl, getUniqId } = this.props;
-        const nextSlide = articlesCrsl[ this.state.nextSlide ];
+        const nextSlide = articlesCrsl.entities[ this.state.nextSlide ];
 
         if(!nextSlide) return null;
         
@@ -211,7 +218,7 @@ class Carousel extends Component {
             <TitleCarousel 
                 key = {getUniqId()}
                 activeSlide = {nextSlide}  
-                lengthSlide = {articlesCrsl.length}
+                lengthSlide = {articlesCrsl.entities.length}
                 numberActive = {this.state.activeSlide + 1} 
                 numberNext = {this.state.nextSlide + 1} 
             />
@@ -220,10 +227,17 @@ class Carousel extends Component {
 
     render() {
         const { articlesCrsl, getUniqId } = this.props;
-        const nextSlide = articlesCrsl[ this.state.nextSlide ];
-        const nextBtnSlide = articlesCrsl[ this.state.nextBtnSlide ];
+        const nextSlide = articlesCrsl.entities[ this.state.nextSlide ];
+        const nextBtnSlide = articlesCrsl.entities[ this.state.nextBtnSlide ];
 
+
+        if(articlesCrsl.isLoading) return <div className='carousel flex'> <Loader color='white' /> </div>
+        if(articlesCrsl.isError) {
+            console.error('Slider Error');
+            return null;
+        }
         if(!nextSlide || !nextBtnSlide) return null;
+        
 
         return (
             <div className = 'carousel flex'>
@@ -250,15 +264,20 @@ class Carousel extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        articlesCrsl: mapToArr(state.articles.carousel),        
+    return {        
+        articlesCrsl: {
+            isLoading: state.articles.slider.isLoading,
+            isLoaded: state.articles.slider.isLoaded,
+            isError: state.articles.slider.isError,
+            entities: mapToArr(state.articles.slider.entities)
+        },        
         artFocus: state.articles.artFocus,
         artNext: state.articles.artNext
     }
 }
 
 const mapToDispatch = {
-    loadCarouselArticles,
+    loadSliderArticles,
     selectArticle,
     closeArticle,
     leaveCursor

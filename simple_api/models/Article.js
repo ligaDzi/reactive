@@ -19,6 +19,10 @@ const articlesSchema = new mongoose.Schema({
         default: 'Admin',
         max: 255
     },
+    isSlider: {
+        type: Boolean,
+        default: false
+    },
     images: [String],
     categories: [{
         type: mongoose.Schema.Types.ObjectId,

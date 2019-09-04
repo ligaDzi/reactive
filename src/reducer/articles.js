@@ -4,7 +4,10 @@ import {
     LOAD_FROM_TO_ARTICLES,
     SELECT_ARTICLE,
     CLOSE_ARTICLE,
-    LOAD_CAROUSEL_ARTICLES } from '../constants'
+    LOAD_SLIDER_ARTICLES,
+    START,
+    SUCCESS,
+    FAIL } from '../constants'
 
 import { arrToMap } from '../helpers'
 import { Record, OrderedMap } from 'immutable'
@@ -20,7 +23,16 @@ const ArticleRecord = Record({
     date: undefined
 });
 
+const SliderRecord = Record({
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
+    entities: new OrderedMap({})
+})
+
 const ReducerState = Record({
+    slider: new SliderRecord({}),
+
     carousel: new OrderedMap({}),
     all: new OrderedMap({}),
     artFocus: new ArticleRecord({}),
@@ -31,20 +43,33 @@ const defaultArticles = new ReducerState();
 
 export default (articles = defaultArticles, action) => {
 
-    const { type, payload } = action;    
+    const { type, payload, response } = action;    
     const allArticles = arrToMap( articleList, ArticleRecord );
 
     switch(type) {
-        case LOAD_ALL_ARTICLES:
-            
+        case LOAD_ALL_ARTICLES:            
             return articles
-                    .set('all', allArticles);
+                .set('all', allArticles);
                     
-        case LOAD_CAROUSEL_ARTICLES:
-                    
+        case LOAD_SLIDER_ARTICLES + START: 
             return articles
-                    .set('carousel', allArticles.slice(0, 5));
+                .setIn(['slider', 'isLoading'], true);
 
+        case LOAD_SLIDER_ARTICLES + SUCCESS:    
+            return articles
+                .updateIn(['slider', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
+                .setIn(['slider', 'isLoading'], false)                
+                .setIn(['slider', 'isLoaded'], true)                
+                .setIn(['slider', 'isError'], false)                
+            // return articles
+            //     .set('carousel', allArticles.slice(0, 5));
+
+        case LOAD_SLIDER_ARTICLES + FAIL: 
+            return articles
+                .setIn(['slider', 'isLoading'], false)                   
+                .setIn(['slider', 'isLoaded'], false)                   
+                .setIn(['slider', 'isError'], true);                   
+        
         case LOAD_FROM_TO_ARTICLES:            
             return articles.set(
                     'all', 

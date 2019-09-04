@@ -1,6 +1,6 @@
 import { 
     LOAD_ALL_ARTICLES,
-    LOAD_CAROUSEL_ARTICLES, 
+    LOAD_SLIDER_ARTICLES, 
     LOAD_FROM_TO_ARTICLES,
     SELECT_ARTICLE,
     CLOSE_ARTICLE,
@@ -21,9 +21,10 @@ export function loadAllArticles() {
     }
 }
 
-export function loadCarouselArticles() {
+export function loadSliderArticles() {
     return {
-        type: LOAD_CAROUSEL_ARTICLES
+        type: LOAD_SLIDER_ARTICLES,
+        callApi: '/api/article/slider'
     }
 }
 
@@ -88,7 +89,8 @@ export function loadContactUs() {
 
 export function loadAllCategories() {
     return {
-        type: LOAD_ALL_CATEGORIES
+        type: LOAD_ALL_CATEGORIES,
+        callApi: '/api/categorie/all'
     }
 }
 

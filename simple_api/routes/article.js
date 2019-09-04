@@ -51,3 +51,25 @@ exports.getByID = async (ctx, next) => {
 
     ctx.body = 'OK';
 }
+
+exports.getSlider = async (ctx, next) => {
+    await Article
+        .find({ isSlider: true }, 'id title description text autor images categories date')
+        .limit(5)
+        .populate('categories', 'id name')
+        .then( articles => {
+            ctx.body = articles.map( article => {
+                article = article.toObject();
+                delete article._id;
+                article.categories = article.categories.map( categor => {
+                    delete categor._id;
+                    return categor;
+                });
+                return article;
+            });
+        })
+        .catch( err => {
+            console.error(err);
+            ctx.body = err;
+        });
+}

@@ -5,7 +5,10 @@ import {
     LOAD_ALL_CATEGORIES,
     CHANGE_SELECTED_CATEGORIES,
     TOGGLE_MENU_CATEGORIES,
-    CLOSE_MENU_CATEGORIES } from '../constants'
+    CLOSE_MENU_CATEGORIES,
+    START,
+    SUCCESS,
+    FAIL } from '../constants'
 
     
 const CategoriesRecord = Record({
@@ -14,7 +17,10 @@ const CategoriesRecord = Record({
 })
 
 const ReducerState = Record({
-    all: new OrderedMap({}),
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
+    entities: new OrderedMap({}),
     selected: [],
     isActive: false
 });
@@ -24,11 +30,24 @@ const defaultCategories = new ReducerState();
 
 export default ( categories = defaultCategories, action ) => {
 
-    const { type, payload } = action;
+    const { type, payload, response } = action;
 
     switch(type) {
-        case LOAD_ALL_CATEGORIES:
-            return categories.set( 'all', arrToMap(List, CategoriesRecord) );
+        case LOAD_ALL_CATEGORIES + START:
+            return categories.set('isLoading', true);
+
+        case LOAD_ALL_CATEGORIES + SUCCESS:
+            return categories
+                .update('entities', entities => arrToMap(response, CategoriesRecord).merge(entities))
+                .set('isLoading', false)
+                .set('isLoaded', true)
+                .set('isError', false); 
+
+        case LOAD_ALL_CATEGORIES + FAIL:
+            return categories            
+                .set('isLoading', false)
+                .set('isLoaded', false)
+                .set('isError', true);            
 
         case TOGGLE_MENU_CATEGORIES:
             return categories.set( 'isActive', !categories.isActive );

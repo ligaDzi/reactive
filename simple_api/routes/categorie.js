@@ -13,3 +13,19 @@ exports.post = async (ctx, next) => {
 
     ctx.body = 'OK';
 }
+
+exports.getAll = async (ctx, next) => {
+    await Categorie
+        .find({}, 'id name')
+        .then(categories => {
+            ctx.body = categories.map(categorie => {
+                categorie = categorie.toObject();
+                delete categorie._id;
+                return categorie;
+            })
+        })
+        .catch( err => {
+            console.error(err);
+            ctx.body = err;
+        });
+}

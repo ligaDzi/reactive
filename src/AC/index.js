@@ -1,8 +1,10 @@
+import { mapToArr } from '../helpers'
 import { 
     LOAD_ALL_ARTICLES,
     LOAD_SLIDER_ARTICLES, 
     LOAD_FROM_TO_ARTICLES,
     SELECT_ARTICLE,
+    UPDATE_ALL_ARTICLES,
     CLOSE_ARTICLE,
     LOAD_MENU,
     TOGGLE_MENU,
@@ -13,7 +15,10 @@ import {
     TOGGLE_MENU_CATEGORIES,
     CLOSE_MENU_CATEGORIES,
     CURSOR_ENTER,
-    CURSOR_LEAVE } from '../constants'
+    CURSOR_LEAVE, 
+    START,
+    SUCCESS,
+    FAIL} from '../constants'
 
 export function loadAllArticles() {
     return {
@@ -28,29 +33,173 @@ export function loadSliderArticles() {
     }
 }
 
-export function loadArticlesFromTo(from, to) {
-    return {
-        type: LOAD_FROM_TO_ARTICLES,
-        payload: { from, to }
+export function loadArticlesFromTo() {
+    return (dispatch, getState) => {
+        const { categories } = getState();
+        
+        dispatch({
+            type: LOAD_FROM_TO_ARTICLES + START
+        });
+
+        const option = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                from: 0,
+                selectCategories: categories.selected
+            })
+        }
+
+        fetch('/api/article/fromto', option)
+            .then(res => {                
+                if(res.status >= 400) {                    
+                    throw new Error(res.statusText);
+                }
+                return res.json();
+            })
+            .then(response => {
+                dispatch({
+                    type: LOAD_FROM_TO_ARTICLES + SUCCESS,
+                    response 
+                })
+            })
+            .catch(err => dispatch({ 
+                type: LOAD_FROM_TO_ARTICLES + FAIL, 
+                payload: { err }
+            }))
     }
 }
 
 export function selectArticle(id) {
-    // В дальнейшем, когда буду писать серверную часть,
-    // здесь будет использоваться middlewares.
-    // С загрузкой с сервера 2х статей: выбранной и следующей после неё.
-    // Т.е. в reducer будет приходить не id а response с 2мя статьями.
-
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch({            
             type: CLOSE_MENU_CATEGORIES            
         });
 
         dispatch({            
-            type: SELECT_ARTICLE,
+            type: SELECT_ARTICLE + START,
             payload: { id }            
         });
 
+        const { articles, categories } = getState();
+        const slider = mapToArr(articles.slider.entities);
+        const allArticles = mapToArr(articles.all.entities);
+
+        let artFocus = null;
+        let artNext = null;
+
+        artFocus = slider.filter(art => art.id === id);        
+
+        if(artFocus[0]){   //СТАТЬЯ ИЗ СЛАЙДЕРА
+            dispatch({
+                type: SELECT_ARTICLE + SUCCESS,
+                payload: {
+                    artFocus: artFocus[0],
+                    artNext
+                }
+            });
+        }else{  //СТАТЬИ НЕ ИЗ СЛАЙДЕРА
+            
+            allArticles.forEach((article, i, artList) => {
+
+                if(article.id === id){
+
+                    if( (i + 1) === artList.length ){   //ПОСЛЕДНЯЯ СТАТЬЯ В СПИСКЕ
+                        const option = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                from: (i + 1),
+                                selectCategories: categories.selected
+                            })
+                        }
+
+                        fetch('/api/article/fromto', option)
+                            .then(res => {                
+                                if(res.status >= 400) {                    
+                                    throw new Error(res.statusText);
+                                }
+                                return res.json();
+                            })
+                            .then(response => {
+                                dispatch({
+                                    type: SELECT_ARTICLE + SUCCESS,
+                                    payload: {
+                                        artFocus: article,
+                                        artNext: response[0] ? response[0] : null
+                                    }
+                                });
+
+                                if(response[0]){
+                                    dispatch({
+                                        type: UPDATE_ALL_ARTICLES,
+                                        payload: {
+                                            newArticles: response
+                                        }
+                                    });
+                                }
+                            })
+                            .catch(err => dispatch({ 
+                                type: SELECT_ARTICLE + FAIL, 
+                                payload: { err }
+                            }));                        
+                    }else if( (i + 2) === artList.length ){   //ПРЕД ПОСЛЕДНЯЯ СТАТЬЯ В СПИСКЕ
+                        dispatch({
+                            type: SELECT_ARTICLE + SUCCESS,
+                            payload: {
+                                artFocus: article,
+                                artNext: artList[i+1]
+                            }
+                        });
+
+                        const option = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                from: (i + 2),
+                                selectCategories: categories.selected
+                            })
+                        }       
+                        
+                        fetch('/api/article/fromto', option)
+                            .then(res => {                
+                                if(res.status >= 400) {                    
+                                    throw new Error(res.statusText);
+                                }
+                                return res.json();
+                            })
+                            .then(response => {
+                                if(response[0]){
+                                    dispatch({
+                                        type: UPDATE_ALL_ARTICLES,
+                                        payload: {
+                                            newArticles: response
+                                        }
+                                    });
+                                }
+                            })
+                            .catch(err => dispatch({ 
+                                type: SELECT_ARTICLE + FAIL, 
+                                payload: { err }
+                            }));                  
+                    }else{
+                        dispatch({
+                            type: SELECT_ARTICLE + SUCCESS,
+                            payload: {
+                                artFocus: article,
+                                artNext: artList[i+1]
+                            }
+                        });
+                    }
+                }
+            })
+        }        
     }
 }
 

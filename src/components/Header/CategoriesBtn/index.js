@@ -48,7 +48,7 @@ function mapStateToProps(state) {
     return {
         isMenuActive: state.menu.isActive,
         isCategorActive: state.categories.isActive,
-        artFocus: state.articles.artFocus
+        artFocus: state.articles.selectArticle.artFocus
     }
 }
 

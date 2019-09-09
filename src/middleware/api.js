@@ -3,6 +3,8 @@ import { START, SUCCESS, FAIL } from '../constants'
 export default store => next => action => {
 
     const { callApi, type, ...rest } = action;
+    console.log('Store:', store.getState().articles);
+    
 
     if(!callApi){
         next(action);

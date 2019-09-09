@@ -73,3 +73,45 @@ exports.getSlider = async (ctx, next) => {
             ctx.body = err;
         });
 }
+
+exports.getFiveStartingFrom = async (ctx, next) => {
+    let { from, selectCategories } = ctx.request.body;    
+
+    selectCategories = selectCategories.length <= 0 ? await getAllCategories() : selectCategories;        
+
+    await Article
+        .find({ isSlider: false, categories: {$in: selectCategories} }, 'id title description text autor images categories date')
+        .sort('date -title -autor')
+        .skip(from)
+        .limit(5)
+        .populate('categories', 'id name')
+        .then( articles => {            
+            ctx.body = articles.map( article => {
+                article = article.toObject();
+                delete article._id;
+                article.categories = article.categories.map( categor => {
+                    delete categor._id;
+                    return categor;
+                });
+                return article;
+            });
+        })
+        .catch( err => {
+            console.error(err);
+            ctx.body = err;
+        });
+
+}
+
+async function getAllCategories() {
+    
+    let categories = [];
+    await Categorie
+        .find({})
+        .then( catList => {
+            categories = catList.map( cat => cat.id);
+        })
+        .catch( err => console.error(err));
+
+    return categories;
+}

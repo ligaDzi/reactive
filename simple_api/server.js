@@ -38,6 +38,7 @@ router.get('/api/contact/all', routeContact.getAll);
 router.get('/api/menu/all', routeMenu.getAll);
 router.get('/api/categorie/all', routeCategorie.getAll);
 router.get('/api/article/slider', routeArticle.getSlider);
+router.post('/api/article/fromto', routeArticle.getFiveStartingFrom);
   
 
 

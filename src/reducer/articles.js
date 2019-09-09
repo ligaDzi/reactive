@@ -5,12 +5,13 @@ import {
     SELECT_ARTICLE,
     CLOSE_ARTICLE,
     LOAD_SLIDER_ARTICLES,
+    UPDATE_ALL_ARTICLES,
     START,
     SUCCESS,
     FAIL } from '../constants'
 
 import { arrToMap } from '../helpers'
-import { Record, OrderedMap } from 'immutable'
+import { Record, OrderedMap, merge } from 'immutable'
 
 const ArticleRecord = Record({    
     id: undefined,
@@ -23,18 +24,27 @@ const ArticleRecord = Record({
     date: undefined
 });
 
-const SliderRecord = Record({
+const ArticleListRecord = Record({
     isLoading: false,
     isLoaded: false,
     isError: false,
     entities: new OrderedMap({})
-})
+});
+
+const SelectArticle = Record({
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
+    artFocus: new ArticleRecord({}),
+    artNext: new ArticleRecord({})
+});
 
 const ReducerState = Record({
-    slider: new SliderRecord({}),
+    slider: new ArticleListRecord({}),
+    all: new ArticleListRecord({}),
+    selectArticle: new SelectArticle({}),
 
     carousel: new OrderedMap({}),
-    all: new OrderedMap({}),
     artFocus: new ArticleRecord({}),
     artNext: new ArticleRecord({})
 })
@@ -43,7 +53,7 @@ const defaultArticles = new ReducerState();
 
 export default (articles = defaultArticles, action) => {
 
-    const { type, payload, response } = action;    
+    const { type, payload, response, err } = action;    
     const allArticles = arrToMap( articleList, ArticleRecord );
 
     switch(type) {
@@ -60,9 +70,7 @@ export default (articles = defaultArticles, action) => {
                 .updateIn(['slider', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
                 .setIn(['slider', 'isLoading'], false)                
                 .setIn(['slider', 'isLoaded'], true)                
-                .setIn(['slider', 'isError'], false)                
-            // return articles
-            //     .set('carousel', allArticles.slice(0, 5));
+                .setIn(['slider', 'isError'], false);
 
         case LOAD_SLIDER_ARTICLES + FAIL: 
             return articles
@@ -70,44 +78,60 @@ export default (articles = defaultArticles, action) => {
                 .setIn(['slider', 'isLoaded'], false)                   
                 .setIn(['slider', 'isError'], true);                   
         
-        case LOAD_FROM_TO_ARTICLES:            
-            return articles.set(
-                    'all', 
-                    allArticles.slice( payload.from, payload.to )
-                );
+        case LOAD_FROM_TO_ARTICLES + START:
+            return articles.setIn(['all', 'isLoading'], true);
 
-        case SELECT_ARTICLE: 
-            // Когда я реализую сервер сюда будет приходить payload.response с 2мя статьями:
-            // выбранной и следующей за ней.  
-            // А этот код до document.body... пока временный
-            let artFocus = null;
-            let artNext = null;
-            articleList.forEach( (article, i, artList) => {
-                if( payload.id === article.id ){
-                    artFocus = new ArticleRecord( artList[i] );
-                    artNext = new ArticleRecord( (i + 1) < artList.length ? artList[i+1] : artList[0] );
-                }
-            });           
+        case LOAD_FROM_TO_ARTICLES + SUCCESS:
+            return articles
+            .updateIn(['all', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
+            .setIn(['all', 'isLoading'], false)                
+            .setIn(['all', 'isLoaded'], true)                
+            .setIn(['all', 'isError'], false);
 
-            document.body.classList.add('body-overflow-hidden'); 
+        case LOAD_FROM_TO_ARTICLES + FAIL: 
+            console.error(payload.err);                     
+            return articles
+                .setIn(['all', 'isLoading'], false)                   
+                .setIn(['all', 'isLoaded'], false)                   
+                .setIn(['all', 'isError'], true); 
 
-            if( articles.all.get(artNext.id) ) {
-                return articles
-                        .set('artFocus', artFocus)
-                        .set('artNext', artNext);
-            } else {
-                return articles
-                        .setIn(['all', artNext.id], artNext)
-                        .set('artFocus', artFocus)
-                        .set('artNext', artNext);
-            }
+        case SELECT_ARTICLE + START:
+            return articles.setIn(['selectArticle', 'isLoading'], true);
+
+        case SELECT_ARTICLE + SUCCESS: 
+            document.body.classList.add('body-overflow-hidden');              
+
+            return articles
+                .setIn(['selectArticle', 'artFocus'], new ArticleRecord(payload.artFocus))
+                .setIn(['selectArticle', 'artNext'], new ArticleRecord(payload.artNext))
+                .setIn(['selectArticle', 'isLoading'], false)                
+                .setIn(['selectArticle', 'isLoaded'], true)                
+                .setIn(['selectArticle', 'isError'], false);
+  
+        case SELECT_ARTICLE + FAIL: 
+            console.error(payload.err);            
+            return articles
+                .setIn(['selectArticle', 'isLoading'], false)                
+                .setIn(['selectArticle', 'isLoaded'], false)                
+                .setIn(['selectArticle', 'isError'], true);
+        
+        case UPDATE_ALL_ARTICLES:
+            return articles
+                .updateIn(['all', 'entities'], entities => entities.merge(arrToMap(payload.newArticles, ArticleRecord)))
             
         case CLOSE_ARTICLE:
             document.body.classList.remove('body-overflow-hidden'); 
+
+            const sortArtList = articles.all.entities.sort((x, y) => {
+                if(x.date > y.date) return 1;
+                if(x.date === y.date) return 0;
+                if(x.date < y.date) return -1;
+            });
+
             return articles
-                    .set('all', articles.all.slice(0, 5))
-                    .set('artFocus', new ArticleRecord({}))
-                    .set('artNext', new ArticleRecord({}));
+                .setIn(['all', 'entities'], sortArtList.slice(0, 5))
+                .setIn(['selectArticle', 'artFocus'], new ArticleRecord({}))
+                .setIn(['selectArticle', 'artNext'], new ArticleRecord({}));
             
     }
     

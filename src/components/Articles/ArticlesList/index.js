@@ -39,8 +39,9 @@ class ArticleList extends Component {
     }
 
     showArticleList = articles => {
-        const { getUniqId, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;   
-           
+        const { getUniqId, artFocus, selectArticle, closeArticle, leaveCursor } = this.props; 
+        let artNext = this.props.artNext.id ? this.props.artNext : false ;         
+        
       
         return articles.map( article => {
 

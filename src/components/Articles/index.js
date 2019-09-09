@@ -6,6 +6,7 @@ import { loadArticlesFromTo, selectArticle, closeArticle, loadAllArticles, leave
 import { filtreatedArticleSelector } from '../../selectors'
 
 import ArticlesList from './ArticlesList'
+import Loader from '../Loader'
 
 import './style.sass'
 
@@ -14,6 +15,11 @@ class Articles extends Component{
     static propTypes = {
         //from store
         articles: PropTypes.array,
+        isArticles: PropTypes.shape({
+            isLoading: PropTypes.bool,
+            isLoaded: PropTypes.bool,
+            isError: PropTypes.bool
+        }),
         artFocus: PropTypes.object,
         artNext: PropTypes.object,
         loadArticlesFromTo: PropTypes.func.isRequired,
@@ -22,15 +28,24 @@ class Articles extends Component{
         leaveCursor: PropTypes.func.isRequired,
     }
 
-    componentDidMount = () => {        
-        this.props.loadArticlesFromTo( 5, 10 );
+    componentDidMount = () => {   
+        const { isLoading, isLoaded } = this.props.isArticles;     
+        const { loadArticlesFromTo } = this.props;     
+
+        if(!isLoaded && !isLoading) loadArticlesFromTo();
     }
 
     render() {
-        const { articles, artFocus, artNext, selectArticle, closeArticle, leaveCursor } = this.props;
+        const { articles, artFocus, artNext, selectArticle, closeArticle, leaveCursor, isArticles } = this.props;
+
+        if(isArticles.isLoading) return <div className='articles-section'> <Loader color='white' /> </div>
+        if(isArticles.isError) {
+            console.error('Slider Error');
+            return null;
+        }
 
         return (
-            <div className='articles-section'>
+            <div className='articles-section'>                
                 <ArticlesList 
                     articles = {articles} 
                     artFocus = {artFocus}
@@ -47,8 +62,13 @@ class Articles extends Component{
 function mapStateToDispatch(state) {
     return {
         articles: filtreatedArticleSelector(state),
-        artFocus: state.articles.artFocus,
-        artNext: state.articles.artNext
+        isArticles: {
+            isLoading: state.articles.all.isLoading,
+            isLoaded: state.articles.all.isLoaded,
+            isError: state.articles.all.isError,
+        },
+        artFocus: state.articles.selectArticle.artFocus,
+        artNext: state.articles.selectArticle.artNext
     }
 }
 

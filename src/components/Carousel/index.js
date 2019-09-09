@@ -82,7 +82,7 @@ class Carousel extends Component {
         if( artFocus.id !== nextProps.artFocus.id ) {
 
             let flag = false;
-            articlesCrsl.forEach( item => {                
+            articlesCrsl.entities.forEach( item => {                
                 if( item.id === nextProps.artFocus.id ) { 
                     flag = true;
                 }
@@ -271,8 +271,8 @@ function mapStateToProps(state) {
             isError: state.articles.slider.isError,
             entities: mapToArr(state.articles.slider.entities)
         },        
-        artFocus: state.articles.artFocus,
-        artNext: state.articles.artNext
+        artFocus: state.articles.selectArticle.artFocus,
+        artNext: state.articles.selectArticle.artNext
     }
 }
 

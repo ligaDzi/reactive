@@ -53,7 +53,7 @@ class Logo extends Component {
 function mapStateToProps(state) {
     return {
         isMenuActive: state.menu.isActive,
-        isArticleOpen: state.articles.artFocus.id ? true : false
+        isArticleOpen: state.articles.selectArticle.artFocus.id ? true : false
     }
 }
 

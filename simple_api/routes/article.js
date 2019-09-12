@@ -74,13 +74,14 @@ exports.getSlider = async (ctx, next) => {
         });
 }
 
+//ИСПРАВИТ КАТЕГОРИИ
 exports.getFiveStartingFrom = async (ctx, next) => {
     let { from, selectCategories } = ctx.request.body;    
 
     selectCategories = selectCategories.length <= 0 ? await getAllCategories() : selectCategories;        
 
     await Article
-        .find({ isSlider: false, categories: {$in: selectCategories} }, 'id title description text autor images categories date')
+        .find({ isSlider: false, categories: {$in: selectCategories}}, 'id title description text autor images categories date')
         .sort('date -title -autor')
         .skip(from)
         .limit(5)

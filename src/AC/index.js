@@ -1,4 +1,5 @@
 import { mapToArr } from '../helpers'
+import { filtreatedArticleSelector } from '../selectors'
 import { 
     LOAD_ALL_ARTICLES,
     LOAD_SLIDER_ARTICLES, 
@@ -85,7 +86,7 @@ export function selectArticle(id) {
 
         const { articles, categories } = getState();
         const slider = mapToArr(articles.slider.entities);
-        const allArticles = mapToArr(articles.all.entities);
+        const allArticles = filtreatedArticleSelector(getState());
 
         let artFocus = null;
         let artNext = null;

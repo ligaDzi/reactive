@@ -53,7 +53,7 @@ const defaultArticles = new ReducerState();
 
 export default (articles = defaultArticles, action) => {
 
-    const { type, payload, response, err } = action;    
+    const { type, payload, response } = action;    
     const allArticles = arrToMap( articleList, ArticleRecord );
 
     switch(type) {

@@ -20,7 +20,7 @@ class ImgListArtSlider extends PureComponent {
         const { getUniqId } = this.props;
 
         return imgList.map( img => (
-            <img key = {getUniqId()} className = 'article-open__img' src = {`./src/img/${img}`} />            
+            <img key = {getUniqId()} className = 'article-open__img' src = {`../src/img/${img}`} />            
         ))
     }
 

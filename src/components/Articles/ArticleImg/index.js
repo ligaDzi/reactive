@@ -16,7 +16,7 @@ class ArticleImg extends PureComponent {
     
         return (        
             <div className='article-imgblock flex-center'>                
-                <img className='article-img' src={`./src/img/${name}`} />
+                <img className='article-img' src={`../src/img/${name}`} />
             </div>
         )
 

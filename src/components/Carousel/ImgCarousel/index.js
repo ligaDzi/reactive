@@ -39,14 +39,14 @@ class CarouselImg extends PureComponent{
                 transitionAppearTimeout = {500}        
             > 
                 <Flipped flipId = {`article-card-${nextSlide.id}`}>
-                    <div className='carousel-content flex' onClick = { this.handleClick } >
+                    <a className='carousel-content flex' onClick = { this.handleClick } >
                         <div className='carousel-item carousel-item__size flex-center'> 
-                            <img className='carousel-item__img' src={`./src/img/${activeSlide.images[0]}`}/> 
+                            <img className='carousel-item__img' src={`../src/img/${activeSlide.images[0]}`}/> 
                         </div>
                         <div className='carousel-item carousel-item__size flex-center'>
-                            <img className='carousel-item__img' src={`./src/img/${nextSlide.images[0]}`}/>
+                            <img className='carousel-item__img' src={`../src/img/${nextSlide.images[0]}`}/>
                         </div>
-                    </div>          
+                    </a>          
                 </Flipped>     
             </CSSTransitionGroup>
         )

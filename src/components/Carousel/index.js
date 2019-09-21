@@ -247,7 +247,7 @@ class Carousel extends Component {
                     {this.getTitleSlider()}
                 </div>
 
-                <button className='carousel-btn__content' onClick = {this.handleNext}>                    
+                <button  className='carousel-btn__content' onClick = {this.handleNext}>                    
                     <CursorProvider text = 'next'>
                         <div className='carousel-btn carousel-btn__size'>
                             <ImgCarousel 

@@ -6,6 +6,8 @@ import {
     CHANGE_SELECTED_CATEGORIES,
     TOGGLE_MENU_CATEGORIES,
     CLOSE_MENU_CATEGORIES,
+    HIDDEN_MENU_CATEGORIES,
+    VISIBLE_MENU_CATEGORIES,
     START,
     SUCCESS,
     FAIL } from '../constants'
@@ -22,7 +24,8 @@ const ReducerState = Record({
     isError: false,
     entities: new OrderedMap({}),
     selected: [],
-    isActive: false
+    isActive: false,
+    isHidden: false
 });
 
 const defaultCategories = new ReducerState();
@@ -47,7 +50,13 @@ export default ( categories = defaultCategories, action ) => {
             return categories            
                 .set('isLoading', false)
                 .set('isLoaded', false)
-                .set('isError', true);            
+                .set('isError', true); 
+        
+        case HIDDEN_MENU_CATEGORIES:
+            return categories.set('isHidden', true);
+
+        case VISIBLE_MENU_CATEGORIES:
+            return categories.set('isHidden', false);
 
         case TOGGLE_MENU_CATEGORIES:
             return categories.set( 'isActive', !categories.isActive );

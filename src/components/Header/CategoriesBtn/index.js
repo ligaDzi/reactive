@@ -15,6 +15,7 @@ class CategoriesBtn extends PureComponent {
         isCategorActive: PropTypes.bool,
         toggleMenuCategor: PropTypes.func.isRequired,
         isMenuActive: PropTypes.bool,
+        isCatMenuHidden: PropTypes.bool,
         artFocus: PropTypes.object
     }
 
@@ -25,9 +26,9 @@ class CategoriesBtn extends PureComponent {
     }
     
     render() { 
-        const { isCategorActive, isMenuActive, artFocus } = this.props;
+        const { isCategorActive, isCatMenuHidden, isMenuActive, artFocus } = this.props;
         const active = isCategorActive ? 'active' : '';
-        const hidden = (isMenuActive || artFocus.id) ? 'hidden' : '';
+        const hidden = (isCatMenuHidden || isMenuActive || artFocus.id) ? 'hidden' : '';
         const textCursor = isCategorActive ? 'close' : 'tag';      
         
         return ( 
@@ -48,6 +49,7 @@ function mapStateToProps(state) {
     return {
         isMenuActive: state.menu.isActive,
         isCategorActive: state.categories.isActive,
+        isCatMenuHidden: state.categories.isHidden,
         artFocus: state.articles.selectArticle.artFocus
     }
 }

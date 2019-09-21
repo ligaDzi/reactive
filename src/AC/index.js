@@ -15,6 +15,8 @@ import {
     CHANGE_SELECTED_CATEGORIES,
     TOGGLE_MENU_CATEGORIES,
     CLOSE_MENU_CATEGORIES,
+    HIDDEN_MENU_CATEGORIES,
+    VISIBLE_MENU_CATEGORIES,
     CURSOR_ENTER,
     CURSOR_LEAVE, 
     START,
@@ -260,6 +262,18 @@ export function toggleMenuCategor() {
 export function closeMenuCategor() {
     return {
         type: CLOSE_MENU_CATEGORIES
+    }
+}
+
+export function hiddenMenuCategories() {
+    return {
+        type: HIDDEN_MENU_CATEGORIES
+    }
+}
+
+export function visibleMenuCategories() {
+    return {
+        type: VISIBLE_MENU_CATEGORIES
     }
 }
 

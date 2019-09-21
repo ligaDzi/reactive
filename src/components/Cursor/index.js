@@ -21,7 +21,7 @@ class Cursor extends PureComponent {
     componentDidMount = () => {
         document.addEventListener('mousemove', ev => {
             this.handleMouveCursor(ev.clientX - 17.5, ev.clientY - 17.5);
-        })
+        });
     }
 
     handleMouveCursor = (pageX, pageY) => {

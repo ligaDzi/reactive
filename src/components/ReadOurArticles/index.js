@@ -21,6 +21,7 @@ const ReadOurArticles = ({ text }) => {
 }
 
 ReadOurArticles.propTypes = {
+    //From component
     text: PropTypes.string
 }
 

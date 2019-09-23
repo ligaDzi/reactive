@@ -46,6 +46,12 @@ const StudioPage = ({ isCatMenuHidden, hiddenMenuCategories }) => {
     )
 }
 
+StudioPage.propTypes = {
+    //From store
+    isCatMenuHidden: PropTypes.bool,
+    hiddenMenuCategories: PropTypes.func.isRequired
+}
+
 function mapStateToProps(state) {
     return {
         isCatMenuHidden: state.categories.isHidden

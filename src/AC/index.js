@@ -17,6 +17,7 @@ import {
     CLOSE_MENU_CATEGORIES,
     HIDDEN_MENU_CATEGORIES,
     VISIBLE_MENU_CATEGORIES,
+    LOAD_ALL_EMPLOEES,
     CURSOR_ENTER,
     CURSOR_LEAVE, 
     START,
@@ -287,5 +288,12 @@ export function enterCursor(text) {
 export function leaveCursor() {
     return {
         type: CURSOR_LEAVE
+    }
+}
+
+export function loadAllEmploees() {
+    return {
+        type: LOAD_ALL_EMPLOEES,
+        callApi: '/api/emploee/all'
     }
 }

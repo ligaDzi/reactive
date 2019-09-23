@@ -37,6 +37,7 @@ const Text = ({ text }) => {
 }
 
 Text.propTypes = {
+    //From component
     text: PropTypes.string
 }
 

@@ -14,6 +14,7 @@ import LandscapeLock from './LandscapeLock'
 import Cursor from './Cursor'
 import FactoryPage from './FactoryPage'
 import StudioPage from './StudioPage'
+import TeamPage from './TeamPage'
 
 import '../style/reset.css'
 
@@ -32,6 +33,7 @@ class Root extends Component {
                                 <Route exact path='/articles' component = { StartPage } />
                                 <Route exact path='/factory' component = { FactoryPage } />
                                 <Route exact path='/studio' component = { StudioPage } />
+                                <Route exact path='/team' component = { TeamPage } />
                                 <Route component = {NotFound} /> 
 
                             </Switch>

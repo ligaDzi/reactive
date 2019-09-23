@@ -1,0 +1,125 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../../node_modules/rfs/sass'
+
+.teamPage-managers
+    height: 85.6752rem
+    & > div
+        display: flex
+        max-width: 100%
+        height: 100%
+        width: 0
+        justify-content: flex-start
+        align-items: flex-start
+    & > div:nth-child(1)
+        flex-grow: 4
+        +r(sm)
+            display: none
+    & > div:nth-child(2)
+        flex-grow: 6
+    +r(xxl)
+        height: 80rem
+    +r(sm)
+        height: 240rem
+        padding: 160px 38px
+    +r(hsm)
+        height: 200rem
+    +r(xxs)
+        height: 180rem
+
+.partners
+    display: flex
+    flex-wrap: wrap
+    padding-top: 2.6612rem
+
+.partners-wrap
+    color: #fff
+    width: 15.5456rem
+    margin-right: 2.8513rem
+    margin-bottom: 1.9009rem    
+    +r(xxl)
+        width: 11.9456rem
+    +r(xl)
+        width: 9.0456rem
+    +r(sm)
+        width: 20.1943rem
+        margin-right: 0
+        margin-bottom: 6.9927rem   
+    +r(xxs) 
+        width: 14.7917rem
+        margin-bottom: 2.18rem
+    +r(hsm) 
+        width: 11.7917rem
+    &:nth-child(3n+2)
+        margin-top: 3.2314rem
+    &:nth-child(3n+3)
+        margin-right: 0
+        +r(xl)
+            margin-right: 2rem
+    &:nth-child(2n)
+        +r(sm)
+            margin-left: calc((100vw - 94px) * 1 / 10)
+
+.manager-root
+    padding: 0
+
+.manager-photo
+    display: flex
+    justify-content: center
+    flex-direction: column
+    align-items: center
+    width: 100%
+    height: 100%
+    &__wrap
+        width: 100%
+        height: 100%
+        max-height: 100%
+        display: block
+        img
+            max-width: 100%
+            max-height: 100%
+            object-fit: cover
+            width: 100%
+            height: 100%
+
+.manager-info
+    padding: 0.8364rem
+    &__name
+        margin-bottom: 0.5703rem
+        div
+            transition-property: color,opacity
+            transition-duration: .2s
+            font-size: 36px
+            line-height: 44px
+            font-weight: 700
+            color: #fff
+            +r(xxx)
+                font-size: 1.3686rem
+                line-height: 1.6727rem
+            +r(sm)
+                font-size: 1.507rem
+                line-height: 1.8687rem
+            +r(xxs)
+                font-size: 1.12083rem
+                line-height: 1.46667rem
+    &__position
+        transition-property: color,opacity
+        transition-duration: .2s
+        font-size: 14px
+        font-weight: 600
+        color: #fff
+        +r(xxx)
+            font-size: 0.5322rem
+            letter-spacing: 0.025em
+        +r(xl)
+            font-size: 0.6558rem
+            line-height: 0.9474rem
+        +r(sm)
+            font-size: 0.9042rem
+            line-height: 1.8687rem
+            letter-spacing: 0.0151rem
+        +r(xxs)
+            font-size: 0.6042rem
+            line-height: 1.2687rem
+            letter-spacing: 0.0151rem
+                    

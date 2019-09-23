@@ -78,7 +78,9 @@ const MultiCarousel = ({ listImg, getUniqId }) => {
 }
 
 MultiCarousel.propTypes = {
+  //From component
   listImg: PropTypes.array,
+  //From decorator
   getUniqId: PropTypes.func.isRequired
 }
 

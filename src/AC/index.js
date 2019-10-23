@@ -7,6 +7,7 @@ import {
     SELECT_ARTICLE,
     UPDATE_ALL_ARTICLES,
     CLOSE_ARTICLE,
+    SLICE_ARTICLE,
     LOAD_MENU,
     TOGGLE_MENU,
     CHANGE_DESCRIPTION_MENU,
@@ -25,8 +26,46 @@ import {
     FAIL} from '../constants'
 
 export function loadAllArticles() {
+    return (dispatch, getState) => {
+        const { categories } = getState();
+        
+        dispatch({
+            type: LOAD_ALL_ARTICLES + START
+        });
+
+        const option = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                selectCategories: categories.selected
+            })
+        }
+
+        fetch('/api/article/all', option)
+            .then(res => {                
+                if(res.status >= 400) {                    
+                    throw new Error(res.statusText);
+                }
+                return res.json();
+            })
+            .then(response => {
+                dispatch({
+                    type: LOAD_ALL_ARTICLES + SUCCESS,
+                    response 
+                })
+            })
+            .catch(err => dispatch({ 
+                type: LOAD_ALL_ARTICLES + FAIL, 
+                payload: { err }
+            }))
+    }
+}
+
+export function sliceArticles() {
     return {
-        type: LOAD_ALL_ARTICLES
+        type: SLICE_ARTICLE
     }
 }
 

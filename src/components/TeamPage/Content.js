@@ -42,7 +42,7 @@ const TeamPage = ({ isLoading, isLoaded, isError, emploees, loadAllEmploees }) =
     )
 }
 
-msContentScript.propTypes = {
+TeamPage.propTypes = {
     //From store
     isLoading: PropTypes.bool,
     isLoaded: PropTypes.bool,

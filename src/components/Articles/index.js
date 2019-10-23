@@ -30,10 +30,13 @@ class Articles extends Component{
 
     componentDidMount = () => {   
         const { isLoading, isLoaded } = this.props.isArticles;     
-        const { loadArticlesFromTo } = this.props;     
-
-        if(!isLoaded && !isLoading) loadArticlesFromTo();
+        const { articles, loadArticlesFromTo, sliceArticles } = this.props; 
+        
+        if(!isLoaded && !isLoading) {
+            loadArticlesFromTo();
+        }
     }
+
 
     render() {
         const { articles, artFocus, artNext, selectArticle, closeArticle, leaveCursor, isArticles } = this.props;

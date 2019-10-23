@@ -1,0 +1,85 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../style/_animation'
+@import '../../../../node_modules/rfs/sass'
+
+
+.archivePage-articleCard
+    position: absolute
+    overflow: visible
+    top: calc(-1 * 944px)
+    left: 0
+    padding-right: 20vw
+    width: auto
+    height: $archivePgHeight
+    white-space: normal
+    display: flex
+    align-items: flex-start
+    justify-content: flex-start
+    transition: transform .5s,-webkit-transform .5s
+    padding-left: 55.67797vh
+    transform-origin: left bottom
+    align-items: flex-start
+    // animation: archiveSlider 40s linear infinite
+    &:hover
+        animation-play-state: paused
+    &__content
+        animation-fill-mode: both
+        width: 51.35593vh
+        height: 72.20339vh
+        flex-shrink: 0
+        position: relative
+        top: $archivePgHeight
+        margin-right: 0
+
+.ap-ac-c__wrap
+    width: 100%
+    height: 100%
+    overflow: hidden
+    position: relative
+    display: flex
+    align-items: center
+    justify-content: center
+    img
+        max-height: 100%
+        height: 100%
+        object-fit: cover
+        object-position: 50% 50%
+        transition: transform .6s,-webkit-transform .6s
+        transform: scale(1)
+        max-width: none
+        flex-shrink: 0
+        width: calc(72.20339vh * 1.12288)
+
+
+
+
+.test-article
+    position: absolute
+    padding: 10px
+    width: 250px
+    height: 350px
+    // animation: archiveSlider 40s linear infinite
+    &:hover
+        animation-play-state: paused
+    &:nth-child(1)
+        top: 0
+        left: 0
+    &:nth-child(2)
+        top: 10%
+        left: 10%
+    &:nth-child(3)
+        top: 20%
+        left: 20%
+    &:nth-child(4)
+        top: 30%
+        left: 30%
+    &:nth-child(5)
+        top: 45%
+        left: 150%
+    &:nth-child(6)
+        top: 30%
+        left: 100%
+    img
+        width: 250px
+        height: 350px

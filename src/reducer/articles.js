@@ -1,4 +1,4 @@
-import { articles as articleList } from '../fixtures'
+
 import { 
     LOAD_ALL_ARTICLES,
     LOAD_FROM_TO_ARTICLES,
@@ -6,6 +6,7 @@ import {
     CLOSE_ARTICLE,
     LOAD_SLIDER_ARTICLES,
     UPDATE_ALL_ARTICLES,
+    SLICE_ARTICLE,
     START,
     SUCCESS,
     FAIL } from '../constants'
@@ -21,6 +22,7 @@ const ArticleRecord = Record({
     autor: undefined,
     images: [],
     categories: [],
+    isSlider: false,
     date: undefined
 });
 
@@ -42,11 +44,7 @@ const SelectArticle = Record({
 const ReducerState = Record({
     slider: new ArticleListRecord({}),
     all: new ArticleListRecord({}),
-    selectArticle: new SelectArticle({}),
-
-    carousel: new OrderedMap({}),
-    artFocus: new ArticleRecord({}),
-    artNext: new ArticleRecord({})
+    selectArticle: new SelectArticle({})
 })
 
 const defaultArticles = new ReducerState();
@@ -54,12 +52,17 @@ const defaultArticles = new ReducerState();
 export default (articles = defaultArticles, action) => {
 
     const { type, payload, response } = action;    
-    const allArticles = arrToMap( articleList, ArticleRecord );
+    
+    const sortArticleList = artList => {        
+        return artList.sort((x, y) => {
+            if(x.date > y.date) return 1;
+            if(x.date === y.date) return 0;
+            if(x.date < y.date) return -1;
+        });
+    }
+
 
     switch(type) {
-        case LOAD_ALL_ARTICLES:            
-            return articles
-                .set('all', allArticles);
                     
         case LOAD_SLIDER_ARTICLES + START: 
             return articles
@@ -78,9 +81,14 @@ export default (articles = defaultArticles, action) => {
                 .setIn(['slider', 'isLoaded'], false)                   
                 .setIn(['slider', 'isError'], true);                   
         
+        case LOAD_ALL_ARTICLES + START:
         case LOAD_FROM_TO_ARTICLES + START:
-            return articles.setIn(['all', 'isLoading'], true);
+            return articles
+                .setIn(['all', 'isLoading'], true)            
+                .setIn(['all', 'isLoaded'], false)                
+                .setIn(['all', 'isError'], false);
 
+        case LOAD_ALL_ARTICLES + SUCCESS:
         case LOAD_FROM_TO_ARTICLES + SUCCESS:
             return articles
             .updateIn(['all', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
@@ -88,6 +96,7 @@ export default (articles = defaultArticles, action) => {
             .setIn(['all', 'isLoaded'], true)                
             .setIn(['all', 'isError'], false);
 
+        case LOAD_ALL_ARTICLES + FAIL:
         case LOAD_FROM_TO_ARTICLES + FAIL: 
             console.error(payload.err);                     
             return articles
@@ -122,14 +131,19 @@ export default (articles = defaultArticles, action) => {
         case CLOSE_ARTICLE:
             document.body.classList.remove('body-overflow-hidden'); 
 
-            const sortArtList = articles.all.entities.sort((x, y) => {
-                if(x.date > y.date) return 1;
-                if(x.date === y.date) return 0;
-                if(x.date < y.date) return -1;
-            });
+            const sortArtList = sortArticleList(articles.all.entities); 
 
             return articles
                 .setIn(['all', 'entities'], sortArtList.slice(0, 5))
+                .setIn(['selectArticle', 'artFocus'], new ArticleRecord({}))
+                .setIn(['selectArticle', 'artNext'], new ArticleRecord({}));
+            
+        case SLICE_ARTICLE:
+            const list = articles.all.entities.filter( art => !art.isSlider);
+            const sortList = sortArticleList(list); 
+
+            return articles
+                .setIn(['all', 'entities'], sortList.slice(0, 5))
                 .setIn(['selectArticle', 'artFocus'], new ArticleRecord({}))
                 .setIn(['selectArticle', 'artNext'], new ArticleRecord({}));
             

@@ -1,0 +1,35 @@
+@import '../../../style/_color'
+@import '../../../style/_mixins'
+@import '../../../style/_animation'
+@import '../../../../node_modules/rfs/sass'
+
+
+.archivePage-list
+    display: flex
+    position: sticky
+    left: 0
+    top: 0
+    width: 100%
+    overflow-x: hidden
+    z-index: 10
+    background-color: $bgPageCl
+    &__wrap        
+        display: flex
+        width: 4722px
+        backface-visibility: hidden
+        height: 100vh
+        position: relative
+        top: 0
+        padding-bottom: 100vh
+        overflow-x: hidden
+        overflow-y: hidden
+        transform-style: preserve-3d
+        perspective: 1px
+        perspective-origin: 0 0
+        white-space: nowrap
+        -webkit-overflow-scrolling: touch
+        background-color: #fff
+        // animation: archiveSlider 40s linear infinite
+
+
+

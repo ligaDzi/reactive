@@ -15,6 +15,7 @@ import Cursor from './Cursor'
 import FactoryPage from './FactoryPage'
 import StudioPage from './StudioPage'
 import TeamPage from './TeamPage'
+import ArchivePage from './ArchivePage'
 
 import '../style/reset.css'
 
@@ -28,16 +29,35 @@ class Root extends Component {
                         <div>
                             <Header />
                             <Switch>
-
-                                <Route exact path='/' component = { StartPage } />
-                                <Route exact path='/articles' component = { StartPage } />
+                                <Route exact path='/'>
+                                    <div>
+                                        <StartPage />
+                                        <Footer />
+                                    </div>
+                                </Route>
+                                <Route exact path='/articles'>
+                                    <div>
+                                        <StartPage />
+                                        <Footer />
+                                    </div>
+                                </Route>
+                                <Route exact path='/studio'>
+                                    <div>
+                                        <StudioPage />
+                                        <Footer />
+                                    </div>
+                                </Route>
+                                <Route exact path='/team'>
+                                    <div>
+                                        <TeamPage />
+                                        <Footer />
+                                    </div>
+                                </Route>
                                 <Route exact path='/factory' component = { FactoryPage } />
-                                <Route exact path='/studio' component = { StudioPage } />
-                                <Route exact path='/team' component = { TeamPage } />
+                                <Route exact path='/archive' component = { ArchivePage } />
                                 <Route component = {NotFound} /> 
 
                             </Switch>
-                            <Footer />
                             <LandscapeLock />
                             <Cursor />
                         </div>

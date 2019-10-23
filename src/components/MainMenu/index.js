@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
  import { loadMenu } from '../../AC'
- import { mapToArr } from '../../helpers'
 
 import ListMainMenu from './ListMainMenu'
 import CopyrightMenu from './CopyrightMenu'
@@ -29,9 +28,12 @@ class MainMenu extends Component {
         if(!isMenuLoading && !isMenuLoaded) loadMenu(); 
     }
 
+
     render() {
         const { isMenuActive } = this.props;
         const active = isMenuActive ? 'active' : '';
+       
+        if(isMenuActive) this.refs.mainMenu.scrollTo(0, 0);
         
 
         return (

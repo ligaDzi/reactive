@@ -1,6 +1,6 @@
 import { Record, OrderedMap } from 'immutable'
 import { arrToMap } from '../helpers'
-import { categories as List } from '../fixtures'
+import history from '../history'
 import { 
     LOAD_ALL_CATEGORIES,
     CHANGE_SELECTED_CATEGORIES,
@@ -12,7 +12,11 @@ import {
     SUCCESS,
     FAIL } from '../constants'
 
-    
+ 
+const getKey = () => {
+    return Date.now() + Math.random();
+}
+
 const CategoriesRecord = Record({
     id: undefined,
     name: undefined
@@ -25,10 +29,12 @@ const ReducerState = Record({
     entities: new OrderedMap({}),
     selected: [],
     isActive: false,
-    isHidden: false
+    isHidden: false,
+    keyArchivePg: getKey()
 });
 
 const defaultCategories = new ReducerState();
+
 
 
 export default ( categories = defaultCategories, action ) => {
@@ -64,24 +70,39 @@ export default ( categories = defaultCategories, action ) => {
         case CLOSE_MENU_CATEGORIES:
             return categories.set( 'isActive', false );
 
-        case CHANGE_SELECTED_CATEGORIES: 
-            if(!payload.id){                
-                return categories.set( 'selected', [] );
+        case CHANGE_SELECTED_CATEGORIES:         
+            //Если пользователь находиться на страницы Архива статей, 
+            //то при выборе категорий надо перерисовывать полностью страницу ArchivePage.
+            //Связанно это с тем, что при изменении кол-ва статей должно меняться время обнуления скролла
+            const updateKeyArchPg = () => {
+                if(history.location.pathname == '/archive') {
+                    return getKey();                        
+                } else {
+                    return categories.keyArchivePg;
+                }
             }
+
+            if(!payload.id){                
+                return categories
+                        .set( 'selected', [] )
+                        .set('keyArchivePg', updateKeyArchPg());
+            } 
 
             const indexId = categories.selected.indexOf(payload.id);            
 
             if( indexId !== -1 ){                                
-                return categories.update(
-                    'selected',
-                    selected => selected.filter( id => id !== payload.id )
-                )               
+                return categories
+                        .update('selected', selected => selected.filter( id => id !== payload.id ))
+                        .set('keyArchivePg', updateKeyArchPg())
+                               
             } else {
-                return categories.update(
-                    'selected', 
-                    selected => selected.concat(payload.id)
-                )
+                return categories
+                        .update('selected', selected => selected.concat(payload.id))
+                        .set('keyArchivePg', updateKeyArchPg())
+                
             }
+
+            
     }
     return categories;
 }

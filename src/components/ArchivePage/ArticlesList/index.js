@@ -20,7 +20,7 @@ const ArticlesList = ({ articles, archivePgRef }) => {
         const timeout = setTimeout(() => {            
             animaSlider = runAnimaSlider();
             setListnerScroll();
-        }, 3000);
+        }, 3000);       
 
         return () => {
             clearInterval(animaSlider);
@@ -153,7 +153,7 @@ const ArticlesList = ({ articles, archivePgRef }) => {
                 j++;
             } else {
                 artClass = `ap-ac-c__${x}`;
-                artStyle = getArtStyleByPosition(x, p + 0.3, true);
+                artStyle = getArtStyleByPosition(x, p + 0.6, true);
                 x++;
             }
             artClassStyle.classList.push(artClass);

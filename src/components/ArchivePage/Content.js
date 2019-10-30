@@ -10,16 +10,18 @@ import ArticlesList from './ArticlesList'
 
 import './style.sass'
 
-const Content = ({ articles, isArticles, loadAllArticles, sliceArticles }) => {
+const Content = ({ articles, isArticles, keyArchivePg, loadAllArticles, sliceArticles }) => {
 
     const archivePgRef = useRef();
 
-    useEffect(() => {        
+    useEffect(() => { 
+              
         if(!isArticles.isLoading){
             loadAllArticles();              
         } 
         return () => sliceArticles();
     }, []);
+
         
     const renderArtList = () => {   
         if(isArticles.isLoaded) {
@@ -33,7 +35,7 @@ const Content = ({ articles, isArticles, loadAllArticles, sliceArticles }) => {
         return null;
     }
     return (
-        <div className='archivePg' ref={archivePgRef}>
+        <div className='archivePg' ref={archivePgRef} key={keyArchivePg}>
             <div className='archivePg__height'></div>
             { renderArtList() }
         </div>
@@ -48,6 +50,7 @@ Content.propTypes = {
         isLoaded: PropTypes.bool,
         isError: PropTypes.bool
     }),
+    keyArchivePg: PropTypes.number,
     loadAllArticles: PropTypes.func.isRequired,
     sliceArticles: PropTypes.func.isRequired
 }
@@ -59,7 +62,8 @@ function mapStateToProps(state) {
             isLoading: state.articles.all.isLoading,
             isLoaded: state.articles.all.isLoaded,
             isError: state.articles.all.isError,
-        }
+        },
+        keyArchivePg: state.categories.keyArchivePg
     }
 }
 

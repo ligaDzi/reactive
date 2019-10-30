@@ -12,7 +12,11 @@
     overflow: hidden
     display: flex
     align-items: center
-    justify-content: center    
+    justify-content: center 
+    transition: transform 0s ease 0s      
+    -webkit-backface-visibility: hidden
+    backface-visibility: hidden 
+    transform-origin: left bottom
     img
         max-height: 100%
         height: 100%
@@ -46,7 +50,6 @@
     top: 0
     width: 51.35593vh
     height: 72.20339vh
-    z-index: 2
 .ap-ac-c__4
     top: 15%
     width: 25.59322vh

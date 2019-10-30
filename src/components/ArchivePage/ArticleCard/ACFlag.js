@@ -6,11 +6,9 @@ import './style.sass'
 const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag }) => {
 
     const artFlagRef = useRef();
-    useEffect(() => {
-            
-            setPositionArtFlag(artFlagRef.current.getBoundingClientRect().x);
-        
-    });
+    useEffect(() => {                        
+            setPositionArtFlag(artFlagRef.current.getBoundingClientRect().x);        
+    }, []);
 
     return (
         <div 

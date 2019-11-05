@@ -1,29 +1,37 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { Flipper, Flipped } from 'react-flip-toolkit'
 
+import { closeArticle, selectArticle, leaveCursor } from '../../../AC'
+import { filtreatedArticleSelector } from '../../../selectors'
+import utilsDecor from '../../../decorators/utils'
 
 import ArticleCard from '../ArticleCard'
+import OpenArticle from '../../Articles/OpenArticle'
+import NextOpenArticle from '../../Articles/NextOpenArticle'
 
 import './style.sass'
 
-const ArticlesList = ({ articles, archivePgRef }) => {
+const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, getUniqId }) => {
 
+    
     const archivePgListRef = useRef();
     const [posXArtFlagState, setPosXArtFlagState] = useState();
     const [scrolLeftMSState, setScrolLeftMSState] = useState({first: 0, second: 0, third: 0, fourth: 0, fifth: 0});
+    const [animaSliderState, setAnimaSliderState] = useState();
 
-    let animaSlider = null;
     let isOneWheel = true;
 
     useEffect(() => {
         const timeout = setTimeout(() => {            
-            animaSlider = runAnimaSlider();
+            setAnimaSliderState(runAnimaSlider());
             setListnerScroll();
         }, 3000);       
 
         return () => {
-            clearInterval(animaSlider);
+            clearInterval(animaSliderState);
             clearTimeout(timeout);
         }
     }, []);
@@ -65,8 +73,9 @@ const ArticlesList = ({ articles, archivePgRef }) => {
         }, 10);
     }
 
-    const setListnerScroll = () => {
-       
+    const setListnerScroll = () => {       
+        if(artFocus) return;
+
         archivePgListRef.current.addEventListener('wheel', function(){            
             timeoutAnimaSlider();
         });
@@ -74,11 +83,11 @@ const ArticlesList = ({ articles, archivePgRef }) => {
 
     const timeoutAnimaSlider = () => {
 
-        if(animaSlider) clearInterval(animaSlider);
+        if(animaSliderState) clearInterval(animaSliderState);
             
         if(isOneWheel) {
             setTimeout(() => {
-                animaSlider = runAnimaSlider();
+                setAnimaSliderState(runAnimaSlider());
 
                 isOneWheel = true;
             }, 5000);
@@ -102,32 +111,78 @@ const ArticlesList = ({ articles, archivePgRef }) => {
         setPosXArtFlagState(x);
     }
 
+    const handleOpenArt = id => {  
+        archivePgRef.current.scrollTop = 0;                
+        clearInterval(animaSliderState);
+        selectArticle(id);
+    }
+    const handleCloseArt = () => {
+        closeArticle();
+        setTimeout(() => {
+            setAnimaSliderState(runAnimaSlider());
+        }, 500);
+    }
+
     // Первые 7 статей должны быть и последними семью статьями, для эффекта бесканечной прокрутки.
     const showArtList = articles.concat(articles.slice(0, 7)); 
     const renderArtList = () => {
-        const { classList, styleList } = getArtClassAndStyleLists(showArtList);        
+        const { classList, styleList } = getArtClassAndStyleLists(showArtList); 
                        
-        return showArtList.map((art, i, arr) => { 
+        return showArtList.map((article, i, arr) => { 
+
+            const articleNext = artNext.id ? artNext : false;
+
+            if(i < arr.length - 7){
+                if(artFocus.id === article.id){
+                    return  <OpenArticle 
+                                key = {article.id} 
+                                article = {article} 
+                                closeArticle = {handleCloseArt}
+                                artNext = {articleNext}
+                                openArticle = {selectArticle}
+                                leaveCursor = {leaveCursor}
+                            />
+                } 
+                if(artNext.id === article.id){
+                    return <NextOpenArticle 
+                                key = {article.id}
+                                article = {article}
+                            />
+                }
+            }
+
             if(i == arr.length - 7){
                 // Этот блок будет играть роль флага, по его положению на страницы определяется когда scrollTop нужно присвоить ноль.
                 return <ArticleCard 
-                            key={art.id+i} 
-                            article={art}
+                            key={`${article.id}_repeat`} 
+                            article={article}
                             artClass={classList[i]} 
                             artStyle={styleList[i]} 
                             isArtFlagRef={true} 
                             archivePgRef={archivePgRef}
                             setPositionArtFlag={setPositionArtFlag} 
+                            openArticle = {handleOpenArt}
+                            leaveCursor = {leaveCursor}
                         />                
             }            
             return <ArticleCard 
-                        key={art.id+i} 
-                        article={art} 
+                        key={getKeyArtCard(i, arr.length, article.id)} 
+                        article={article} 
                         artClass={classList[i]} 
                         artStyle={styleList[i]} 
                         isArtFlagRef={false} 
+                        openArticle = {handleOpenArt}
+                        leaveCursor = {leaveCursor}
                     />
-        });
+        });        
+    }
+
+    const getKeyArtCard = (i, arrLength, id) => {
+        if(i < arrLength - 7){
+            return id;
+        } else {
+            return `${id}_repeat`;
+        }
     }
 
     const getArtClassAndStyleLists = list => {
@@ -231,6 +286,7 @@ const ArticlesList = ({ articles, archivePgRef }) => {
     }
 
     return (
+
         <div className='archivePage-list'>
             <CSSTransitionGroup
                 transitionName = 'ap-list__anima'
@@ -240,24 +296,50 @@ const ArticlesList = ({ articles, archivePgRef }) => {
                 transitionLeaveTimeout = {100}
                 component = 'div'
             >
-                <div className='ap-list__anima'>
-                    <div className='archivePage-list__wrap' ref={archivePgListRef}>               
-                            
-                            {
-                                renderArtList()
-                            }
-                        <div className='archivePage-articleCard__width'></div>
+                <Flipper flipKey={artFocus.id} className='ap-list__anima'>
+                    <div className='ap-list__anima'>
+                        <div className='archivePage-list__wrap' ref={archivePgListRef}> 
+                                
+                                { renderArtList() }
+
+                            <div className='archivePage-articleCard__width'></div>
+                        </div>
                     </div>
-                </div>
-            </CSSTransitionGroup>
+                </Flipper>
+            </CSSTransitionGroup>            
         </div>
+
     )
 }
 
 ArticlesList.propTypes = {
-    //From component
+    //From Store
     articles: PropTypes.array,
-    archivePgRef: PropTypes.object,
+    artFocus: PropTypes.object,
+    artNext: PropTypes.object,
+    closeArticle: PropTypes.func.isRequired,
+    leaveCursor: PropTypes.func.isRequired,
+    selectArticle: PropTypes.func.isRequired,
+    //From component
+    archivePgRef: PropTypes.object,        
+    //from decorator
+    getUniqId: PropTypes.func.isRequired
 }
 
-export default ArticlesList;
+function mapStateToProps(state) {
+    return {
+        articles: filtreatedArticleSelector(state),
+        artFocus: state.articles.selectArticle.artFocus,
+        artNext: state.articles.selectArticle.artNext,
+    }
+}
+
+const mapToDispatch = {
+    closeArticle,
+    leaveCursor,
+    selectArticle
+}
+
+const decorator = connect( mapStateToProps, mapToDispatch );
+
+export default decorator( utilsDecor(ArticlesList) );

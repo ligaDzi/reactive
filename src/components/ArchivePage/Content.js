@@ -10,7 +10,7 @@ import ArticlesList from './ArticlesList'
 
 import './style.sass'
 
-const Content = ({ articles, isArticles, keyArchivePg, loadAllArticles, sliceArticles }) => {
+const Content = ({ isArticles, keyArchivePg, loadAllArticles, sliceArticles }) => {
 
     const archivePgRef = useRef();
 
@@ -25,7 +25,7 @@ const Content = ({ articles, isArticles, keyArchivePg, loadAllArticles, sliceArt
         
     const renderArtList = () => {   
         if(isArticles.isLoaded) {
-            return <ArticlesList articles={ articles } archivePgRef={archivePgRef} />
+            return <ArticlesList archivePgRef={archivePgRef} />
         } else return null;
     }
 
@@ -44,7 +44,6 @@ const Content = ({ articles, isArticles, keyArchivePg, loadAllArticles, sliceArt
 
 Content.propTypes = {
     //from store
-    articles: PropTypes.array,
     isArticles: PropTypes.shape({
         isLoading: PropTypes.bool,
         isLoaded: PropTypes.bool,
@@ -57,7 +56,6 @@ Content.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        articles: filtreatedArticleSelector(state),
         isArticles: {
             isLoading: state.articles.all.isLoading,
             isLoaded: state.articles.all.isLoaded,

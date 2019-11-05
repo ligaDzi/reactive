@@ -1,14 +1,24 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import './style.sass'
 
-const ACSimple = ({ article, artClass, artStyle }) => {
+
+const ACSimple = ({ article, artClass, artStyle, openArticle, leaveCursor }) => {
+
+    const handleClickCmp = () => {
+        if(openArticle){
+            leaveCursor();
+            openArticle(article.id);
+        }
+    }     
+       
 
     return (
         <div 
             className={`archivePage-articleCard ${artClass}`} 
             style={artStyle} 
+            onClick={handleClickCmp}
         >
             <img src={`../src/img/${article.images[0]}`} />
             
@@ -32,6 +42,8 @@ ACSimple.propTypes = {
     }),
     artClass: PropTypes.string,
     artStyle: PropTypes.object,
+    openArticle: PropTypes.func.isRequired,
+    leaveCursor: PropTypes.func.isRequired,
 }
 
 export default ACSimple;

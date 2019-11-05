@@ -9,6 +9,8 @@ class CursorPropvider extends Component {
     static propTypes = {
         //from store
         isHover: PropTypes.bool,
+        enterCursor: PropTypes.func.isRequired,
+        leaveCursor: PropTypes.func.isRequired,
         //from component
         text: PropTypes.string,
         isHidden: PropTypes.bool

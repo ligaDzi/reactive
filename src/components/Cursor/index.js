@@ -8,6 +8,7 @@ class Cursor extends PureComponent {
 
     static propTypes = {
         myContent: PropTypes.object,
+        //From store
         isHover: PropTypes.bool,
         text: PropTypes.string
     }

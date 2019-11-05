@@ -1,58 +1,43 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { Flipped } from 'react-flip-toolkit'
 
 import ACSimple from './ACSimple'
 import ACFlag from './ACFlag'
+import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 
-const ArticleCard = ({ article, artClass, artStyle, isArtFlagRef, archivePgRef, setPositionArtFlag }) => {
+const ArticleCard = ({ article, artClass, artStyle, isArtFlagRef, archivePgRef, setPositionArtFlag, openArticle, leaveCursor }) => {
 
     return (
         isArtFlagRef ? (
-            <ACFlag 
-                article={article}
-                artClass={artClass}
-                artStyle={artStyle}
-                setPositionArtFlag={setPositionArtFlag}
-            />
+            <div>
+                <CursorProvider text='open'>                    
+                    <ACFlag 
+                        article={article}
+                        artClass={artClass}
+                        artStyle={artStyle}
+                        setPositionArtFlag={setPositionArtFlag}
+                        openArticle={openArticle}
+                        leaveCursor={leaveCursor}
+                    />
+                </CursorProvider>
+            </div>
         ) : (
-            <ACSimple 
-                article={article}
-                artClass={artClass}
-                artStyle={artStyle}
-            />
+            <div>
+                <CursorProvider text='open'>
+                    <ACSimple 
+                        article={article}
+                        artClass={artClass}
+                        artStyle={artStyle}
+                        openArticle={openArticle}
+                        leaveCursor={leaveCursor}
+                    />
+                </CursorProvider>
+            </div>
         )
     )
-    
-    // if(isArtFlagRef){
-    //     const artFlagRef = useRef();
-    //     useEffect(() => {
-                
-    //             setPositionArtFlag(artFlagRef.current.getBoundingClientRect().x);
-            
-    //     });
-    //     return (
-    //         <div 
-    //             className={`archivePage-articleCard ${artClass}`} 
-    //             ref={artFlagRef} 
-    //             style={artStyle} 
-    //         >
-    //             <img src={`../src/img/${article.images[0]}`} />
-                
-    //         </div>
-    //     )        
-    // } else {
-    //     return (
-    //         <div 
-    //             className={`archivePage-articleCard ${artClass}`} 
-    //             style={artStyle} 
-    //         >
-    //             <img src={`../src/img/${article.images[0]}`} />
-                
-    //         </div>
-    //     )
-    // }
 }
 
 ArticleCard.propTypes = {
@@ -73,6 +58,8 @@ ArticleCard.propTypes = {
     isArtFlagRef: PropTypes.bool,
     setPositionArtFlag: PropTypes.func,    
     archivePgRef: PropTypes.object,
+    openArticle: PropTypes.func.isRequired,
+    leaveCursor: PropTypes.func.isRequired,
 }
 
 export default ArticleCard;

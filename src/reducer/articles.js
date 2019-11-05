@@ -13,6 +13,7 @@ import {
 
 import { arrToMap } from '../helpers'
 import { Record, OrderedMap, merge } from 'immutable'
+import history from '../history'
 
 const ArticleRecord = Record({    
     id: undefined,
@@ -61,6 +62,29 @@ export default (articles = defaultArticles, action) => {
         });
     }
 
+    const scrollHidden = path => {
+        switch (path) {
+            case '/':
+                document.body.classList.add('body-overflow-hidden');
+                break;
+            case '/archive':
+                document.querySelector('.archivePg').classList.add('body-overflow-Y-hidden');
+                break;
+
+        }
+    }
+    const scrollShow = path => {
+        switch (path) {
+            case '/':
+                document.body.classList.remove('body-overflow-hidden');
+                break;
+            case '/archive':
+                document.querySelector('.archivePg').classList.remove('body-overflow-Y-hidden');
+                break;
+
+        }
+    }
+
 
     switch(type) {
                     
@@ -107,8 +131,9 @@ export default (articles = defaultArticles, action) => {
         case SELECT_ARTICLE + START:
             return articles.setIn(['selectArticle', 'isLoading'], true);
 
-        case SELECT_ARTICLE + SUCCESS: 
-            document.body.classList.add('body-overflow-hidden');              
+        case SELECT_ARTICLE + SUCCESS:         
+            // document.body.classList.add('body-overflow-hidden');  
+            scrollHidden(history.location.pathname);            
 
             return articles
                 .setIn(['selectArticle', 'artFocus'], new ArticleRecord(payload.artFocus))
@@ -129,12 +154,20 @@ export default (articles = defaultArticles, action) => {
                 .updateIn(['all', 'entities'], entities => entities.merge(arrToMap(payload.newArticles, ArticleRecord)))
             
         case CLOSE_ARTICLE:
-            document.body.classList.remove('body-overflow-hidden'); 
+            // document.body.classList.remove('body-overflow-hidden'); 
+            scrollShow(history.location.pathname);
 
-            const sortArtList = sortArticleList(articles.all.entities); 
+            const sortArtList = sortArticleList(articles.all.entities);
+            const getArtList = () => {
+                if(history.location.pathname === '/archive'){
+                    return sortArtList;
+                } else{
+                    return sortArtList.slice(0, 5)
+                }
+            } 
 
             return articles
-                .setIn(['all', 'entities'], sortArtList.slice(0, 5))
+                .setIn(['all', 'entities'], getArtList())
                 .setIn(['selectArticle', 'artFocus'], new ArticleRecord({}))
                 .setIn(['selectArticle', 'artNext'], new ArticleRecord({}));
             

@@ -40,7 +40,7 @@ class ImgListArtSlider extends PureComponent {
         const { activeImg, imgList } = this.props;        
             
         return (
-            <div className = 'imglist__wrapp' style = {{transform: `translateY(${(-100 * activeImg) - this.getIndex(activeImg)}vh)`}}>
+            <div className = 'imglist__wrapp flex fd-column' style = {{transform: `translateY(${(-100 * activeImg)}vh)`}}>
                 {this.renderList(imgList)}
             </div>
         )

@@ -3,18 +3,26 @@ import PropTypes from 'prop-types'
 
 import './style.sass'
 
-const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag }) => {
+const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag, openArticle, leaveCursor }) => {
 
     const artFlagRef = useRef();
     useEffect(() => {          
         setPositionArtFlag(artFlagRef.current.getBoundingClientRect().x);        
     }, []);
 
+    const handleClickCmp = () => {
+        if(openArticle){
+            leaveCursor();
+            openArticle(article.id);
+        }
+    }
+
     return (
         <div 
             className={`archivePage-articleCard ${artClass}`} 
             ref={artFlagRef} 
-            style={artStyle} 
+            style={artStyle}
+            onClick={handleClickCmp} 
         >
             <img src={`../src/img/${article.images[0]}`} />
             
@@ -38,6 +46,8 @@ ACFlag.propTypes = {
     artClass: PropTypes.string,
     artStyle: PropTypes.object,
     setPositionArtFlag: PropTypes.func,   
+    openArticle: PropTypes.func.isRequired,
+    leaveCursor: PropTypes.func.isRequired,
 }
 
 export default ACFlag;

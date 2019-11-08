@@ -30,9 +30,21 @@ class Articles extends Component{
 
     componentDidMount = () => {   
         const { isLoading, isLoaded } = this.props.isArticles;     
-        const { articles, loadArticlesFromTo, sliceArticles } = this.props; 
+        const { loadArticlesFromTo, articles } = this.props; 
+
+        console.log('-------------------------');
+        console.log('-------------------------');
+        console.log('-------------------------');
+        console.log('-------------------------');
+        console.log('articles = ', articles);
+        console.log('-------------------------');
+        console.log('-------------------------');
+        console.log('-------------------------');
+        console.log('-------------------------');
         
-        if(!isLoaded && !isLoading) {
+       
+        
+        if(!isLoaded && !isLoading) { 
             loadArticlesFromTo();
         }
     }
@@ -45,7 +57,11 @@ class Articles extends Component{
         if(isArticles.isError) {
             console.error('Slider Error');
             return null;
-        }
+        }  
+
+        console.log('++++++++++++++++++++++++');
+        console.log('articles = ', articles);
+        console.log('++++++++++++++++++++++++');
 
         return (
             <div className='articles-section'>                

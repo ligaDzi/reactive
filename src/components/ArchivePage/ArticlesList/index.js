@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { CSSTransitionGroup } from 'react-transition-group'
@@ -7,6 +7,7 @@ import { Flipper, Flipped } from 'react-flip-toolkit'
 import { closeArticle, selectArticle, leaveCursor } from '../../../AC'
 import { filtreatedArticleSelector } from '../../../selectors'
 import utilsDecor from '../../../decorators/utils'
+import history from '../../../history'
 
 import ArticleCard from '../ArticleCard'
 import OpenArticle from '../../Articles/OpenArticle'
@@ -14,29 +15,21 @@ import NextOpenArticle from '../../Articles/NextOpenArticle'
 
 import './style.sass'
 
-const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, getUniqId }) => {
+const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, getUniqId, isMenuActive, isCatMenuActive }) => {
 
     
     const archivePgListRef = useRef();
     const [posXArtFlagState, setPosXArtFlagState] = useState();
     const [scrolLeftMSState, setScrolLeftMSState] = useState({first: 0, second: 0, third: 0, fourth: 0, fifth: 0});
     const [animaSliderState, setAnimaSliderState] = useState();
+    const [isWheelState, setIsWheelState] = useState(false);
+    const [wheelTimeoutState, setWheelTimeoutState] = useState();
 
     let isOneWheel = true;
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {            
-            setAnimaSliderState(runAnimaSlider());
-            setListnerScroll();
-        }, 3000);       
 
-        return () => {
-            clearInterval(animaSliderState);
-            clearTimeout(timeout);
-        }
-    }, []);
+
     
-
     useEffect(() => { 
                        
         archivePgRef.current.onscroll = () => {  
@@ -58,9 +51,50 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
         }
     });
 
+    useEffect(() => {        
+        let timeout;
+
+        if(artFocus.id) return;
+        
+        if((isCatMenuActive || isMenuActive) && animaSliderState) {
+
+            clearInterval(animaSliderState);
+
+        } else if(!isCatMenuActive && !isMenuActive) {
+
+            timeout = setTimeout(() => {                 
+                setAnimaSliderState(runAnimaSlider());              
+                setListnerScroll();
+            }, 1000);
+
+        }
+        return () => {
+            clearTimeout(timeout);
+            clearInterval(animaSliderState);
+        }
+    }, [isCatMenuActive, isMenuActive]);
+
+    useEffect(() => {
+        
+        if(isWheelState){
+            timeoutAnimaSlider();
+        }
+        return () => clearTimeout(wheelTimeoutState);
+        
+    }, [isWheelState]);
+
+    useEffect(() => {
+        if(artFocus.id && wheelTimeoutState){
+            clearTimeout(wheelTimeoutState)
+        }
+    }, [artFocus]);
+
+
+
     const runAnimaSlider = () => {
         return setInterval(() => {
-
+            if(!archivePgListRef.current) return null;
+            
             const { offsetWidth, scrollLeft, scrollWidth } = archivePgListRef.current;
             let scrollList = offsetWidth + scrollLeft + 430;
                         
@@ -72,25 +106,36 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
             
         }, 10);
     }
-
+    
     const setListnerScroll = () => {       
-        if(artFocus) return;
 
-        archivePgListRef.current.addEventListener('wheel', function(){            
-            timeoutAnimaSlider();
+        archivePgListRef.current.addEventListener('wheel', function(){  
+            setIsWheelState(true);
         });
     }
 
     const timeoutAnimaSlider = () => {
-
-        if(animaSliderState) clearInterval(animaSliderState);
+        
+        if(animaSliderState) {            
+            clearInterval(animaSliderState);
+        }
             
         if(isOneWheel) {
-            setTimeout(() => {
-                setAnimaSliderState(runAnimaSlider());
-
-                isOneWheel = true;
+            const timeout = setTimeout(() => {
+                /**
+                 * Эта проверка нужна для пердотвращения утечки памяти.
+                 * При скроле останавливается анимация и через 5 секунд снова запускается,
+                 * если в эти 5 секунд перейти на другую страницу то анимация все равно запуститься 
+                 * и очистка интервала и таймера в useEffect() не поможет.
+                 */
+                if(history.location.pathname === '/archive'){
+                    setAnimaSliderState(runAnimaSlider());
+    
+                    isOneWheel = true;
+                    setIsWheelState(false);
+                }
             }, 5000);
+            setWheelTimeoutState(timeout);
         }
         isOneWheel = false;
     }
@@ -120,14 +165,16 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
         closeArticle();
         setTimeout(() => {
             setAnimaSliderState(runAnimaSlider());
+            setIsWheelState(false);
         }, 500);
     }
 
     // Первые 7 статей должны быть и последними семью статьями, для эффекта бесканечной прокрутки.
     const showArtList = articles.concat(articles.slice(0, 7)); 
     const renderArtList = () => {
-        const { classList, styleList } = getArtClassAndStyleLists(showArtList); 
-                       
+        const { classList, styleList } = getArtClassAndStyleLists(showArtList);
+        
+        
         return showArtList.map((article, i, arr) => { 
 
             const articleNext = artNext.id ? artNext : false;
@@ -154,7 +201,7 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
             if(i == arr.length - 7){
                 // Этот блок будет играть роль флага, по его положению на страницы определяется когда scrollTop нужно присвоить ноль.
                 return <ArticleCard 
-                            key={`${article.id}_repeat`} 
+                            key={`${article.id}_repeat2`} 
                             article={article}
                             artClass={classList[i]} 
                             artStyle={styleList[i]} 
@@ -320,6 +367,8 @@ ArticlesList.propTypes = {
     closeArticle: PropTypes.func.isRequired,
     leaveCursor: PropTypes.func.isRequired,
     selectArticle: PropTypes.func.isRequired,
+    isMenuActive: PropTypes.bool,
+    isCatMenuActive: PropTypes.bool,
     //From component
     archivePgRef: PropTypes.object,        
     //from decorator
@@ -331,6 +380,8 @@ function mapStateToProps(state) {
         articles: filtreatedArticleSelector(state),
         artFocus: state.articles.selectArticle.artFocus,
         artNext: state.articles.selectArticle.artNext,
+        isCatMenuActive: state.categories.isActive,
+        isMenuActive: state.menu.isActive,
     }
 }
 

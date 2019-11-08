@@ -115,10 +115,10 @@ export default (articles = defaultArticles, action) => {
         case LOAD_ALL_ARTICLES + SUCCESS:
         case LOAD_FROM_TO_ARTICLES + SUCCESS:
             return articles
-            .updateIn(['all', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
-            .setIn(['all', 'isLoading'], false)                
-            .setIn(['all', 'isLoaded'], true)                
-            .setIn(['all', 'isError'], false);
+                .updateIn(['all', 'entities'], entities => arrToMap(response, ArticleRecord).merge(entities))
+                .setIn(['all', 'isLoading'], false)                
+                .setIn(['all', 'isLoaded'], true)                
+                .setIn(['all', 'isError'], false);
 
         case LOAD_ALL_ARTICLES + FAIL:
         case LOAD_FROM_TO_ARTICLES + FAIL: 
@@ -132,7 +132,6 @@ export default (articles = defaultArticles, action) => {
             return articles.setIn(['selectArticle', 'isLoading'], true);
 
         case SELECT_ARTICLE + SUCCESS:         
-            // document.body.classList.add('body-overflow-hidden');  
             scrollHidden(history.location.pathname);            
 
             return articles
@@ -154,7 +153,6 @@ export default (articles = defaultArticles, action) => {
                 .updateIn(['all', 'entities'], entities => entities.merge(arrToMap(payload.newArticles, ArticleRecord)))
             
         case CLOSE_ARTICLE:
-            // document.body.classList.remove('body-overflow-hidden'); 
             scrollShow(history.location.pathname);
 
             const sortArtList = sortArticleList(articles.all.entities);
@@ -162,7 +160,7 @@ export default (articles = defaultArticles, action) => {
                 if(history.location.pathname === '/archive'){
                     return sortArtList;
                 } else{
-                    return sortArtList.slice(0, 5)
+                    return sortArtList.slice(0, 5);
                 }
             } 
 

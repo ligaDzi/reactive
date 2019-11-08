@@ -6,7 +6,6 @@ import { Flipper, Flipped } from 'react-flip-toolkit'
 
 import { closeArticle, selectArticle, leaveCursor } from '../../../AC'
 import { filtreatedArticleSelector } from '../../../selectors'
-import utilsDecor from '../../../decorators/utils'
 import history from '../../../history'
 
 import ArticleCard from '../ArticleCard'
@@ -15,7 +14,7 @@ import NextOpenArticle from '../../Articles/NextOpenArticle'
 
 import './style.sass'
 
-const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, getUniqId, isMenuActive, isCatMenuActive }) => {
+const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, isMenuActive, isCatMenuActive }) => {
 
     
     const archivePgListRef = useRef();
@@ -393,4 +392,4 @@ const mapToDispatch = {
 
 const decorator = connect( mapStateToProps, mapToDispatch );
 
-export default decorator( utilsDecor(ArticlesList) );
+export default decorator( ArticlesList );

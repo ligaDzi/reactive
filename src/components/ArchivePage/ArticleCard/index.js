@@ -8,7 +8,7 @@ import CursorProvider from '../../Cursor/CursorProvider'
 
 import './style.sass'
 
-const ArticleCard = ({ article, artClass, artStyle, isArtFlagRef, archivePgRef, setPositionArtFlag, openArticle, leaveCursor }) => {
+const ArticleCard = ({ article, artClass, artStyle, isArtFlagRef, setPositionArtFlag, openArticle, leaveCursor }) => {
 
     return (
         isArtFlagRef ? (
@@ -56,8 +56,7 @@ ArticleCard.propTypes = {
     artClass: PropTypes.string,
     artStyle: PropTypes.object,
     isArtFlagRef: PropTypes.bool,
-    setPositionArtFlag: PropTypes.func,    
-    archivePgRef: PropTypes.object,
+    setPositionArtFlag: PropTypes.func, 
     openArticle: PropTypes.func.isRequired,
     leaveCursor: PropTypes.func.isRequired,
 }

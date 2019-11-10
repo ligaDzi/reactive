@@ -205,7 +205,6 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
                             artClass={classList[i]} 
                             artStyle={styleList[i]} 
                             isArtFlagRef={true} 
-                            archivePgRef={archivePgRef}
                             setPositionArtFlag={setPositionArtFlag} 
                             openArticle = {handleOpenArt}
                             leaveCursor = {leaveCursor}
@@ -369,9 +368,7 @@ ArticlesList.propTypes = {
     isMenuActive: PropTypes.bool,
     isCatMenuActive: PropTypes.bool,
     //From component
-    archivePgRef: PropTypes.object,        
-    //from decorator
-    getUniqId: PropTypes.func.isRequired
+    archivePgRef: PropTypes.object,      
 }
 
 function mapStateToProps(state) {

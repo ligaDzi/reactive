@@ -1,5 +1,7 @@
 import React from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { Image, Transformation } from 'cloudinary-react'
+
 
 import Scroll from '../Scroll'
 
@@ -17,7 +19,9 @@ const IntrestingImg = () => (
         >
             <div className='intresting-img__content'>
                 <Scroll />
-                <img src='../src/img/reactive_studio.jpg' />
+                <Image publicId='reactive/reactive_studio.jpg' >
+                    <Transformation flags={["progressive", "progressive:semi"]} />
+                </Image> 
             </div>
         </CSSTransitionGroup>
     </div>

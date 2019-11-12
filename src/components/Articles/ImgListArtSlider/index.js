@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { Image, Transformation } from 'cloudinary-react'
 
 import utils from '../../../decorators/utils'
 
@@ -20,7 +21,9 @@ class ImgListArtSlider extends PureComponent {
         const { getUniqId } = this.props;
 
         return imgList.map( img => (
-            <img key = {getUniqId()} className = 'article-open__img' src = {`../src/img/${img}`} />            
+            <Image key = {getUniqId()} className='article-open__img' publicId={`reactive/${img}`} >
+                <Transformation flags={["progressive", "progressive:semi"]} />
+            </Image>  
         ))
     }
 

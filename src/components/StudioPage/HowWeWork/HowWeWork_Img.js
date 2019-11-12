@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import AOS from 'aos'
+import { Image, Transformation } from 'cloudinary-react'
+
 
 import './style.sass'
 
@@ -20,7 +22,9 @@ const HowWeWorkImg = () => {
             data-aos-easing="ease"
         >
             <div  className='howWeWork-img_wrap'>
-                <img src='../src/img/makespace_studio_vertical.jpg' />
+                <Image publicId='reactive/makespace_studio_vertical.jpg' >
+                    <Transformation flags={["progressive", "progressive:semi"]} />
+                </Image> 
             </div>
         </div>
     )

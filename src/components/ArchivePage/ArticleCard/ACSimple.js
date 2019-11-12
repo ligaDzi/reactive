@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Image, Transformation } from 'cloudinary-react'
 
 import './style.sass'
 
@@ -20,8 +21,9 @@ const ACSimple = ({ article, artClass, artStyle, openArticle, leaveCursor }) => 
             style={artStyle} 
             onClick={handleClickCmp}
         >
-            <img src={`../src/img/${article.images[0]}`} />
-            
+            <Image publicId={`reactive/${article.images[0]}`} >
+                <Transformation flags={["progressive", "progressive:semi"]} />
+            </Image> 
         </div>
     )    
 }

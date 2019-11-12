@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { Flipped } from 'react-flip-toolkit'
+import { Image, Transformation } from 'cloudinary-react'
+
 
 
 import './style.sass'
@@ -41,10 +43,14 @@ class CarouselImg extends PureComponent{
                 <Flipped flipId = {`article-card-${nextSlide.id}`}>
                     <a className='carousel-content flex' onClick = { this.handleClick } >
                         <div className='carousel-item carousel-item__size flex-center'> 
-                            <img className='carousel-item__img' src={`../src/img/${activeSlide.images[0]}`}/> 
+                            <Image className='carousel-item__img' publicId={`reactive/${activeSlide.images[0]}`} >
+                                <Transformation flags={["progressive", "progressive:semi"]} />
+                            </Image> 
                         </div>
                         <div className='carousel-item carousel-item__size flex-center'>
-                            <img className='carousel-item__img' src={`../src/img/${nextSlide.images[0]}`}/>
+                            <Image className='carousel-item__img' publicId={`reactive/${nextSlide.images[0]}`} >
+                                <Transformation flags={["progressive", "progressive:semi"]} />
+                            </Image> 
                         </div>
                     </a>          
                 </Flipped>     

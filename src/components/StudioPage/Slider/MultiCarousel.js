@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Swiper from 'react-id-swiper'
 import AOS from 'aos'
+import { Image, Transformation } from 'cloudinary-react'
+
 
 import utils from '../../../decorators/utils'
 
@@ -66,7 +68,9 @@ const MultiCarousel = ({ listImg, getUniqId }) => {
                         data-aos-duration="1000"
                         data-aos-easing="ease"
                       >
-                        <img className='slider-swiper__img' src={`../src/img/studio/${img}.jpg`} />
+                        <Image className='slider-swiper__img' publicId={`reactive/studio/${img}.jpg`} >
+                            <Transformation flags={["progressive", "progressive:semi"]} />
+                        </Image> 
                       </div>
                     </CursorProvider>
                   </div>

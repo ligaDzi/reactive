@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import Proptypes from 'prop-types'
+import { Image, Transformation } from 'cloudinary-react'
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -15,8 +16,10 @@ class ArticleImg extends PureComponent {
         const { name } = this.props;        
     
         return (        
-            <div className='article-imgblock flex-center'>                
-                <img className='article-img' src={`../src/img/${name}`} />
+            <div className='article-imgblock flex-center'> 
+                <Image className='article-img' publicId={`reactive/${name}`} >
+                    <Transformation flags={["progressive", "progressive:semi"]} />
+                </Image>                
             </div>
         )
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { Image, Transformation } from 'cloudinary-react'
 
 import './style.sass'
-
 const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag, openArticle, leaveCursor }) => {
 
     const artFlagRef = useRef();
@@ -16,6 +16,8 @@ const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag, openArticle, 
             openArticle(article.id);
         }
     }
+    
+    
 
     return (
         <div 
@@ -24,8 +26,9 @@ const ACFlag = ({ article, artClass, artStyle, setPositionArtFlag, openArticle, 
             style={artStyle}
             onClick={handleClickCmp} 
         >
-            <img src={`../src/img/${article.images[0]}`} />
-            
+            <Image publicId={`reactive/${article.images[0]}`} >
+                <Transformation flags={["progressive", "progressive:semi"]} />
+            </Image>            
         </div>
     )    
 }

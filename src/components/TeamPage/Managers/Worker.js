@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Image, Transformation } from 'cloudinary-react'
+
 
 import './style.sass'
 import '../../../style/_position.sass'
@@ -8,7 +10,9 @@ const Worker = ({ worker }) => (
     <div className='manager-root'>
         <div className='manager-photo'>
             <div className='manager-photo__wrap'>
-                <img src={`../src/img/team/${worker.photo}`} />
+                <Image publicId={`reactive/team/${worker.photo}`} >
+                    <Transformation flags={["progressive", "progressive:semi"]} />
+                </Image> 
             </div>
         </div>
         <div className='manager-info'>

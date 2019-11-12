@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import utils from '../../../decorators/utils'
 
@@ -20,7 +21,9 @@ class LinksFooter extends Component {
         return links.map( link => {
             return (
                 <li className='link-footer' key = {getUniqId()}>
-                    {link.name}
+                    <Link className='link-footer' to={`/${link.alias}`}>
+                        {link.name}
+                    </Link>
                 </li>
             )
         })

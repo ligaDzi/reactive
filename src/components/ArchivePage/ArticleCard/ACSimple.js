@@ -6,7 +6,7 @@ import './style.sass'
 
 const ACSimple = ({ article, artClass, artStyle, openArticle, leaveCursor }) => {
 
-    const handleClickCmp = () => {
+    const handleClickCmp = () => {        
         if(openArticle){
             leaveCursor();
             openArticle(article.id);
@@ -23,8 +23,7 @@ const ACSimple = ({ article, artClass, artStyle, openArticle, leaveCursor }) => 
             <img src={`../src/img/${article.images[0]}`} />
             
         </div>
-    )
-    
+    )    
 }
 
 ACSimple.propTypes = {

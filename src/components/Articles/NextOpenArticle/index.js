@@ -19,7 +19,7 @@ class NextOpenArticle extends Component {
                 flipId = {`article-card-${article.id}`}                
             >
                 <div className = 'article-next'>
-                    <img src = {`./src/img/${article.images[0]}`} />                    
+                    <img src = {`../src/img/${article.images[0]}`} />                    
                 </div>
             </Flipped>        
         )

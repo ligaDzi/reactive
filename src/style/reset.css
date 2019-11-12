@@ -29,6 +29,7 @@ display: block;
 }
 body {
 line-height: 1;
+background-color: #000;
 }
 ol, ul {
 list-style: none;

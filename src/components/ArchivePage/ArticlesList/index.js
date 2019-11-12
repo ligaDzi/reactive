@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { CSSTransitionGroup } from 'react-transition-group'
-import { Flipper, Flipped } from 'react-flip-toolkit'
+import { Flipper } from 'react-flip-toolkit'
 
 import { closeArticle, selectArticle, leaveCursor } from '../../../AC'
 import { filtreatedArticleSelector } from '../../../selectors'
@@ -14,8 +14,18 @@ import NextOpenArticle from '../../Articles/NextOpenArticle'
 
 import './style.sass'
 
-const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle, selectArticle, leaveCursor, isMenuActive, isCatMenuActive }) => {
+const ArticlesList = props => {
 
+    const { 
+        articles, 
+        archivePgRef, 
+        artFocus, 
+        artNext, 
+        closeArticle, 
+        selectArticle, 
+        leaveCursor, 
+        isMenuActive, 
+        isCatMenuActive } = props;
     
     const archivePgListRef = useRef();
     const [posXArtFlagState, setPosXArtFlagState] = useState();
@@ -50,6 +60,7 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
         }
     });
 
+
     useEffect(() => {        
         let timeout;
 
@@ -73,6 +84,7 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
         }
     }, [isCatMenuActive, isMenuActive]);
 
+
     useEffect(() => {
         
         if(isWheelState){
@@ -81,6 +93,7 @@ const ArticlesList = ({ articles, archivePgRef, artFocus, artNext, closeArticle,
         return () => clearTimeout(wheelTimeoutState);
         
     }, [isWheelState]);
+    
 
     useEffect(() => {
         if(artFocus.id && wheelTimeoutState){

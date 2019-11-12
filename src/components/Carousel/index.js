@@ -50,6 +50,7 @@ class Carousel extends Component {
 
         this.timeInterval = 6000;
         this.interval = null;
+        this.startTimeout = null;
         this.flag = true;
     }
     componentWillMount = () => {
@@ -59,8 +60,15 @@ class Carousel extends Component {
         if(!isLoading && !isLoaded) loadSliderArticles();
     }
 
-    componentDidMount = () => {      
+    componentDidMount = () => { 
+        const { isLoading, isLoaded} = this.props.articlesCrsl; 
         
+        if(!isLoading && !isLoaded){
+            this.startTimeout = setTimeout(() => {
+                this.nextSlide();
+            }, 3000);
+        }    
+
         this.interval = setInterval(() => {
             this.nextSlide();
             
@@ -95,6 +103,7 @@ class Carousel extends Component {
         
     componentWillUnmount = () => {
         clearInterval(this.interval);
+        clearTimeout(this.startTimeout);
     }
 
     nextSlide = () => {        
@@ -148,7 +157,7 @@ class Carousel extends Component {
     }
 
     getImgSlider = () => {
-        const { articlesCrsl, getUniqId, artFocus, selectArticle } = this.props;
+        const { articlesCrsl, artFocus } = this.props;
         const activeSlide = articlesCrsl.entities[ this.state.activeSlide ];
         const nextSlide = articlesCrsl.entities[ this.state.nextSlide ];      
 

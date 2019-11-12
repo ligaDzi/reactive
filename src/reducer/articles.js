@@ -67,7 +67,7 @@ export default (articles = defaultArticles, action) => {
             case '/':
                 document.body.classList.add('body-overflow-hidden');
                 break;
-            case '/archive':
+            case '/archive':                
                 document.querySelector('.archivePg').classList.add('body-overflow-Y-hidden');
                 break;
 

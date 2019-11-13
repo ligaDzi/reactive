@@ -1,6 +1,5 @@
 import { Record, OrderedMap } from 'immutable'
 import { arrToMap } from '../helpers'
-import { menu as menuList } from '../fixtures'
 import { LOAD_MENU, TOGGLE_MENU, CHANGE_DESCRIPTION_MENU, START, SUCCESS, FAIL } from '../constants'
 
 const MenuRecord = Record({    

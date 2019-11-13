@@ -5,6 +5,7 @@ import contactReduser from './contact'
 import categorieReducer from './categories'
 import cursorReducer from './cursor'
 import emploeeReducer from './emploees'
+import mailReducer from './mail'
 
 export default combineReducers({
     articles: articlesReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     contactUs: contactReduser,
     categories: categorieReducer,
     cursor: cursorReducer,
-    emploees: emploeeReducer
+    emploees: emploeeReducer,
+    mail: mailReducer
 })

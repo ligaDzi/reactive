@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loadMenu, loadContactUs } from '../../AC'
+
+import { loadMenu, loadContactUs, sendMail } from '../../AC'
 import { mapToArr } from '../../helpers'
 
 import FormFooter from './FormFooter'
@@ -29,8 +30,15 @@ class Footer extends Component {
             isError: PropTypes.bool,
             entities: PropTypes.array
         }),
+        mail: PropTypes.shape({
+            isLoading: PropTypes.bool,
+            isSuccess: PropTypes.bool,
+            isError: PropTypes.bool,
+            email: PropTypes.string
+        }),
         loadMenu: PropTypes.func.isRequired,
-        loadContactUs: PropTypes.func.isRequired
+        loadContactUs: PropTypes.func.isRequired,
+        sendMail: PropTypes.func.isRequired
     }
 
     componentDidMount = () => {
@@ -59,7 +67,11 @@ class Footer extends Component {
     }
     
     handleEmailSubmit = email => {
-        console.log('===', 'email = ', email);        
+        const { mail, sendMail } = this.props; 
+
+        if(!mail.isLoading) {
+            sendMail(email);
+        }
     }
     
     showContactUs = () => {
@@ -130,13 +142,20 @@ function mapStateToProps(state) {
             isLoaded: state.contactUs.isLoaded,
             isError: state.contactUs.isError,
             entities: mapToArr(state.contactUs.entities)
+        },
+        mail: {
+            isLoading: state.mail.isLoading,
+            isSuccess: state.mail.isSuccess,
+            isError: state.mail.isError,
+            email: state.mail.email,
         }
     }
 }
 
 const mapToDispatch = {
     loadMenu,
-    loadContactUs
+    loadContactUs,
+    sendMail
 }
 
 const decorator = connect( mapStateToProps, mapToDispatch );

@@ -21,9 +21,44 @@ import {
     LOAD_ALL_EMPLOEES,
     CURSOR_ENTER,
     CURSOR_LEAVE, 
+    SEND_MAIL,
     START,
     SUCCESS,
     FAIL} from '../constants'
+
+export function sendMail(email) {
+    return dispatch => {
+        dispatch({
+            type: SEND_MAIL + START
+        });
+
+        const option = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        }
+        
+        fetch('/api/sendmail', option)
+            .then(res => {                
+                if(res.status >= 400) {                    
+                    throw new Error(res.statusText);
+                }
+                return res.text();
+            })
+            .then(response => {
+                dispatch({
+                    type: SEND_MAIL + SUCCESS,
+                    payload: { email } 
+                })
+            })
+            .catch(err => dispatch({ 
+                type: SEND_MAIL + FAIL, 
+                payload: { err }
+            }))
+    }
+}
 
 export function loadAllArticles() {
     return (dispatch, getState) => {

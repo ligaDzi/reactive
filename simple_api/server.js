@@ -26,6 +26,7 @@ const routeMenu = require('./routes/menu');
 const routeCategorie = require('./routes/categorie');
 const routeArticle = require('./routes/article');
 const routerEmploee = require('./routes/emploee');
+const routeMail = require('./routes/mail');
 
 router.get('/', routeHome);
 router.get('/user', routeUser);
@@ -43,6 +44,7 @@ router.get('/api/article/slider', routeArticle.getSlider);
 router.post('/api/article/fromto', routeArticle.getFiveStartingFrom);
 router.post('/api/article/all', routeArticle.getAll);
 router.get('/api/emploee/all', routerEmploee.getAll);
+router.post('/api/sendmail', routeMail.post);
   
 
 

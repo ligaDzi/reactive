@@ -2,7 +2,6 @@ import {
     CURSOR_ENTER,
     CURSOR_LEAVE } from '../constants'
 
-import { arrToMap } from '../helpers'
 import { Record } from 'immutable'
 
 const CursorReducerState = Record({

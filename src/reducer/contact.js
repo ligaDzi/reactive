@@ -1,4 +1,3 @@
-import {  contactUs as contactList } from '../fixtures'
 import { LOAD_CONTACTUS, START, SUCCESS, FAIL } from '../constants'
 import { arrToMap } from '../helpers'
 import { Record, OrderedMap } from 'immutable'

@@ -12,7 +12,7 @@ import {
     FAIL } from '../constants'
 
 import { arrToMap } from '../helpers'
-import { Record, OrderedMap, merge } from 'immutable'
+import { Record, OrderedMap } from 'immutable'
 import history from '../history'
 
 const ArticleRecord = Record({    

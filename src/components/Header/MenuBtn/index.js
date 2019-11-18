@@ -10,7 +10,7 @@ import './style.sass'
 
 class MenuBtn extends Component {
 
-    static proptypes = {
+    static propTypes = {
         //from store
         isMenuActive: PropTypes.bool,
         isCategorActive: PropTypes.bool,

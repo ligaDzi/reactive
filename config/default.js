@@ -2,7 +2,7 @@ module.exports = {
     port: process.env.PORT || 3001,
     secret: 'my23sec45ret7853',
     mongoose: {
-      uri: process.env.MONGO_URL || 'mongodb://adli:iSt2gk_6@ds123146.mlab.com:23146/stal',
+      uri: process.env.MONGO_URL,
       options: {
         server: {
           socketOptions: {
